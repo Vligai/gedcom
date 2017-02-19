@@ -5,12 +5,18 @@ tags=["INDI","NAME","SEX","BIRT","DEAT","FAMC","FAMS","FAM","MARR","HUSB","WIFE"
 d = {} # for individuals
 d2 = {} # for families
 
+months ={"JAN":1,"FEB":2,"MAR":3,"APR":4,"MAY":5,"JUN":6,"JUL":7,"AUG":8,"SEP":9,"OCT":10,"NOV":11,"DEC":12}
+
 def birth_before_death(birth,death):
 	if birth["year"]>death["year"]:
 		return False
-	if birth["month"]>death["month"]:
+	elif birth["year"]<death["year"]:
+		return True
+	elif months[birth["month"]]>months[death["month"]]:
 		return False
-	if birth["day"]>=death["day"]:
+	elif months[birth["month"]]<months[death["month"]]:
+		return True
+	elif birth["day"]>death["day"]:
 		return False
 	return True
 
