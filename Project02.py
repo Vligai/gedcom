@@ -2,10 +2,9 @@
 import sys
 from collections import defaultdict
 tags=["INDI","NAME","SEX","BIRT","DEAT","FAMC","FAMS","FAM","MARR","HUSB","WIFE","CHIL","DIV","DATE","HEAD","TRLR","NOTE"]
-
+d = {} # for individuals
+d2 = {} # for families
 def main(filename):
-	d = {} # for individuals
-	d2 = {} # for families
 	with open(filename, 'r') as f:
 		icurr=''
 		birt=0
