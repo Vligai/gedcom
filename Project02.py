@@ -4,6 +4,16 @@ from collections import defaultdict
 tags=["INDI","NAME","SEX","BIRT","DEAT","FAMC","FAMS","FAM","MARR","HUSB","WIFE","CHIL","DIV","DATE","HEAD","TRLR","NOTE"]
 d = {} # for individuals
 d2 = {} # for families
+
+def birth_before_death(birth,death):
+	if birth["year"]>death["year"]:
+		return False
+	if birth["month"]>death["month"]:
+		return False
+	if birth["day"]>=death["day"]:
+		return False
+	return True
+
 def main(filename):
 	with open(filename, 'r') as f:
 		icurr=''
@@ -41,7 +51,7 @@ def main(filename):
 			elif len(y)>2 and y[1].strip()=="SURN":
 				a=y[2].strip()
 				d[icurr]["SURN"]=a
-			elif len(y)>2 and y[1].strip()=="BIRT":
+			elif len(y)>=2 and y[1].strip()=="BIRT":
 				birt=1
 			elif len(y)>2 and y[1].strip()=="DEAT":
 				deat=1
