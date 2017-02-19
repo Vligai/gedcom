@@ -34,7 +34,7 @@ def firstDateIsEarlier(d1, d2):
     """
     yyyymmdd1 = str(d1["year"]) + str(d1["month"]) + str(d1["day"])
     yyyymmdd2 = str(d2["year"]) + str(d2["month"]) + str(d2["day"])
-    return parseInt(yyyymmdd1) < parseInt(yyyymmdd2)
+    return int(yyyymmdd1) < int(yyyymmdd2)
 
 def marriage_before_divorce(mar, div):
     """
