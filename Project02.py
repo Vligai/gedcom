@@ -21,6 +21,19 @@ def birth_before_death(birth,death):
 		return False
 	return True
 
+def birth_before_marr(birth,marr):
+	if birth["year"]>marr["year"]:
+		return False
+	elif birth["year"]<marr["year"]:
+		return True
+	elif months[birth["month"]]>months[marr["month"]]:
+		return False
+	elif months[birth["month"]]<months[marr["month"]]:
+		return True
+	elif birth["day"]>marr["day"]:
+		return False
+	return True
+
 def less_than_150(birth, death):
     """user story 07"""
     birth = date(birth["year"], birth["month"], birth["day"])
