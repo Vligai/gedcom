@@ -9,6 +9,10 @@ d2 = {} # for families
 months ={"JAN":1,"FEB":2,"MAR":3,"APR":4,"MAY":5,"JUN":6,"JUL":7,"AUG":8,"SEP":9,"OCT":10,"NOV":11,"DEC":12}
 
 def birth_before_death(birth,death):
+	if death == {}:
+        	return True #nothing to worry about
+    	if birth == {}:
+        	return False #you need to have a birthday
 	if birth["year"]>death["year"]:
 		return False
 	elif birth["year"]<death["year"]:
@@ -22,6 +26,10 @@ def birth_before_death(birth,death):
 	return True
 
 def birth_before_marr(birth,marr):
+	if marr == {}:
+        	return True #nothing to worry about
+    	if birth == {}:
+        	return False #you need to have a birthday
 	if birth["year"]>marr["year"]:
 		return False
 	elif birth["year"]<marr["year"]:
