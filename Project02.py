@@ -27,6 +27,11 @@ def less_than_150(birth, death):
     end = date.today() if death == {} else date(death["year"], death["month"], death["day"])
     return (end - birth) < 150*timedelta(days=365)
 
+def div_before_death(div, death):
+    """user story 06"""
+    #TODO check to see if you can be divorced after death.
+    return div != {}
+
 def firstDateIsEarlier(d1, d2):
     """
     Given dates in the form {"year":1970, "month": 01, "day": 01},
