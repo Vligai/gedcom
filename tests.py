@@ -62,21 +62,21 @@ class UserStory04Tests(unittest.TestCase):
         self.assertTrue(marriage_before_divorce({},{}))
     def test2(self):
         #marriage without divorce is fine
-        m = {"year":2000, "month":01, "day":01}
+        m = {"year":2000, "month":1, "day":1}
         self.assertTrue(marriage_before_divorce(m,{}))
     def test3(self):
         #divorce without marriage is NOT fine
-        d = {"year":2000, "month":01, "day":01}
+        d = {"year":2000, "month":1, "day":1}
         self.assertFalse(marriage_before_divorce({},d))
     def test4(self):
         #both events, with marriage first is fine
-        m = {"year":2000, "month":01, "day":01}
-        d = {"year":2010, "month":01, "day":01}
+        m = {"year":2000, "month":1, "day":1}
+        d = {"year":2010, "month":1, "day":1}
         self.assertTrue(marriage_before_divorce(m,d))
     def test5(self):
         #both events, with divorce first is NOT fine
-        d = {"year":2000, "month":01, "day":01}
-        m = {"year":2010, "month":01, "day":01}
+        d = {"year":2000, "month":1, "day":1}
+        m = {"year":2010, "month":1, "day":1}
         self.assertFalse(marriage_before_divorce(m,d))
 
 class UserStory05Tests(unittest.TestCase):
@@ -120,7 +120,7 @@ class UserStory07Tests(unittest.TestCase):
         birth = {"year":1850, "month":3, "day":23}
         death = {"year":2030, "month":3, "day":23}
         self.assertFalse(less_than_150(birth,death))
-        
+
 class UserStory08Tests(unittest.TestCase):
     def test1(self): #person born after parents married
         birth = {"year":2001, "month":11, "day":20}
@@ -165,7 +165,7 @@ class story09test(unittest.TestCase):
         birth = {}
         marriage = {"year":2001, "month":12, "day":21}
         self.assertEqual(birth_before_death_of_parents(birth, marriage), False)
-        
+
 if __name__ == '__main__':
 	main("Mirtchouk_Mark_Project02.ged")
         i=0
