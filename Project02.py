@@ -9,7 +9,7 @@ d2 = {} # for families
 months ={"JAN":1,"FEB":2,"MAR":3,"APR":4,"MAY":5,"JUN":6,"JUL":7,"AUG":8,"SEP":9,"OCT":10,"NOV":11,"DEC":12}
 
 def birth_before_death(birth,death):
-	""" 
+	"""
 	User Story US03: True means everything is ok and Birthday is before Death day
 	"""
 	if death == {}:
@@ -29,7 +29,7 @@ def birth_before_death(birth,death):
 	return True
 
 def birth_before_marriage(birth,marr):
-	""" 
+	"""
 	User Story US02: True means everything is ok and Birthday is before marriage day
 	"""
 	if marr == {}:
@@ -59,9 +59,9 @@ def firstDateIsEarlier(d1, d2):
     Given dates in the form {"year":1970, "month": 01, "day": 01},
     return True if the first date is the earlier of the two
     """
-    yyyymmdd1 = str(d1["year"]) + str(d1["month"]) + str(d1["day"])
-    yyyymmdd2 = str(d2["year"]) + str(d2["month"]) + str(d2["day"])
-    return int(yyyymmdd1) < int(yyyymmdd2)
+    date1 = date(d1["year"], d1["month"], d1["day"])
+    date2 = date(d2["year"], d2["month"], d2["day"])
+    return date1 < date2
 
 def marriage_before_divorce(mar, div):
     """
@@ -119,7 +119,7 @@ def birth_before_death_of_parents(birth, death_of_parents):
                 return True
         else:
                 return False
-                
+
 def main(filename):
 	with open(filename, 'r') as f:
 		icurr=''
