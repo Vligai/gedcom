@@ -56,12 +56,11 @@ def less_than_150(birth, death):
 
 def div_before_death(div, death):
     """user story 06"""
-    #TODO check to see if you can be divorced after death.
     if div == {}:
         return False
     if death == {}:
         return True
-    return 
+    return firstDateIsEarlier(div, death)
 
 def firstDateIsEarlier(d1, d2):
     """

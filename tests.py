@@ -102,6 +102,25 @@ class UserStory05Tests(unittest.TestCase):
         m = {"year":2010, "month":01, "day":01}
         self.assertFalse(marriage_before_death(m,d))
 
+class UserStory06Tests(unittest.TestCase):
+    def test1(self):
+        div = {"year":1950, "month":3, "day":23}
+        self.assertTrue(div_before_death(div,{}))
+    def test2(self):
+        div = {"year":1850, "month":3, "day":23}
+        self.assertTrue(div_before_death(div,{}))
+    def test3(self):
+        death = {"year":2010, "month":4, "day":3}
+        self.assertTrue(div_before_death({}, death))
+    def test4(self):
+        div = {"year":1950, "month":3, "day":23}
+        death = {"year":1990, "month":3, "day":23}
+        self.assertTrue(div_before_death(div,death))
+    def test5(self):
+        death = {"year":1850, "month":3, "day":23}
+        div = {"year":2030, "month":3, "day":23}
+        self.assertFalse(div_before_death(div,death))
+
 class UserStory07Tests(unittest.TestCase):
     def test1(self):
         birth = {"year":1950, "month":3, "day":23}
