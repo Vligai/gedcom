@@ -130,17 +130,17 @@ def main(filename):
 		for line in f:
 			if "HUSB" not in line and "WIFE" not in line and "CHIL" not in line:
 				fam=0
-			print (line.strip())
+			#print (line.strip())
 			y = line.strip().split(" ")
 
-			print (y[0].strip())
+			#print (y[0].strip())
 
-			if y[1].strip() in tags:
-			    print (y[1].strip())
-			elif len(y)>2 and y[2].strip() in tags:
-				print (y[2].strip())
-			else:
-				print ("Invalid tag")
+			#if y[1].strip() in tags:
+			#    print (y[1].strip())
+			#elif len(y)>2 and y[2].strip() in tags:
+			#	print (y[2].strip())
+			#else:
+			#	print ("Invalid tag")
 
 			if len(y)>2 and y[2].strip()=="INDI":
 				icurr=y[1].strip()
