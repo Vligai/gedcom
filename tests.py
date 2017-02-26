@@ -88,5 +88,28 @@ class UserStory08Tests(unittest.TestCase):
         marriage = {"year":2001, "month":12, "day":21}
         self.assertEqual(birth_before_marriage_of_parents(birth, marriage), False)
 
+
+class story09test(unittest.TestCase):
+    def test1(self): #person born after parents died
+        birth = {"year":2001, "month":11, "day":20}
+        marriage = {"year":1999, "month":5, "day":20}
+        self.assertFalse(birth_before_death_of_parents(birth, marriage))
+    def test2(self): #not dead, so the person is born before death of parents
+        birth = {"year":2001, "month":11, "day":20}
+        marriage = {}
+        self.assertTrue(birth_before_death_of_parents(birth, marriage))
+    def test3(self): #person born before parents death
+        birth = {"year":2001, "month":11, "day":20}
+        marriage = {"year":2002, "month":5, "day":20}
+        self.assertTrue(birth_before_death_of_parents(birth, marriage))
+    def test4(self): #person born before parents death
+        birth = {"year":2001, "month":11, "day":20}
+        marriage = {"year":2001, "month":12, "day":21}
+        self.assertEqual(birth_before_death_of_parents(birth, marriage), True)
+    def test5(self): #no birth date given
+        birth = {}
+        marriage = {"year":2001, "month":12, "day":21}
+        self.assertEqual(birth_before_death_of_parents(birth, marriage), False)
+        
 if __name__ == '__main__':
     unittest.main()
