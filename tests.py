@@ -66,12 +66,12 @@ class UserStory04Tests(unittest.TestCase):
         self.assertTrue(marriage_before_divorce(m,{}))
     def test3(self):
         #divorce without marriage is NOT fine
-        d = {"year":2000, "month":1, "day":1}
+        d = {"year":2000, "month":"JAN", "day":1}
         self.assertFalse(marriage_before_divorce({},d))
     def test4(self):
         #both events, with marriage first is fine
         m = {"year":2000, "month":1, "day":1}
-        d = {"year":2010, "month":1, "day":1}
+        d = {"year":2010, "month":"FEB", "day":1}
         self.assertTrue(marriage_before_divorce(m,d))
     def test5(self):
         #both events, with divorce first is NOT fine
@@ -85,21 +85,21 @@ class UserStory05Tests(unittest.TestCase):
         self.assertTrue(marriage_before_death({},{}))
     def test2(self):
         #marriage without death is fine
-        m = {"year":2000, "month":01, "day":01}
+        m = {"year":2000, "month":1, "day":1}
         self.assertTrue(marriage_before_death(m,{}))
     def test3(self):
         #death without marriage is fine
-        d = {"year":2000, "month":01, "day":01}
+        d = {"year":2000, "month":1, "day":1}
         self.assertTrue(marriage_before_death({},d))
     def test4(self):
         #both events, with marriage first is fine
-        m = {"year":2000, "month":01, "day":01}
-        d = {"year":2010, "month":01, "day":01}
+        m = {"year":2000, "month":1, "day":1}
+        d = {"year":2010, "month":1, "day":1}
         self.assertTrue(marriage_before_death(m,d))
     def test5(self):
         #both events, with death first is NOT fine
-        d = {"year":2000, "month":01, "day":01}
-        m = {"year":2010, "month":01, "day":01}
+        d = {"year":2000, "month":1, "day":1}
+        m = {"year":2010, "month":1, "day":1}
         self.assertFalse(marriage_before_death(m,d))
 
 class UserStory06Tests(unittest.TestCase):
