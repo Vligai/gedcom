@@ -9,6 +9,13 @@ d2 = {} # for families
 months ={"JAN":1,"FEB":2,"MAR":3,"APR":4,"MAY":5,"JUN":6,"JUL":7,"AUG":8,"SEP":9,"OCT":10,"NOV":11,"DEC":12}
 
 def birth_before_death(birth,death):
+	""" 
+	User Story US03: True means everything is ok and Birthday is before Death day
+	"""
+	if death == {}:
+        	return True #nothing to worry about
+    	if birth == {}:
+        	return False #you need to have a birthday
 	if birth["year"]>death["year"]:
 		return False
 	elif birth["year"]<death["year"]:
@@ -18,6 +25,26 @@ def birth_before_death(birth,death):
 	elif months[birth["month"]]<months[death["month"]]:
 		return True
 	elif birth["day"]>death["day"]:
+		return False
+	return True
+
+def birth_before_marriage(birth,marr):
+	""" 
+	User Story US02: True means everything is ok and Birthday is before marriage day
+	"""
+	if marr == {}:
+        	return True #nothing to worry about
+    	if birth == {}:
+        	return False #you need to have a birthday
+	if birth["year"]>marr["year"]:
+		return False
+	elif birth["year"]<marr["year"]:
+		return True
+	elif months[birth["month"]]>months[marr["month"]]:
+		return False
+	elif months[birth["month"]]<months[marr["month"]]:
+		return True
+	elif birth["day"]>marr["day"]:
 		return False
 	return True
 
@@ -108,17 +135,17 @@ def main(filename):
 		for line in f:
 			if "HUSB" not in line and "WIFE" not in line and "CHIL" not in line:
 				fam=0
-			print (line.strip())
+			#print (line.strip())
 			y = line.strip().split(" ")
 
-			print (y[0].strip())
+			#print (y[0].strip())
 
-			if y[1].strip() in tags:
-			    print (y[1].strip())
-			elif len(y)>2 and y[2].strip() in tags:
-				print (y[2].strip())
-			else:
-				print ("Invalid tag")
+			#if y[1].strip() in tags:
+			#    print (y[1].strip())
+			#elif len(y)>2 and y[2].strip() in tags:
+			#	print (y[2].strip())
+			#else:
+			#	print ("Invalid tag")
 
 			if len(y)>2 and y[2].strip()=="INDI":
 				icurr=y[1].strip()
