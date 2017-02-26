@@ -28,7 +28,7 @@ def birth_before_death(birth,death):
 		return False
 	return True
 
-def birth_before_marr(birth,marr):
+def birth_before_marriage(birth,marr):
 	""" 
 	User Story US02: True means everything is ok and Birthday is before marriage day
 	"""
