@@ -30,7 +30,7 @@ class UserStory02Tests(unittest.TestCase):
 
 
 class UserStory03Tests(unittest.TestCase):
-
+    #note DEAT is just used as a date, and will ultimately be marriage dates
     def test_birth_before_death0(self):
         self.assertTrue(birth_before_marriage(self.person0["BIRT"],self.person0["DEAT"]))
 
