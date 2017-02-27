@@ -1,6 +1,58 @@
 import unittest
 from Project02 import *
 
+class firstIsEarlierTests(unittest.TestCase):
+    #equality and format comparisons
+    # d_h = date high
+    # d_l = date low
+    d_l_leadZero = {"year":1900, "month":01, "day":02}
+    d_l_noZero = {"year":1900, "month":1, "day":2}
+    d_l_letter = {"year":1900, "month":"JAN", "day":2}
+    d_h_leadZero = {"year":1900, "month":02, "day":02}
+    d_h_noZero = {"year":1900, "month":2, "day":2}
+    d_h_letter = {"year":1900, "month":"FEB", "day":2}
+    def testFalseForEqual(self):
+        self.assertEqual(firstDateIsEarlier(self.d_l_leadZero, self.d_l_noZero), False)
+        self.assertEqual(firstDateIsEarlier(self.d_l_leadZero, self.d_l_letter), False)
+        self.assertEqual(firstDateIsEarlier(self.d_l_noZero, self.d_l_letter), False)
+        self.assertEqual(firstDateIsEarlier(self.d_l_noZero, self.d_l_leadZero), False)
+        self.assertEqual(firstDateIsEarlier(self.d_l_letter, self.d_l_leadZero), False)
+        self.assertEqual(firstDateIsEarlier(self.d_l_letter, self.d_l_noZero), False)
+    def testCrossFormat(self):
+        self.assertEqual(firstDateIsEarlier(self.d_l_leadZero, self.d_h_leadZero), True)
+        self.assertEqual(firstDateIsEarlier(self.d_l_leadZero, self.d_h_noZero), True)
+        self.assertEqual(firstDateIsEarlier(self.d_l_leadZero, self.d_h_letter), True)
+        self.assertEqual(firstDateIsEarlier(self.d_h_leadZero, self.d_l_leadZero), False)
+        self.assertEqual(firstDateIsEarlier(self.d_h_noZero, self.d_l_leadZero), False)
+        self.assertEqual(firstDateIsEarlier(self.d_h_letter, self.d_l_leadZero), False)
+    #date isolation comparisons
+    d_base = {"year":1970, "month":4, "day":2}
+    d_yearDown = {"year":1969, "month":4, "day":2}
+    d_yearUp = {"year":1971, "month":4, "day":2}
+    d_monthDown = {"year":1970, "month":3, "day":2}
+    d_monthUp = {"year":1970, "month":5, "day":2}
+    d_dayDown = {"year":1970, "month":4, "day":1}
+    d_dayUp = {"year":1970, "month":4, "day":3}
+    def testIsolateYear(self):
+        self.assertEqual(firstDateIsEarlier(self.d_yearDown, self.d_base), True)
+        self.assertEqual(firstDateIsEarlier(self.d_base, self.d_yearDown), False)
+        self.assertEqual(firstDateIsEarlier(self.d_base, self.d_yearUp), True)
+        self.assertEqual(firstDateIsEarlier(self.d_yearUp, self.d_base), False)
+    def testIsolateMonth(self):
+        self.assertEqual(firstDateIsEarlier(self.d_monthDown, self.d_base), True)
+        self.assertEqual(firstDateIsEarlier(self.d_base, self.d_monthDown), False)
+        self.assertEqual(firstDateIsEarlier(self.d_base, self.d_monthUp), True)
+        self.assertEqual(firstDateIsEarlier(self.d_monthUp, self.d_base), False)
+    def testIsolateDay(self):
+        self.assertEqual(firstDateIsEarlier(self.d_dayDown, self.d_base), True)
+        self.assertEqual(firstDateIsEarlier(self.d_base, self.d_dayDown), False)
+        self.assertEqual(firstDateIsEarlier(self.d_base, self.d_dayUp), True)
+        self.assertEqual(firstDateIsEarlier(self.d_dayUp, self.d_base), False)
+    def testNewYears(self):
+        yearPrev = {"year":1999, "month":12, "day":31}
+        yearNext = {"year":2000, "month":1, "day":1}
+        self.assertEqual(firstDateIsEarlier(yearPrev, yearNext), True)
+        self.assertEqual(firstDateIsEarlier(yearNext, yearPrev), False)
 
 class UserStory02Tests(unittest.TestCase):
 
