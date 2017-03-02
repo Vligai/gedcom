@@ -13,52 +13,37 @@ def birth_before_death(birth,death):
 	User Story US03: True means everything is ok and Birthday is before Death day
 	"""
 	if death == {}:
-        	return True #nothing to worry about
+        	return True
     	if birth == {}:
-        	return False #you need to have a birthday
-	if birth["year"]>death["year"]:
-		return False
-	elif birth["year"]<death["year"]:
-		return True
-	elif months[birth["month"]]>months[death["month"]]:
-		return False
-	elif months[birth["month"]]<months[death["month"]]:
-		return True
-	elif birth["day"]>death["day"]:
-		return False
-	return True
+        	return False
+    	return firstDateIsEarlier(birth, death)
 
 def birth_before_marriage(birth,marr):
 	"""
 	User Story US02: True means everything is ok and Birthday is before marriage day
 	"""
 	if marr == {}:
-        	return True #nothing to worry about
+        	return True
     	if birth == {}:
-        	return False #you need to have a birthday
-	if birth["year"]>marr["year"]:
-		return False
-	elif birth["year"]<marr["year"]:
-		return True
-	elif months[birth["month"]]>months[marr["month"]]:
-		return False
-	elif months[birth["month"]]<months[marr["month"]]:
-		return True
-	elif birth["day"]>marr["day"]:
-		return False
-	return True
+        	return False
+    	return firstDateIsEarlier(birth, marr)
 
 def less_than_150(birth, death):
     """user story 07"""
-    birth = date(birth["year"], birth["month"], birth["day"])
-    end = date.today() if death == {} else date(death["year"], death["month"], death["day"])
+    if len(str(birth["month"]))>2:
+	birth["month"]=months[birth["month"]]
+    birth = date(int(birth["year"]), birth["month"], int(birth["day"]))
+    if death == {}:
+    	end = date.today() 
+    else: 
+	end = date(int(death["year"]), death["month"], int(death["day"]))
     return (end - birth) < 150*timedelta(days=365)
 
 def div_before_death(div, death):
     """user story 06"""
-    if div == {}:
-        return False
     if death == {}:
+        return True
+    if div == {}:
         return True
     return firstDateIsEarlier(div, death)
 
@@ -73,8 +58,8 @@ def firstDateIsEarlier(d1, d2):
     if len(str(d2["month"])) > 2 and str(d2["month"]) in months.keys():
         #replace GED month code with number
         d2["month"] = months[d2["month"]]
-    date1 = date(d1["year"], d1["month"], d1["day"])
-    date2 = date(d2["year"], d2["month"], d2["day"])
+    date1 = date(int(d1["year"]), d1["month"], int(d1["day"]))
+    date2 = date(int(d2["year"]), d2["month"], int(d2["day"]))
     return date1 < date2
 
 def marriage_before_divorce(mar, div):
@@ -103,15 +88,16 @@ def marriage_before_death(mar, death):
 def birth_before_marriage_of_parents(birth, marriage_of_parents):
         """user story 08 - if born before marriage return True else return False"""
         '''check if birth date is given, if not return False'''
+	print birth,marriage_of_parents
         if birth == {}:
                 return False
         else:
-                birth = date(birth["year"], birth["month"], birth["day"])
+                birth = date(int(birth["year"]), birth["month"], int(birth["day"]))
         '''check if marriage date(of parents) is given, if not return True'''
         if marriage_of_parents == {}:
                 return True
         else:
-                marriage_of_parents = date(marriage_of_parents["year"], marriage_of_parents["month"], marriage_of_parents["day"])
+                marriage_of_parents = date(int(marriage_of_parents["year"]), marriage_of_parents["month"], int(marriage_of_parents["day"]))
         if birth < marriage_of_parents:
                 return True
         else:
@@ -123,12 +109,12 @@ def birth_before_death_of_parents(birth, death_of_parents):
         if birth == {}:
                 return False
         else:
-                birth = date(birth["year"], birth["month"], birth["day"])
+                birth = date(int(birth["year"]), birth["month"], int(birth["day"]))
         '''check if death date(of parents) is given, if not return True'''
         if death_of_parents == {}:
                 return True
         else:
-                death_of_parents = date(death_of_parents["year"], death_of_parents["month"], death_of_parents["day"])
+                death_of_parents = date(int(death_of_parents["year"]), death_of_parents["month"], int(death_of_parents["day"]))
         if birth < death_of_parents:
                 return True
         else:
@@ -158,7 +144,18 @@ def main(filename):
 
 			if len(y)>2 and y[2].strip()=="INDI":
 				icurr=y[1].strip()
-				d[icurr]={}
+				d[icurr]={
+					"MARR":{},
+					"NAME":{},
+					"SEX":{},
+					"GIVN":{},
+					"SURN":{},
+					"BIRT":{},
+					"DEAT":{},
+					"FAMC":{},
+					"FAMS":{},
+					"DIV":{}
+					}
 			elif len(y)>3 and y[1].strip()=="NAME":
 				a=y[2].strip()+" "+ y[3].strip()
 				d[icurr]["NAME"]=a
@@ -203,27 +200,82 @@ def main(filename):
 				d[icurr]["FAMS"]=a
 			elif len(y)>2 and y[2].strip()=="FAM":
 				fcurr=y[1].strip()
-				d2[fcurr]={}
+				d2[fcurr]={
+					"MARR":{},
+					"NAME":{},
+					"SEX":{},
+					"GIVN":{},
+					"SURN":{},
+					"BIRT":{},
+					"DEAT":{},
+					"FAMC":{},
+					"FAMS":{},
+					"DIV":{},
+					"CHIL":[]
+					}
 				fam=1
 			elif len(y)>2 and fam==1:
 				tag=y[1].strip()
 				a=y[2].strip()
-				d2[fcurr][tag]=a
+				if tag =="CHIL":
+					d2[fcurr][tag].append(a)
+				else:
+					d2[fcurr][tag]=a
 			elif len(y)>1 and y[1].strip()=="MARR":
 				marr=1
 			elif len(y)>1 and y[1].strip()=="DIV":
 				div=1
 		print ("Printing individual ID's and name!")
-		for key in sorted(d, key=lambda x: int(x[1:])):
-			name=d[key]["NAME"]
+                for key in sorted(d, key=lambda x: int(x[1:])):
+                        name=d[key]["NAME"]
+                        birt=d[key]["BIRT"]
+                        deat=d[key]["DEAT"]
 			print (key,name)
+                        if not birth_before_death(birt,deat):
+				print "Birth is not before death: ",name
+                        if not less_than_150(birt,deat):
+				print "Greater than 150 years old: ",name
+
 		print ("Printing family ID's, husband name, and wife name!")
 		for key2 in sorted(d2, key=lambda x: int(x[1:])):
 			husb=d2[key2]["HUSB"]
 			wife=d2[key2]["WIFE"]
 			hname=d[husb]["NAME"]
 			wname=d[wife]["NAME"]
+			hbirt=d[husb]["BIRT"]
+			wbirt=d[wife]["BIRT"]
+			hdeat=d[husb]["DEAT"]
+			wdeat=d[wife]["DEAT"]
+                        marr=d2[key2]["MARR"]
+                        div=d2[key2]["DIV"]
+                        chil=d2[key2]["CHIL"]
 			print (key2,hname," , ",wname)
+                        if not birth_before_marriage(hbirt,marr):
+				print "Birth is not before marriage: ",hname
+                        if not marriage_before_divorce(hbirt,div):
+				print "Marriage is not before divorce: ",hname
+                        if not birth_before_marriage(wbirt,marr):
+				print "Birth is not before marriage: ",wname
+                        if not marriage_before_divorce(wbirt,div):
+				print "Marriage is not before divorce: ",wname
+                        if not marriage_before_death(marr,hdeat):
+				print "Marriage is not before death: ",hname
+                        if not div_before_death(div,hdeat):
+				print "Divorce is not before death: ",hname
+                        if not marriage_before_death(marr,wdeat):
+				print "Marriage is not before death: ",wname
+                        if not div_before_death(div,wdeat):
+				print "Divorce is not before death: ",wname
+			for c in chil:
+				name=d[c]["NAME"]
+				birth=d[c]["BIRT"]
+	                        if birth_before_marriage_of_parents(birth,marr):
+					print "Birth of %s is before marriage of %s,%s "%(name,hname,wname)
+	                        if birth_before_death_of_parents(birth,hdeat):
+					print "Birth of %s is before death of Dad: %s"%(name,hname)
+	                        if birth_before_death_of_parents(birth,wdeat):
+					print "Birth of %s is before death of Mom: %s"%(name,wname)
+				
 if __name__ == '__main__':
     if len(sys.argv) == 2:
         filename = sys.argv[1]
