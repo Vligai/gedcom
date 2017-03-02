@@ -88,7 +88,7 @@ def marriage_before_death(mar, death):
 def birth_before_marriage_of_parents(birth, marriage_of_parents):
         """user story 08 - if born before marriage return True else return False"""
         '''check if birth date is given, if not return False'''
-	print birth,marriage_of_parents
+	#print birth,marriage_of_parents
         if birth == {}:
                 return False
         else:
