@@ -230,11 +230,11 @@ def main(filename):
                         name=d[key]["NAME"]
                         birt=d[key]["BIRT"]
                         deat=d[key]["DEAT"]
-			print (key,name)
+			print "The lovely person with the key %s has the wonderful name %s"%(key,name)
                         if not birth_before_death(birt,deat):
-				print "Birth is not before death: ",name
+				print "US03: Birth is not before death: ",name
                         if not less_than_150(birt,deat):
-				print "Greater than 150 years old: ",name
+				print "US07: Greater than 150 years old: ",name
 
 		print ("Printing family ID's, husband name, and wife name!")
 		for key2 in sorted(d2, key=lambda x: int(x[1:])):
@@ -249,32 +249,31 @@ def main(filename):
                         marr=d2[key2]["MARR"]
                         div=d2[key2]["DIV"]
                         chil=d2[key2]["CHIL"]
-			print (key2,hname," , ",wname)
+			print "The lovely marriage with the key %s happened betwwen the handsome %s and the beautiful %s"%(key2,hname,wname)
                         if not birth_before_marriage(hbirt,marr):
-				print "Birth is not before marriage: ",hname
-                        if not marriage_before_divorce(hbirt,div):
-				print "Marriage is not before divorce: ",hname
+				print "US02: Husbands Birth with key %s has name %s is not before marriage "%(husb, hname)
                         if not birth_before_marriage(wbirt,marr):
-				print "Birth is not before marriage: ",wname
-                        if not marriage_before_divorce(wbirt,div):
-				print "Marriage is not before divorce: ",wname
+				print "US02: Wifes Birth with key %s has name %s is not before marriage "%(wife, wname)
+                        if not marriage_before_divorce(marr,div):
+				print "US04: Marriage with key %s of %s and %s is not before divorce "%(key2, hname, wname)
                         if not marriage_before_death(marr,hdeat):
-				print "Marriage is not before death: ",hname
-                        if not div_before_death(div,hdeat):
-				print "Divorce is not before death: ",hname
+				print "US05: Marriage with key %s of %s and %s is not before death of husband %s: "%(key2, hname, wname, hname)
                         if not marriage_before_death(marr,wdeat):
-				print "Marriage is not before death: ",wname
+				print "US05: Marriage with key %s of %s and %s is not before death of wife %s "%(key2, hname, wname, wname)
+                        if not div_before_death(div,hdeat):
+				print "US06: Divorce with key %s of %s and %s is not before deathof husband %s "%(key2, hname, wname, hname)
                         if not div_before_death(div,wdeat):
-				print "Divorce is not before death: ",wname
+				print "US06: Divorce with key %s of %s and %s is not before death of wife %s "%(key2, hname, wname, wname)
+
 			for c in chil:
 				name=d[c]["NAME"]
 				birth=d[c]["BIRT"]
 	                        if birth_before_marriage_of_parents(birth,marr):
-					print "Birth of %s is before marriage of %s,%s "%(name,hname,wname)
+					print "US08: Birth of %s is before marriage of %s,%s "%(name,hname,wname)
 	                        if birth_before_death_of_parents(birth,hdeat):
-					print "Birth of %s is before death of Dad: %s"%(name,hname)
+					print "US09: Birth of %s is before death of Dad: %s"%(name,hname)
 	                        if birth_before_death_of_parents(birth,wdeat):
-					print "Birth of %s is before death of Mom: %s"%(name,wname)
+					print "US09: Birth of %s is before death of Mom: %s"%(name,wname)
 				
 if __name__ == '__main__':
     if len(sys.argv) == 2:
