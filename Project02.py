@@ -214,7 +214,7 @@ def male_last_names(ind, fam):
     return True
 
 def no_incest(ind, fam, start):
-    sex = "HUSB" if ind[start]["SEX"] == "M" else "WIFE":
+    sex = "HUSB" if ind[start]["SEX"] == "M" else "WIFE"
     other = "WIFE" if sex == "HUSB" else "HUSB"
     childsFams = []
     marr = {}
