@@ -39,6 +39,14 @@ def marriage_after_14(birth, marriage):
         end = date(int(marriage["year"]), marriage["month"], int(marriage["day"]))
     return (end - birth) >= 14*timedelta(days=365)
 
+def date_before_today(d):
+    """user story 01"""
+    if d == {}:
+	return False
+    today = date.today()
+    today2={"day":today.day, "month":today.month,"year":today.year}
+    return firstDateIsEarlier(d,today2)
+
 def less_than_150(birth, death):
     """user story 07"""
     if len(str(birth["month"]))>2:
@@ -150,12 +158,26 @@ def unique_ids(d):
     """
     return True
 
-def no_bigamy(p):
+def no_bigamy(marr1,marr2,div1,div2):
     """
     User Story 11
     Marriage should not occur during marriage to another spouse
     """
+
+    if firstDateIsEarlier(marr1,marr2):
+	if div1 == {}:
+		return False
+	if firstDateIsEarlier(marr2,div1):
+		return False
+
+    if firstDateIsEarlier(marr2,marr1):
+	if div2 == {}:
+		return False
+	if firstDateIsEarlier(marr1,div2):
+		return False
+
     return True
+
 def sibling_spacing(birth_sib1, birth_sib2):
     """
     User Story 13
@@ -163,15 +185,23 @@ def sibling_spacing(birth_sib1, birth_sib2):
     days apart (twins may be born one day apart, e.g. 11:59 PM and 12:02 AM the
     following calendar day)
     """
+
+    if firstDateIsEarlier(birth_sib2,birth_sib1):
+	# Makes the birth_sib1 first
+	temp = birth_sib1
+	birth_sib1 = birth_sib2
+	birth_sib2 = temp
+
     if birth_sib1 == {}:
         return False
     else:
-        birth_sib1 = date(int(birth["year"]), birth["month"], int(birth["day"]))
+        birth_sib1 = date(int(birth_sib1["year"]), birth_sib1["month"], int(birth_sib1["day"]))
     if birth_sib2 == {}:
         return True
     else:
-        birth_sib1 = date(int(birth["year"]), birth["month"], int(birth["day"]))
-    if (birth_sib1-birth_sib2) < 8*timedelta(months = 12) and (birth_sib1-birth_sib2) > 2*timedelta(days = 365):
+        birth_sib2 = date(int(birth_sib2["year"]), birth_sib2["month"], int(birth_sib2["day"]))
+
+    if (birth_sib2-birth_sib1) < 8*timedelta(days=30) and birth_sib2-birth_sib1 > 2*timedelta(days=1):
         return False
     return True
 
@@ -324,6 +354,10 @@ def main(filename, printUserStories, printDescriptions):
                 print "US03:\tBirth is not before death: ",name
             if not less_than_150(birt,deat):
                 print "US07:\tGreater than 150 years old: ",name
+            if not date_before_today(birt):
+                print "US01:\tDate of %s's birth %s is after today"%(name,birt)
+            if not date_before_today(deat):
+                print "US01:\tDate of %s's death %s is after today "%(name,deat)
 
     """
     interate over families
@@ -363,6 +397,13 @@ def main(filename, printUserStories, printDescriptions):
                 print "US10:\tHusbands Birth with key %s has name %s is not older than 14"%(husb, hname)
             if not marriage_after_14(wbirt,marr):
                 print "US10:\tWifes Birth with key %s has name %s is not older than 14"%(wife, wname)
+            if not date_before_today(marr):
+                print "US01:\tDate of %s and %s marriage %s is after today"%(hname,wname,marr)
+            if not date_before_today(div):
+                print "US01:\tDate of %s and %s divorce %s is after today"%(hname,wname,marr)
+
+
+
 
         for c in chil:
             name=d[c]["NAME"]
@@ -375,33 +416,44 @@ def main(filename, printUserStories, printDescriptions):
                 if birth_before_death_of_parents(birth,wdeat):
                     print "US09:\tBirth of %s is before death of Mom: %s"%(name,wname)
 
-    d3=sorted(d2, key=lambda x: int(x[1:]))
+        for c in chil:
+		boolb=0
+	        for c2 in chil:
+			if c==c2:
+				boolb=1
+			elif boolb==1:
+	        	    	birth1=d[c]["BIRT"]
+        	    		birth2=d[c2]["BIRT"]
+				print "b1,b2",birth1,birth2
+				if not sibling_spacing(birth1,birth2):
+					print "US13:\tSibling spacing between %s and %s is too small or too large"%(c,c2)
 
+    d3=sorted(d2, key=lambda x: int(x[1:]))
     for key2 in d3:
+	boolb=0
 	for key3 in d3:
 		if key2==key3:
-			continue
+			boolb=1
+		elif boolb==1: 
+		        husb1=d2[key2]["HUSB"]
+		        wife1=d2[key2]["WIFE"]
+		        hname1=d[husb1]["NAME"]
+		        wname1=d[wife1]["NAME"]
+		        marr1=d2[key2]["MARR"]
+		        div1=d2[key2]["DIV"]
 
-	        husb1=d2[key2]["HUSB"]
-	        wife1=d2[key2]["WIFE"]
-	        hname1=d[husb1]["NAME"]
-	        wname1=d[wife1]["NAME"]
-	        marr1=d2[key2]["MARR"]
-	        div1=d2[key2]["DIV"]
+		        husb2=d2[key3]["HUSB"]
+		        wife2=d2[key3]["WIFE"]
+		        hname2=d[husb2]["NAME"]
+		        wname2=d[wife2]["NAME"]
+		        marr2=d2[key3]["MARR"]
+		        div2=d2[key3]["DIV"]
 
-	        husb2=d2[key3]["HUSB"]
-	        wife2=d2[key3]["WIFE"]
-	        hname2=d[husb2]["NAME"]
-	        wname2=d[wife2]["NAME"]
-	        marr2=d2[key3]["MARR"]
-	        div2=d2[key3]["DIV"]
-
-		if husb1==husb2 or wife1==wife2:
-			if stuff(marr1,marr2,div1,div2):
-	                    print "US11:\tMarriage with key %s of %s and %s overlaps with Marriage with key %s of %s and %s "%(marr1,husb1,wife1,marr2,wife2,husb2)
+			if husb1==husb2 or wife1==wife2:
+				if not no_bigamy(marr1,marr2,div1,div2):
+		                    print "US11:\tMarriage with key %s of %s and %s overlaps with Marriage with key %s of %s and %s"%(key2,husb1,wife1,key3,wife2,husb2)
 				
 		
-
 
 
 if __name__ == '__main__':
