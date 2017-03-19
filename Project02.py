@@ -335,8 +335,6 @@ def main(filename, printUserStories, printDescriptions):
     PRINT_USER_STORY_TESTS = printUserStories
     PRINT_PERSON_OR_FAMILY_DESCRIPTION = printDescriptions
 
-    d, d2 = parseFile(filename, PRINT_USER_STORY_TESTS)
-
     if True: #to match indentation for easy formatting
         print "+-------------------------------------------------+"
         print "| Running...                                      |"
@@ -349,6 +347,7 @@ def main(filename, printUserStories, printDescriptions):
     if True: #same as above, for formatting
         print "+-------------------------------------------------+"
 
+    d, d2 = parseFile(filename, PRINT_USER_STORY_TESTS)
 
     """
     interate over individuals
