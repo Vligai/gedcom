@@ -300,9 +300,9 @@ def parseFile(filename, PRINT_USER_STORY_TESTS):
             elif len(y)>2 and y[2].strip()=="FAM":
                 fcurr=y[1].strip()
                 if fcurr in d2:
-                    fcurr = fcurr + "500"
                     if PRINT_USER_STORY_TESTS:
                         print "US22:\tFamily ID duplicate:{0}".format(fcurr)
+                    fcurr = fcurr + "500"
                 d2[fcurr]={
                     "MARR":{},
                     # "NAME":{},
