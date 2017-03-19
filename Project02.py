@@ -42,7 +42,7 @@ def marriage_after_14(birth, marriage):
 def date_before_today(d):
     """user story 01"""
     if d == {}:
-	return False
+	return True
     today = date.today()
     today2={"day":today.day, "month":today.month,"year":today.year}
     return firstDateIsEarlier(d,today2)
@@ -400,7 +400,7 @@ def main(filename, printUserStories, printDescriptions):
             if not date_before_today(marr):
                 print "US01:\tDate of %s and %s marriage %s is after today"%(hname,wname,marr)
             if not date_before_today(div):
-                print "US01:\tDate of %s and %s divorce %s is after today"%(hname,wname,marr)
+                print "US01:\tDate of %s and %s divorce %s is after today"%(hname,wname,div)
 
 
 
@@ -424,7 +424,6 @@ def main(filename, printUserStories, printDescriptions):
 			elif boolb==1:
 	        	    	birth1=d[c]["BIRT"]
         	    		birth2=d[c2]["BIRT"]
-				print "b1,b2",birth1,birth2
 				if not sibling_spacing(birth1,birth2):
 					print "US13:\tSibling spacing between %s and %s is too small or too large"%(c,c2)
 
