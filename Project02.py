@@ -133,10 +133,11 @@ def unique_ids(d):
     """
     User story 22
     Check if a dictionary has all unique IDs
+
+    Note: Python dictionaries don't allow duplicates, so the check and error
+          message happens in the main function when parsing the file
     """
-    if len(d) == len(set(d)):
-        return True
-    return False
+    return True
 
 def main(filename, printUserStories, printDescriptions):
     PRINT_USER_STORY_TESTS = printUserStories
@@ -165,6 +166,9 @@ def main(filename, printUserStories, printDescriptions):
 
             if len(y)>2 and y[2].strip()=="INDI":
                 icurr=y[1].strip()
+                if PRINT_USER_STORY_TESTS:
+                    if icurr in d:
+                        print "US22:\tIndividual ID duplicate:{0}".format(icurr)
                 d[icurr]={
                     "MARR":{},
                     "NAME":{},
@@ -223,6 +227,9 @@ def main(filename, printUserStories, printDescriptions):
                 d[icurr]["FAMS"]=a
             elif len(y)>2 and y[2].strip()=="FAM":
                 fcurr=y[1].strip()
+                if PRINT_USER_STORY_TESTS:
+                    if fcurr in d2:
+                        print "US22:\tIndividual ID duplicate:{0}".format(fcurr)
                 d2[fcurr]={
                     "MARR":{},
                     "NAME":{},
