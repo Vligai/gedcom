@@ -120,11 +120,14 @@ def birth_before_death_of_parents(birth, death_of_parents):
     else:
         return False
 
-def correct_gender(person):
+def correct_genders(husb, wife):
     """
     User story 21
+    Check that husband is male and wife is female
     """
-    return True
+    if husb['SEX'] == 'M' and wife['SEX'] == 'F':
+        return True
+    return False
 
 def unique_ids(d):
     """
@@ -135,15 +138,10 @@ def unique_ids(d):
         return True
     return False
 
-def parse_date(d):
-    """
-    Parse a date into a common format
-    """
-    if not isinstance(d['month'], int):
-        d['month'] = months[d['month']]
-    print d
+def main(filename, printUserStories, printDescriptions):
+    PRINT_USER_STORY_TESTS = printUserStories
+    PRINT_PERSON_OR_FAMILY_DESCRIPTION = printDescriptions
 
-def main(filename):
     with open(filename, 'r') as f:
         icurr=''
         birt=0
@@ -250,18 +248,38 @@ def main(filename):
                 marr=1
             elif len(y)>1 and y[1].strip()=="DIV":
                 div=1
-        print ("Printing individual ID's and name!")
+
+        if True: #to match indentation for easy formatting
+            print "+-------------------------------------------------+"
+            print "| Running...                                      |"
+        if PRINT_USER_STORY_TESTS or PRINT_PERSON_OR_FAMILY_DESCRIPTION:
+            print "| Looking at individual and family information    |"
+        if PRINT_USER_STORY_TESTS:
+            print "|   - Printing information on user story tests    |"
+        if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
+            print "|   - Printing individual and family descriptions |"
+        if True: #same as above, for formatting
+            print "+-------------------------------------------------+"
+
+
+        """
+        interate over individuals
+        """
         for key in sorted(d, key=lambda x: int(x[1:])):
             name=d[key]["NAME"]
             birt=d[key]["BIRT"]
             deat=d[key]["DEAT"]
-        print "The lovely person with the key %s has the wonderful name %s"%(key,name)
-        if not birth_before_death(birt,deat):
-            print "US03: Birth is not before death: ",name
-        if not less_than_150(birt,deat):
-            print "US07: Greater than 150 years old: ",name
+            if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
+                print "The lovely person with the key %s has the wonderful name %s"%(key,name)
+            if PRINT_USER_STORY_TESTS:
+                if not birth_before_death(birt,deat):
+                    print "US03:\tBirth is not before death: ",name
+                if not less_than_150(birt,deat):
+                    print "US07:\tGreater than 150 years old: ",name
 
-        print ("Printing family ID's, husband name, and wife name!")
+        """
+        interate over families
+        """
         for key2 in sorted(d2, key=lambda x: int(x[1:])):
             husb=d2[key2]["HUSB"]
             wife=d2[key2]["WIFE"]
@@ -274,35 +292,42 @@ def main(filename):
             marr=d2[key2]["MARR"]
             div=d2[key2]["DIV"]
             chil=d2[key2]["CHIL"]
-            print "The lovely marriage with the key %s happened betwwen the handsome %s and the beautiful %s"%(key2,hname,wname)
-            if not birth_before_marriage(hbirt,marr):
-                print "US02: Husbands Birth with key %s has name %s is not before marriage "%(husb, hname)
-            if not birth_before_marriage(wbirt,marr):
-                print "US02: Wifes Birth with key %s has name %s is not before marriage "%(wife, wname)
-            if not marriage_before_divorce(marr,div):
-                print "US04: Marriage with key %s of %s and %s is not before divorce "%(key2, hname, wname)
-            if not marriage_before_death(marr,hdeat):
-                print "US05: Marriage with key %s of %s and %s is not before death of husband %s: "%(key2, hname, wname, hname)
-            if not marriage_before_death(marr,wdeat):
-                print "US05: Marriage with key %s of %s and %s is not before death of wife %s "%(key2, hname, wname, wname)
-            if not div_before_death(div,hdeat):
-                print "US06: Divorce with key %s of %s and %s is not before deathof husband %s "%(key2, hname, wname, hname)
-            if not div_before_death(div,wdeat):
-                print "US06: Divorce with key %s of %s and %s is not before death of wife %s "%(key2, hname, wname, wname)
+            if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
+                print "The lovely marriage with the key %s happened betwwen the handsome %s and the beautiful %s"%(key2,hname,wname)
+            if PRINT_USER_STORY_TESTS:
+                if not birth_before_marriage(hbirt,marr):
+                    print "US02:\tHusbands Birth with key %s has name %s is not before marriage "%(husb, hname)
+                if not birth_before_marriage(wbirt,marr):
+                    print "US02:\tWifes Birth with key %s has name %s is not before marriage "%(wife, wname)
+                if not marriage_before_divorce(marr,div):
+                    print "US04:\tMarriage with key %s of %s and %s is not before divorce "%(key2, hname, wname)
+                if not marriage_before_death(marr,hdeat):
+                    print "US05:\tMarriage with key %s of %s and %s is not before death of husband %s: "%(key2, hname, wname, hname)
+                if not marriage_before_death(marr,wdeat):
+                    print "US05:\tMarriage with key %s of %s and %s is not before death of wife %s "%(key2, hname, wname, wname)
+                if not div_before_death(div,hdeat):
+                    print "US06:\tDivorce with key %s of %s and %s is not before deathof husband %s "%(key2, hname, wname, hname)
+                if not div_before_death(div,wdeat):
+                    print "US06:\tDivorce with key %s of %s and %s is not before death of wife %s "%(key2, hname, wname, wname)
+                if not correct_genders(d[husb], d[wife]):
+                    print "US21:\tMarriage gender error: husband {0} is not male or wife {1} is not female".format(hname, wname)
 
             for c in chil:
                 name=d[c]["NAME"]
                 birth=d[c]["BIRT"]
-                if birth_before_marriage_of_parents(birth,marr):
-                    print "US08: Birth of %s is before marriage of %s,%s "%(name,hname,wname)
-                if birth_before_death_of_parents(birth,hdeat):
-                    print "US09: Birth of %s is before death of Dad: %s"%(name,hname)
-                if birth_before_death_of_parents(birth,wdeat):
-                    print "US09: Birth of %s is before death of Mom: %s"%(name,wname)
+                if PRINT_USER_STORY_TESTS:
+                    if birth_before_marriage_of_parents(birth,marr):
+                        print "US08:\tBirth of %s is before marriage of %s,%s "%(name,hname,wname)
+                    if birth_before_death_of_parents(birth,hdeat):
+                        print "US09:\tBirth of %s is before death of Dad: %s"%(name,hname)
+                    if birth_before_death_of_parents(birth,wdeat):
+                        print "US09:\tBirth of %s is before death of Mom: %s"%(name,wname)
 
 if __name__ == '__main__':
+    print_user_stories = True
+    print_descriptions = False
     if len(sys.argv) == 2:
         filename = sys.argv[1]
-        main(filename)
+        main(filename, print_user_stories, print_descriptions)
     else:
         print ("Usage: python project02.py <filename>")
