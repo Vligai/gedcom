@@ -228,7 +228,7 @@ def no_incest(ind, fam, start):
     for id in descendants:
         for famid in ind[id]["FAMIDS"]:
             descendants += fam[famid]["CHIL"]
-            if (fam[famid][sex], fam[famid][other]) in marr or (fam[famid][other], fam[famid][sex]):
+            if (fam[famid][sex], fam[famid][other]) in marr or (fam[famid][other], fam[famid][sex]) in marr:
                 return False
     return True
 
@@ -391,8 +391,6 @@ def main(filename, printUserStories, printDescriptions):
             if not no_incest(d,d2,key):
                 print "US17:\tPerson with key %s with name %s is married to descendant"%(key,name)
 
-
-
     """
     interate over families
     """
@@ -435,6 +433,8 @@ def main(filename, printUserStories, printDescriptions):
                 print "US01:\tDate of %s and %s marriage %s is after today"%(hname,wname,marr)
             if not date_before_today(div):
                 print "US01:\tDate of %s and %s divorce %s is after today"%(hname,wname,div)
+            if not male_last_names(d,d2[key2]):
+                print "US16:\tFamily with key %s doesn't have all male last names"%(key2)
 
 
 

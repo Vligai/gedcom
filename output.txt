@@ -1,15 +1,27 @@
-Printing individual ID's and name!
++-------------------------------------------------+
+| Running...                                      |
+| Looking at individual and family information    |
+|   - Printing information on user story tests    |
+|   - Printing individual and family descriptions |
++-------------------------------------------------+
+US22:	Individual ID duplicate:I1
+US22:	Family ID duplicate:F1
 The lovely person with the key I1 has the wonderful name Mark /Mirtchouk/
-US07: Greater than 150 years old:  Mark /Mirtchouk/
+US07:	Greater than 150 years old:  Mark /Mirtchouk/
 The lovely person with the key I2 has the wonderful name Alex /Mirtchouk/
+US17:	Person with key I2 with name Alex /Mirtchouk/ is married to descendant
 The lovely person with the key I3 has the wonderful name Kate /Slou/
+US01:	Date of Kate /Slou/'s birth {'year': '2969', 'day': '1', 'month': 5} is after today
+US17:	Person with key I3 with name Kate /Slou/ is married to descendant
 The lovely person with the key I4 has the wonderful name Grigory /Mirchouk/
-US03: Birth is not before death:  Grigory /Mirchouk/
+US03:	Birth is not before death:  Grigory /Mirchouk/
+US17:	Person with key I4 with name Grigory /Mirchouk/ is married to descendant
 The lovely person with the key I5 has the wonderful name Raisa /Heyk/
+US17:	Person with key I5 with name Raisa /Heyk/ is married to descendant
 The lovely person with the key I6 has the wonderful name Beata /Mirchouk/
 The lovely person with the key I7 has the wonderful name Ben /Mirtchouk/
 The lovely person with the key I8 has the wonderful name Marina /Mirchouk/
-US03: Birth is not before death:  Marina /Mirchouk/
+US03:	Birth is not before death:  Marina /Mirchouk/
 The lovely person with the key I9 has the wonderful name Andy /Krylov/
 The lovely person with the key I10 has the wonderful name Darya /Krylov/
 The lovely person with the key I11 has the wonderful name Ilya /Eygin/
@@ -20,41 +32,65 @@ The lovely person with the key I15 has the wonderful name Lena /Petrova/
 The lovely person with the key I16 has the wonderful name Vaily /Krylov/
 The lovely person with the key I17 has the wonderful name Ily /Krylov/
 The lovely person with the key I18 has the wonderful name Michael /Duben/
-Printing family ID's, husband name, and wife name!
+The lovely person with the key I1500 has the wonderful name Marki /Mirtchouk/
+US07:	Greater than 150 years old:  Marki /Mirtchouk/
 The lovely marriage with the key F1 happened betwwen the handsome Alex /Mirtchouk/ and the beautiful Kate /Slou/
-US02: Wifes Birth with key I3 has name Kate /Slou/ is not before marriage 
-US08: Birth of Mark /Mirtchouk/ is before marriage of Alex /Mirtchouk/,Kate /Slou/ 
-US09: Birth of Mark /Mirtchouk/ is before death of Dad: Alex /Mirtchouk/
-US09: Birth of Mark /Mirtchouk/ is before death of Mom: Kate /Slou/
-US09: Birth of Beata /Mirchouk/ is before death of Dad: Alex /Mirtchouk/
-US09: Birth of Beata /Mirchouk/ is before death of Mom: Kate /Slou/
-US09: Birth of Ben /Mirtchouk/ is before death of Dad: Alex /Mirtchouk/
-US09: Birth of Ben /Mirtchouk/ is before death of Mom: Kate /Slou/
+US02:	Wifes Birth with key I3 has name Kate /Slou/ is not before marriage 
+US10:	Wifes Birth with key I3 has name Kate /Slou/ is not older than 14
+US08:	Birth of Mark /Mirtchouk/ is before marriage of Alex /Mirtchouk/,Kate /Slou/ 
+US09:	Birth of Mark /Mirtchouk/ is before death of Dad: Alex /Mirtchouk/
+US09:	Birth of Mark /Mirtchouk/ is before death of Mom: Kate /Slou/
+US09:	Birth of Beata /Mirchouk/ is before death of Dad: Alex /Mirtchouk/
+US09:	Birth of Beata /Mirchouk/ is before death of Mom: Kate /Slou/
+US09:	Birth of Ben /Mirtchouk/ is before death of Dad: Alex /Mirtchouk/
+US09:	Birth of Ben /Mirtchouk/ is before death of Mom: Kate /Slou/
+US13:	Sibling spacing between I6 and I7 is too small or too large
 The lovely marriage with the key F2 happened betwwen the handsome Grigory /Mirchouk/ and the beautiful Raisa /Heyk/
-US08: Birth of Alex /Mirtchouk/ is before marriage of Grigory /Mirchouk/,Raisa /Heyk/ 
-US09: Birth of Alex /Mirtchouk/ is before death of Mom: Raisa /Heyk/
-US08: Birth of Marina /Mirchouk/ is before marriage of Grigory /Mirchouk/,Raisa /Heyk/ 
-US09: Birth of Marina /Mirchouk/ is before death of Mom: Raisa /Heyk/
+US10:	Husbands Birth with key I4 has name Grigory /Mirchouk/ is not older than 14
+US10:	Wifes Birth with key I5 has name Raisa /Heyk/ is not older than 14
+US08:	Birth of Alex /Mirtchouk/ is before marriage of Grigory /Mirchouk/,Raisa /Heyk/ 
+US09:	Birth of Alex /Mirtchouk/ is before death of Mom: Raisa /Heyk/
+US08:	Birth of Marina /Mirchouk/ is before marriage of Grigory /Mirchouk/,Raisa /Heyk/ 
+US09:	Birth of Marina /Mirchouk/ is before death of Mom: Raisa /Heyk/
 The lovely marriage with the key F3 happened betwwen the handsome Michael /Duben/ and the beautiful Marina /Mirchouk/
-US05: Marriage with key F3 of Michael /Duben/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/ 
+US05:	Marriage with key F3 of Michael /Duben/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/ 
 The lovely marriage with the key F4 happened betwwen the handsome Andy /Krylov/ and the beautiful Marina /Mirchouk/
-US05: Marriage with key F4 of Andy /Krylov/ and Marina /Mirchouk/ is not before death of husband Andy /Krylov/: 
-US05: Marriage with key F4 of Andy /Krylov/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/ 
-US08: Birth of Darya /Krylov/ is before marriage of Andy /Krylov/,Marina /Mirchouk/ 
-US09: Birth of Darya /Krylov/ is before death of Dad: Andy /Krylov/
+US05:	Marriage with key F4 of Andy /Krylov/ and Marina /Mirchouk/ is not before death of husband Andy /Krylov/: 
+US05:	Marriage with key F4 of Andy /Krylov/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/ 
+US06:	Divorce with key F4 of Andy /Krylov/ and Marina /Mirchouk/ is not before deathof husband Andy /Krylov/ 
+US06:	Divorce with key F4 of Andy /Krylov/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/ 
+US01:	Date of Andy /Krylov/ and Marina /Mirchouk/ marriage {'year': '2018', 'day': '15', 'month': 6} is after today
+US01:	Date of Andy /Krylov/ and Marina /Mirchouk/ divorce {'year': '2019', 'day': '15', 'month': 6} is after today
+US08:	Birth of Darya /Krylov/ is before marriage of Andy /Krylov/,Marina /Mirchouk/ 
+US09:	Birth of Darya /Krylov/ is before death of Dad: Andy /Krylov/
 The lovely marriage with the key F5 happened betwwen the handsome Andy /Krylov/ and the beautiful Lena /Petrova/
-US08: Birth of Vaily /Krylov/ is before marriage of Andy /Krylov/,Lena /Petrova/ 
-US09: Birth of Vaily /Krylov/ is before death of Dad: Andy /Krylov/
-US09: Birth of Vaily /Krylov/ is before death of Mom: Lena /Petrova/
-US08: Birth of Ily /Krylov/ is before marriage of Andy /Krylov/,Lena /Petrova/ 
-US09: Birth of Ily /Krylov/ is before death of Dad: Andy /Krylov/
-US09: Birth of Ily /Krylov/ is before death of Mom: Lena /Petrova/
+US09:	Birth of Vaily /Krylov/ is before death of Dad: Andy /Krylov/
+US09:	Birth of Vaily /Krylov/ is before death of Mom: Lena /Petrova/
+US09:	Birth of Ily /Krylov/ is before death of Dad: Andy /Krylov/
+US09:	Birth of Ily /Krylov/ is before death of Mom: Lena /Petrova/
 The lovely marriage with the key F6 happened betwwen the handsome Leonid /Eygin/ and the beautiful Marina /Mirchouk/
-US04: Marriage with key F6 of Leonid /Eygin/ and Marina /Mirchouk/ is not before divorce 
-US05: Marriage with key F6 of Leonid /Eygin/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/ 
-US06: Divorce with key F6 of Leonid /Eygin/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/ 
-US09: Birth of Ilya /Eygin/ is before death of Dad: Leonid /Eygin/
+US04:	Marriage with key F6 of Leonid /Eygin/ and Marina /Mirchouk/ is not before divorce 
+US05:	Marriage with key F6 of Leonid /Eygin/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/ 
+US06:	Divorce with key F6 of Leonid /Eygin/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/ 
+US09:	Birth of Ilya /Eygin/ is before death of Dad: Leonid /Eygin/
 The lovely marriage with the key F7 happened betwwen the handsome Leonid /Eygin/ and the beautiful Olga /Ivanova/
-US08: Birth of Vasya /Eygin/ is before marriage of Leonid /Eygin/,Olga /Ivanova/ 
-US09: Birth of Vasya /Eygin/ is before death of Dad: Leonid /Eygin/
-US09: Birth of Vasya /Eygin/ is before death of Mom: Olga /Ivanova/
+US21:	Marriage gender error: husband Leonid /Eygin/ is not male or wife Olga /Ivanova/ is not female
+US09:	Birth of Vasya /Eygin/ is before death of Dad: Leonid /Eygin/
+US09:	Birth of Vasya /Eygin/ is before death of Mom: Olga /Ivanova/
+The lovely marriage with the key F8 happened betwwen the handsome Mark /Mirtchouk/ and the beautiful Kate /Slou/
+US02:	Wifes Birth with key I3 has name Kate /Slou/ is not before marriage 
+US10:	Wifes Birth with key I3 has name Kate /Slou/ is not older than 14
+US01:	Date of Mark /Mirtchouk/ and Kate /Slou/ marriage {'year': '2017', 'day': '19', 'month': 3} is after today
+The lovely marriage with the key F1500 happened betwwen the handsome Alex /Mirtchouk/ and the beautiful Kate /Slou/
+US02:	Husbands Birth with key I2 has name Alex /Mirtchouk/ is not before marriage 
+US02:	Wifes Birth with key I3 has name Kate /Slou/ is not before marriage 
+US10:	Husbands Birth with key I2 has name Alex /Mirtchouk/ is not older than 14
+US10:	Wifes Birth with key I3 has name Kate /Slou/ is not older than 14
+US08:	Birth of Mark /Mirtchouk/ is before marriage of Alex /Mirtchouk/,Kate /Slou/ 
+US09:	Birth of Mark /Mirtchouk/ is before death of Dad: Alex /Mirtchouk/
+US09:	Birth of Mark /Mirtchouk/ is before death of Mom: Kate /Slou/
+US09:	Birth of Beata /Mirchouk/ is before death of Dad: Alex /Mirtchouk/
+US09:	Birth of Beata /Mirchouk/ is before death of Mom: Kate /Slou/
+US09:	Birth of Ben /Mirtchouk/ is before death of Dad: Alex /Mirtchouk/
+US09:	Birth of Ben /Mirtchouk/ is before death of Mom: Kate /Slou/
+US13:	Sibling spacing between I6 and I7 is too small or too large
