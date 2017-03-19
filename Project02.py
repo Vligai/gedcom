@@ -214,7 +214,7 @@ def male_last_names(ind, fam):
     return True
 
 def no_incest(ind, fam, start):
-    sex = "HUSB" if ind[start]["SEX"] == "M" else "WIFE":
+    sex = "HUSB" if ind[start]["SEX"] == "M" else "WIFE"
     other = "WIFE" if sex == "HUSB" else "HUSB"
     childsFams = []
     marr = {}
@@ -388,6 +388,10 @@ def main(filename, printUserStories, printDescriptions):
                 print "US01:\tDate of %s's birth %s is after today"%(name,birt)
             if not date_before_today(deat):
                 print "US01:\tDate of %s's death %s is after today "%(name,deat)
+            if not no_incest(d,d2,key):
+                print "US17:\tPerson with key %s with name %s is married to descendant"%(key,name)
+
+
 
     """
     interate over families
