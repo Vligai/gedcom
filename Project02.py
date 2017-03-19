@@ -139,6 +139,31 @@ def unique_ids(d):
     """
     return True
 
+def no_bigamy(p):
+    """
+    User Story 11
+    Marriage should not occur during marriage to another spouse
+    """
+    return True
+def sibling_spacing(birth_sib1, birth_sib2):
+    """
+    User Story 13
+    Birth dates of siblings should be more than 8 months apart or less than 2
+    days apart (twins may be born one day apart, e.g. 11:59 PM and 12:02 AM the
+    following calendar day)
+    """
+    if birth_sib1 == {}:
+        return False
+    else:
+        birth_sib1 = date(int(birth["year"]), birth["month"], int(birth["day"]))
+    if birth_sib2 == {}:
+        return True
+    else:
+        birth_sib1 = date(int(birth["year"]), birth["month"], int(birth["day"]))
+    if (birth_sib1-birth_sib2) < 8*timedelta(months = 12) and (birth_sib1-birth_sib2) > 2*timedelta(days = 365):
+        return False
+    return True
+
 def parseFile(filename, PRINT_USER_STORY_TESTS):
     with open(filename, 'r') as f:
         icurr=''
