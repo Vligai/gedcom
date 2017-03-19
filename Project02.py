@@ -28,6 +28,17 @@ def birth_before_marriage(birth,marr):
         return False
     return firstDateIsEarlier(birth, marr)
 
+def marriage_after_14(birth, marriage):
+    """user story 10"""
+    if len(str(birth["month"]))>2:
+        birth["month"]=months[birth["month"]]
+    birth = date(int(birth["year"]), birth["month"], int(birth["day"]))
+    if marriage == {}:
+	return False
+    else:
+        end = date(int(marriage["year"]), marriage["month"], int(marriage["day"]))
+    return (end - birth) >= 14*timedelta(days=365)
+
 def less_than_150(birth, death):
     """user story 07"""
     if len(str(birth["month"]))>2:
@@ -323,6 +334,10 @@ def main(filename, printUserStories, printDescriptions):
                 print "US06:\tDivorce with key %s of %s and %s is not before death of wife %s "%(key2, hname, wname, wname)
             if not correct_genders(d[husb], d[wife]):
                 print "US21:\tMarriage gender error: husband {0} is not male or wife {1} is not female".format(hname, wname)
+            if not marriage_after_14(hbirt,marr):
+                print "US10:\tHusbands Birth with key %s has name %s is not older than 14"%(husb, hname)
+            if not marriage_after_14(wbirt,marr):
+                print "US10:\tWifes Birth with key %s has name %s is not older than 14"%(wife, wname)
 
         for c in chil:
             name=d[c]["NAME"]
@@ -337,7 +352,7 @@ def main(filename, printUserStories, printDescriptions):
 
 if __name__ == '__main__':
     print_user_stories = True
-    print_descriptions = False
+    print_descriptions = True
     if len(sys.argv) == 2:
         filename = sys.argv[1]
         main(filename, print_user_stories, print_descriptions)
