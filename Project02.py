@@ -34,7 +34,7 @@ def marriage_after_14(birth, marriage):
         birth["month"]=months[birth["month"]]
     birth = date(int(birth["year"]), birth["month"], int(birth["day"]))
     if marriage == {}:
-	return False
+        return False
     else:
         end = date(int(marriage["year"]), marriage["month"], int(marriage["day"]))
     return (end - birth) >= 14*timedelta(days=365)
@@ -42,7 +42,7 @@ def marriage_after_14(birth, marriage):
 def date_before_today(d):
     """user story 01"""
     if d == {}:
-	return True
+        return True
     today = date.today()
     today2={"day":today.day, "month":today.month,"year":today.year}
     return firstDateIsEarlier(d,today2)
@@ -165,16 +165,16 @@ def no_bigamy(marr1,marr2,div1,div2):
     """
 
     if firstDateIsEarlier(marr1,marr2):
-	if div1 == {}:
-		return False
-	if firstDateIsEarlier(marr2,div1):
-		return False
+        if div1 == {}:
+            return False
+    if firstDateIsEarlier(marr2,div1):
+        return False
 
     if firstDateIsEarlier(marr2,marr1):
-	if div2 == {}:
-		return False
-	if firstDateIsEarlier(marr1,div2):
-		return False
+        if div2 == {}:
+            return False
+    if firstDateIsEarlier(marr1,div2):
+        return False
 
     return True
 
@@ -187,10 +187,10 @@ def sibling_spacing(birth_sib1, birth_sib2):
     """
 
     if firstDateIsEarlier(birth_sib2,birth_sib1):
-	# Makes the birth_sib1 first
-	temp = birth_sib1
-	birth_sib1 = birth_sib2
-	birth_sib2 = temp
+    # Makes the birth_sib1 first
+        temp = birth_sib1
+        birth_sib1 = birth_sib2
+        birth_sib2 = temp
 
     if birth_sib1 == {}:
         return False
@@ -237,8 +237,9 @@ def parseFile(filename, PRINT_USER_STORY_TESTS):
 
             if len(y)>2 and y[2].strip()=="INDI":
                 icurr=y[1].strip()
-                if PRINT_USER_STORY_TESTS:
-                    if icurr in d:
+                if icurr in d:
+                    icurr = icurr + "copy"
+                    if PRINT_USER_STORY_TESTS:
                         print "US22:\tIndividual ID duplicate:{0}".format(icurr)
                 d[icurr]={
                     "MARR":{},
@@ -298,9 +299,10 @@ def parseFile(filename, PRINT_USER_STORY_TESTS):
                 d[icurr]["FAMS"]=a
             elif len(y)>2 and y[2].strip()=="FAM":
                 fcurr=y[1].strip()
-                if PRINT_USER_STORY_TESTS:
-                    if fcurr in d2:
-                        print "US22:\tIndividual ID duplicate:{0}".format(fcurr)
+                if fcurr in d2:
+                    fcurr = fcurr + "copy"
+                    if PRINT_USER_STORY_TESTS:
+                        print "US22:\tFamily ID duplicate:{0}".format(fcurr)
                 d2[fcurr]={
                     "MARR":{},
                     # "NAME":{},
@@ -358,6 +360,7 @@ def main(filename, printUserStories, printDescriptions):
         if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
             print "The lovely person with the key %s has the wonderful name %s"%(key,name)
         if PRINT_USER_STORY_TESTS:
+            print "US22:\tDuplicate IDs prevented"
             if not birth_before_death(birt,deat):
                 print "US03:\tBirth is not before death: ",name
             if not less_than_150(birt,deat):
@@ -425,42 +428,42 @@ def main(filename, printUserStories, printDescriptions):
                     print "US09:\tBirth of %s is before death of Mom: %s"%(name,wname)
 
         for c in chil:
-		boolb=0
-	        for c2 in chil:
-			if c==c2:
-				boolb=1
-			elif boolb==1:
-	        	    	birth1=d[c]["BIRT"]
-        	    		birth2=d[c2]["BIRT"]
-				if not sibling_spacing(birth1,birth2):
-					print "US13:\tSibling spacing between %s and %s is too small or too large"%(c,c2)
+            boolb=0
+            for c2 in chil:
+                if c==c2:
+                    boolb=1
+                elif boolb==1:
+                    birth1=d[c]["BIRT"]
+                    birth2=d[c2]["BIRT"]
+                    if not sibling_spacing(birth1,birth2):
+                        print "US13:\tSibling spacing between %s and %s is too small or too large"%(c,c2)
 
     d3=sorted(d2, key=lambda x: int(x[1:]))
     for key2 in d3:
-	boolb=0
-	for key3 in d3:
-		if key2==key3:
-			boolb=1
-		elif boolb==1: 
-		        husb1=d2[key2]["HUSB"]
-		        wife1=d2[key2]["WIFE"]
-		        hname1=d[husb1]["NAME"]
-		        wname1=d[wife1]["NAME"]
-		        marr1=d2[key2]["MARR"]
-		        div1=d2[key2]["DIV"]
+        boolb=0
+    for key3 in d3:
+        if key2==key3:
+            boolb=1
+        elif boolb==1:
+            husb1=d2[key2]["HUSB"]
+            wife1=d2[key2]["WIFE"]
+            hname1=d[husb1]["NAME"]
+            wname1=d[wife1]["NAME"]
+            marr1=d2[key2]["MARR"]
+            div1=d2[key2]["DIV"]
 
-		        husb2=d2[key3]["HUSB"]
-		        wife2=d2[key3]["WIFE"]
-		        hname2=d[husb2]["NAME"]
-		        wname2=d[wife2]["NAME"]
-		        marr2=d2[key3]["MARR"]
-		        div2=d2[key3]["DIV"]
+            husb2=d2[key3]["HUSB"]
+            wife2=d2[key3]["WIFE"]
+            hname2=d[husb2]["NAME"]
+            wname2=d[wife2]["NAME"]
+            marr2=d2[key3]["MARR"]
+            div2=d2[key3]["DIV"]
 
-			if husb1==husb2 or wife1==wife2:
-				if not no_bigamy(marr1,marr2,div1,div2):
-		                    print "US11:\tMarriage with key %s of %s and %s overlaps with Marriage with key %s of %s and %s"%(key2,husb1,wife1,key3,wife2,husb2)
-				
-		
+            if husb1==husb2 or wife1==wife2:
+                if not no_bigamy(marr1,marr2,div1,div2):
+                    print "US11:\tMarriage with key %s of %s and %s overlaps with Marriage with key %s of %s and %s"%(key2,husb1,wife1,key3,wife2,husb2)
+
+
 
 
 if __name__ == '__main__':
