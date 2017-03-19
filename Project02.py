@@ -238,9 +238,9 @@ def parseFile(filename, PRINT_USER_STORY_TESTS):
             if len(y)>2 and y[2].strip()=="INDI":
                 icurr=y[1].strip()
                 if icurr in d:
-                    icurr = icurr + "copy"
                     if PRINT_USER_STORY_TESTS:
                         print "US22:\tIndividual ID duplicate:{0}".format(icurr)
+                    icurr = icurr + "500"
                 d[icurr]={
                     "MARR":{},
                     "NAME":{},
@@ -300,7 +300,7 @@ def parseFile(filename, PRINT_USER_STORY_TESTS):
             elif len(y)>2 and y[2].strip()=="FAM":
                 fcurr=y[1].strip()
                 if fcurr in d2:
-                    fcurr = fcurr + "copy"
+                    fcurr = fcurr + "500"
                     if PRINT_USER_STORY_TESTS:
                         print "US22:\tFamily ID duplicate:{0}".format(fcurr)
                 d2[fcurr]={
@@ -360,7 +360,6 @@ def main(filename, printUserStories, printDescriptions):
         if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
             print "The lovely person with the key %s has the wonderful name %s"%(key,name)
         if PRINT_USER_STORY_TESTS:
-            print "US22:\tDuplicate IDs prevented"
             if not birth_before_death(birt,deat):
                 print "US03:\tBirth is not before death: ",name
             if not less_than_150(birt,deat):
