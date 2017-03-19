@@ -236,6 +236,27 @@ class story09test(unittest.TestCase):
         birth = {}
         marriage = {"year":2001, "month":12, "day":21}
         self.assertEqual(birth_before_death_of_parents(birth, marriage), False)
+class story16tests(unittest.TestCase): 
+    def test1(self): #person born after parents died
+        fam = {"HUSB":"I1", "WIFE":"I2", "CHIL":[]}
+        ind = {"I1":{"SURN":"Name"}, "I2":{"SURN":"Name"}}
+        self.assertTrue(male_last_names(ind, fam))
+    def test2(self): #not dead, so the person is born before death of parents
+        fam = {"HUSB":"I1", "WIFE":"I2", "CHIL":[]}
+        ind = {"I1":{"SURN":"Name"}, "I2":{"SURN":"Different"}}
+        self.assertTrue(male_last_names(ind, fam))
+    def test3(self): #person born before parents death
+        fam = {"HUSB":"I1", "WIFE":"I2", "CHIL":["I3"]}
+        ind = {"I1":{"SURN":"Name"}, "I2":{"SURN":"NAME"}, "I3":{"SURN":"Name", "SEX":"F"}}
+        self.assertTrue(male_last_names(ind, fam))
+    def test4(self): #person born before parents death
+        fam = {"HUSB":"I1", "WIFE":"I2", "CHIL":["I3"]}
+        ind = {"I1":{"SURN":"Name"}, "I2":{"SURN":"NAME"}, "I3":{"SURN":"Name", "SEX":"M"}}
+        self.assertTrue(male_last_names(ind, fam))
+    def test5(self): #no birth date given
+        fam = {"HUSB":"I1", "WIFE":"I2", "CHIL":["I3"]}
+        ind = {"I1":{"SURN":"Name"}, "I2":{"SURN":"NAME"}, "I3":{"SURN":"Different", "SEX":"M"}}
+        self.assertFalse(male_last_names(ind, fam))
 
 if __name__ == '__main__':
 	main("Mirtchouk_Mark_Project02.ged")

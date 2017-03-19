@@ -175,6 +175,14 @@ def sibling_spacing(birth_sib1, birth_sib2):
         return False
     return True
 
+def male_last_names(ind, fam):
+    """User Story 16"""
+    name = ind[fam["HUSB"]]["GIVEN"]
+    for child in fam["CHIL"]:
+        if ind[child]["SURN"] != name and ind[child]["SEX"] == "M":
+            return False
+    return True
+
 def parseFile(filename, PRINT_USER_STORY_TESTS):
     with open(filename, 'r') as f:
         icurr=''
@@ -265,14 +273,14 @@ def parseFile(filename, PRINT_USER_STORY_TESTS):
                         print "US22:\tIndividual ID duplicate:{0}".format(fcurr)
                 d2[fcurr]={
                     "MARR":{},
-                    "NAME":{},
-                    "SEX":{},
-                    "GIVN":{},
-                    "SURN":{},
-                    "BIRT":{},
-                    "DEAT":{},
-                    "FAMC":{},
-                    "FAMS":{},
+                    # "NAME":{},
+                    # "SEX":{},
+                    # "GIVN":{},
+                    # "SURN":{},
+                    # "BIRT":{},
+                    # "DEAT":{},
+                    # "FAMC":{},
+                    # "FAMS":{},
                     "DIV":{},
                     "CHIL":[]
                     }
