@@ -350,6 +350,35 @@ def main(filename, printUserStories, printDescriptions):
                 if birth_before_death_of_parents(birth,wdeat):
                     print "US09:\tBirth of %s is before death of Mom: %s"%(name,wname)
 
+    d3=sorted(d2, key=lambda x: int(x[1:]))
+
+    for key2 in d3:
+	for key3 in d3:
+		if key2==key3:
+			continue
+
+	        husb1=d2[key2]["HUSB"]
+	        wife1=d2[key2]["WIFE"]
+	        hname1=d[husb1]["NAME"]
+	        wname1=d[wife1]["NAME"]
+	        marr1=d2[key2]["MARR"]
+	        div1=d2[key2]["DIV"]
+
+	        husb2=d2[key3]["HUSB"]
+	        wife2=d2[key3]["WIFE"]
+	        hname2=d[husb2]["NAME"]
+	        wname2=d[wife2]["NAME"]
+	        marr2=d2[key3]["MARR"]
+	        div2=d2[key3]["DIV"]
+
+		if husb1==husb2 or wife1==wife2:
+			if stuff(marr1,marr2,div1,div2):
+	                    print "US11:\tMarriage with key %s of %s and %s overlaps with Marriage with key %s of %s and %s "%(marr1,husb1,wife1,marr2,wife2,husb2)
+				
+		
+
+
+
 if __name__ == '__main__':
     print_user_stories = True
     print_descriptions = True
