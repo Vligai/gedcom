@@ -207,10 +207,29 @@ def sibling_spacing(birth_sib1, birth_sib2):
 
 def male_last_names(ind, fam):
     """User Story 16"""
-    name = ind[fam["HUSB"]]["GIVEN"]
+    name = ind[fam["HUSB"]]["SURN"]
     for child in fam["CHIL"]:
         if ind[child]["SURN"] != name and ind[child]["SEX"] == "M":
             return False
+    return True
+
+def no_incest(ind, fam, start):
+    sex = "HUSB" if ind[start]["SEX"] == "M" else "WIFE":
+    other = "WIFE" if sex == "HUSB" else "HUSB"
+    childsFams = []
+    marr = {}
+    descendants = []
+    for famid in ind[start]["FAMIDS"]:
+        if sex == "HUSB":
+            marr[(fam[famid][sex], fam[famid][other])] = ''
+        else:
+            marr[(fam[famid][other], fam[famid][sex])] = ''
+        descendants += fam[famid]["CHIL"]
+    for id in descendants:
+        for famid in ind[id]["FAMIDS"]:
+            descendants += fam[famid]["CHIL"]
+            if (fam[famid][sex], fam[famid][other]) in marr or (fam[famid][other], fam[famid][sex]):
+                return False
     return True
 
 def parseFile(filename, PRINT_USER_STORY_TESTS):
@@ -250,7 +269,8 @@ def parseFile(filename, PRINT_USER_STORY_TESTS):
                     "DEAT":{},
                     "FAMC":{},
                     "FAMS":{},
-                    "DIV":{}
+                    "DIV":{},
+                    "FAMIDS":[] #for if they have marry multiple times
                     }
             elif len(y)>3 and y[1].strip()=="NAME":
                 a=y[2].strip()+" "+ y[3].strip()
@@ -322,6 +342,7 @@ def parseFile(filename, PRINT_USER_STORY_TESTS):
                     d2[fcurr][tag].append(a)
                 else:
                     d2[fcurr][tag]=a
+                    d[a]["FAMIDS"].append(fcurr)
             elif len(y)>1 and y[1].strip()=="MARR":
                 marr=1
             elif len(y)>1 and y[1].strip()=="DIV":
