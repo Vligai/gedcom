@@ -18,9 +18,7 @@ def printErrors(print_us_nums=True):
     if len(ERR_OBJ) == 0:
         print "No errors found"
         return
-
-    print "\n"
-    print "+----------------------+"
+    print "\n+----------------------+"
     print "| Errors found in file |"
     print "+----------------------+"
     for user_story, msgLst in sorted(ERR_OBJ.iteritems()):
@@ -406,23 +404,18 @@ def main(filename, printUserStories, printDescriptions):
         deat=d[key]["DEAT"]
         if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
             print "| {0:{kw}} | {1:{nw}} |".format(key, name, kw=keyWidth, nw=nameWidth)
-            #print "The lovely person with the key %s has the wonderful name %s"%(key,name)
         if not birth_before_death(birt,deat):
-            #delline print "US03:\tBirth is not before death: ",name
             msg = "Birth is not before death:{0}".format(name)
             addError("US03", msg)
         if not less_than_150(birt,deat):
-            #delline print "US07:\tGreater than 150 years old: ",name
             msg = "Greater than 150 years old: {0}".format(name)
             addError('US07', msg)
         if not date_before_today(birt):
-            #delline print "US01:\tDate of %s's birth %s is after today"%(name,birt)
             msg = "Date of {0}'s birth {1} is after today".format(name, birt)
             addError("US01", msg)
         if not date_before_today(deat):
             msg = "Date of {0}'s death {1} is after today".format(name,deat)
             addError("US01", msg)
-            #delline print "US01:\tDate of %s's death %s is after today "%(name,deat)
     if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
         print ind_table_hr
 
@@ -451,9 +444,7 @@ def main(filename, printUserStories, printDescriptions):
         chil=d2[key2]["CHIL"]
         if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
             print "| {0:{kw}} | {1:{nw}} | {2:{nw}} |".format(key2, hname, wname, kw=keyWidth, nw=nameWidth)
-            #print "The lovely marriage with the key %s happened betwwen the handsome %s and the beautiful %s"%(key2,hname,wname)
         if not birth_before_marriage(hbirt,marr):
-            #delline print "US02:\tHusbands Birth with key %s has name %s is not before marriage "%(husb, hname)
             msg = "Husbands Birth with key {0} has name {1} is not before marriage ".format(husb, hname)
             addError("US02", msg)
         if not birth_before_marriage(wbirt,marr):
