@@ -545,7 +545,8 @@ def main(filename, printUserStories, printDescriptions):
 
             if husb1==husb2 or wife1==wife2:
                 if not no_bigamy(marr1,marr2,div1,div2):
-                    print "US11:\tMarriage with key %s of %s and %s overlaps with Marriage with key %s of %s and %s"%(key2,husb1,wife1,key3,wife2,husb2)
+                    msg = "Marriage with key {} of {} and {} overlaps with Marriage with key {} of {} and {}".format(key2,husb1,wife1,key3,wife2,husb2)
+                    addError('US11', msg)
     if PRINT_USER_STORY_TESTS:
         printErrors()
 
