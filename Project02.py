@@ -8,6 +8,31 @@ d2 = {} # for families
 
 months ={"JAN":1,"FEB":2,"MAR":3,"APR":4,"MAY":5,"JUN":6,"JUL":7,"AUG":8,"SEP":9,"OCT":10,"NOV":11,"DEC":12}
 
+ERR_OBJ = {}
+def addError(user_story, message):
+    if not user_story in ERR_OBJ:
+        ERR_OBJ[user_story] = []
+    ERR_OBJ[user_story].append(message)
+
+def printErrors(print_us_nums=True):
+    if len(ERR_OBJ) == 0:
+        print "No errors found"
+        return
+
+    print "\n"
+    print "+----------------------+"
+    print "| Errors found in file |"
+    print "+----------------------+"
+    for user_story, msgLst in sorted(ERR_OBJ.iteritems()):
+        #msgLst = ERR_OBJ[user_story]
+        if print_us_nums:
+            print "{0} errors:".format(user_story)
+        for msg in msgLst:
+            indent = ''
+            if print_us_nums:
+                indent = "-"
+            print "{0:2}{1}".format(indent, msg)
+
 def birth_before_death(birth,death):
     """
     User Story US03: True means everything is ok and Birthday is before Death day
@@ -257,8 +282,8 @@ def parseFile(filename, PRINT_USER_STORY_TESTS):
             if len(y)>2 and y[2].strip()=="INDI":
                 icurr=y[1].strip()
                 if icurr in d:
-                    if PRINT_USER_STORY_TESTS:
-                        print "US22:\tIndividual ID duplicate:{0}".format(icurr)
+                    msg = "Individual ID duplicate:{0}".format(icurr)
+                    addError('US22', msg)
                     icurr = icurr + "500"
                 d[icurr]={
                     "MARR":{},
@@ -320,8 +345,8 @@ def parseFile(filename, PRINT_USER_STORY_TESTS):
             elif len(y)>2 and y[2].strip()=="FAM":
                 fcurr=y[1].strip()
                 if fcurr in d2:
-                    if PRINT_USER_STORY_TESTS:
-                        print "US22:\tFamily ID duplicate:{0}".format(fcurr)
+                    msg = "Family ID duplicate:{0}".format(fcurr)
+                    addError('US22', msg)
                     fcurr = fcurr + "500"
                 d2[fcurr]={
                     "MARR":{},
@@ -351,66 +376,44 @@ def parseFile(filename, PRINT_USER_STORY_TESTS):
                 div=1
     return d, d2
 
-ERR_OBJ = {}
-def addError(user_story, message):
-    if not user_story in ERR_OBJ:
-        ERR_OBJ[user_story] = []
-    ERR_OBJ[user_story].append(message)
 
-def printErrors(print_us_nums=True):
-    if len(ERR_OBJ) == 0:
-        print "No errors found"
-        return
-
-    print "\n"
-    print "+----------------------+"
-    print "| Errors found in file |"
-    print "+----------------------+"
-    for user_story in ERR_OBJ:
-        msgLst = ERR_OBJ[user_story]
-        if print_us_nums:
-            print "Errors for {0}".format(user_story)
-        for msg in msgLst:
-            indent = ''
-            if print_us_nums:
-                indent = "- "
-            print "{0}{1}".format(indent, msg)
 
 def main(filename, printUserStories, printDescriptions):
     PRINT_USER_STORY_TESTS = printUserStories
     PRINT_PERSON_OR_FAMILY_DESCRIPTION = printDescriptions
     ERR_LIST = {}
 
-    if True: #to match indentation for easy formatting
-        print "+-------------------------------------------------+"
-        print "| Running...                                      |"
-    if PRINT_USER_STORY_TESTS or PRINT_PERSON_OR_FAMILY_DESCRIPTION:
-        print "| Looking at individual and family information    |"
-    if PRINT_USER_STORY_TESTS:
-        print "|   - Printing information on user story tests    |"
-    if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
-        print "|   - Printing individual and family descriptions |"
-    if True: #same as above, for formatting
-        print "+-------------------------------------------------+"
+    print "+------------+"
+    print "| Running... |"
+    print "+------------+"
 
     d, d2 = parseFile(filename, PRINT_USER_STORY_TESTS)
 
     """
     interate over individuals
     """
+    if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
+        print "\nIndividuals:"
+        keyWidth = 6
+        nameWidth = 25
+        ind_table_hr = "+-{0:-<{kw}}-+-{1:-<{nw}}-+".format('', '', kw=keyWidth, nw=nameWidth) #horizontal table line
+        print ind_table_hr
+        print "| {0:{kw}} | {1:{nw}} |".format("Key", "Name", kw=keyWidth, nw=nameWidth)
+        print ind_table_hr
     for key in sorted(d, key=lambda x: int(x[1:])):
         name=d[key]["NAME"]
         birt=d[key]["BIRT"]
         deat=d[key]["DEAT"]
         if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
-            print "The lovely person with the key %s has the wonderful name %s"%(key,name)
+            print "| {0:{kw}} | {1:{nw}} |".format(key, name, kw=keyWidth, nw=nameWidth)
+            #print "The lovely person with the key %s has the wonderful name %s"%(key,name)
         if not birth_before_death(birt,deat):
             #delline print "US03:\tBirth is not before death: ",name
             msg = "Birth is not before death:{0}".format(name)
             addError("US03", msg)
         if not less_than_150(birt,deat):
             #delline print "US07:\tGreater than 150 years old: ",name
-            msg = "Greater than 150 years old: ".format(name)
+            msg = "Greater than 150 years old: {0}".format(name)
             addError('US07', msg)
         if not date_before_today(birt):
             #delline print "US01:\tDate of %s's birth %s is after today"%(name,birt)
@@ -420,10 +423,20 @@ def main(filename, printUserStories, printDescriptions):
             msg = "Date of {0}'s death {1} is after today".format(name,deat)
             addError("US01", msg)
             #delline print "US01:\tDate of %s's death %s is after today "%(name,deat)
+    if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
+        print ind_table_hr
 
     """
     interate over families
     """
+    if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
+        print "\nFamilies:"
+        keyWidth = 6
+        nameWidth = 25
+        fam_table_hr = "+-{0:-<{kw}}-+-{1:-<{nw}}-+-{1:-<{nw}}-+".format('', '', kw=keyWidth, nw=nameWidth) #horizontal table line
+        print fam_table_hr
+        print "| {0:{kw}} | {1:{nw}} | {2:{nw}} |".format("Key", "Husband", "Wife", kw=keyWidth, nw=nameWidth)
+        print fam_table_hr
     for key2 in sorted(d2, key=lambda x: int(x[1:])):
         husb=d2[key2]["HUSB"]
         wife=d2[key2]["WIFE"]
@@ -437,48 +450,61 @@ def main(filename, printUserStories, printDescriptions):
         div=d2[key2]["DIV"]
         chil=d2[key2]["CHIL"]
         if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
-            print "The lovely marriage with the key %s happened betwwen the handsome %s and the beautiful %s"%(key2,hname,wname)
-        if PRINT_USER_STORY_TESTS:
-            if not birth_before_marriage(hbirt,marr):
-                print "US02:\tHusbands Birth with key %s has name %s is not before marriage "%(husb, hname)
-            if not birth_before_marriage(wbirt,marr):
-                print "US02:\tWifes Birth with key %s has name %s is not before marriage "%(wife, wname)
-            if not marriage_before_divorce(marr,div):
-                print "US04:\tMarriage with key %s of %s and %s is not before divorce "%(key2, hname, wname)
-            if not marriage_before_death(marr,hdeat):
-                print "US05:\tMarriage with key %s of %s and %s is not before death of husband %s: "%(key2, hname, wname, hname)
-            if not marriage_before_death(marr,wdeat):
-                print "US05:\tMarriage with key %s of %s and %s is not before death of wife %s "%(key2, hname, wname, wname)
-            if not div_before_death(div,hdeat):
-                print "US06:\tDivorce with key %s of %s and %s is not before deathof husband %s "%(key2, hname, wname, hname)
-            if not div_before_death(div,wdeat):
-                print "US06:\tDivorce with key %s of %s and %s is not before death of wife %s "%(key2, hname, wname, wname)
-            if not correct_genders(d[husb], d[wife]):
-                print "US21:\tMarriage gender error: husband {0} is not male or wife {1} is not female".format(hname, wname)
-            if not marriage_after_14(hbirt,marr):
-                print "US10:\tHusbands Birth with key %s has name %s is not older than 14"%(husb, hname)
-            if not marriage_after_14(wbirt,marr):
-                print "US10:\tWifes Birth with key %s has name %s is not older than 14"%(wife, wname)
-            if not date_before_today(marr):
-                print "US01:\tDate of %s and %s marriage %s is after today"%(hname,wname,marr)
-            if not date_before_today(div):
-                print "US01:\tDate of %s and %s divorce %s is after today"%(hname,wname,div)
-            if not male_last_names(d,d2[key2]):
-                print "US16:\tFamily with key %s doesn't have all male last names"%(key2)
-
-
-
+            print "| {0:{kw}} | {1:{nw}} | {2:{nw}} |".format(key2, hname, wname, kw=keyWidth, nw=nameWidth)
+            #print "The lovely marriage with the key %s happened betwwen the handsome %s and the beautiful %s"%(key2,hname,wname)
+        if not birth_before_marriage(hbirt,marr):
+            #delline print "US02:\tHusbands Birth with key %s has name %s is not before marriage "%(husb, hname)
+            msg = "Husbands Birth with key {0} has name {1} is not before marriage ".format(husb, hname)
+            addError("US02", msg)
+        if not birth_before_marriage(wbirt,marr):
+            msg = "Wifes Birth with key {0} has name {1} is not before marriage ".format(wife, wname)
+            addError("US02", msg)
+        if not marriage_before_divorce(marr,div):
+            msg = "Marriage with key {0} of {1} and {2} is not before divorce ".format(key2, hname, wname)
+            addError("US04", msg)
+        if not marriage_before_death(marr,hdeat):
+            msg = "Marriage with key {0} of {1} and {2} is not before death of husband {3}: ".format(key2, hname, wname, hname)
+            addError("US05", msg)
+        if not marriage_before_death(marr,wdeat):
+            msg = "Marriage with key {0} of {1} and {2} is not before death of wife {3} ".format(key2, hname, wname, wname)
+            addError("US05", msg)
+        if not div_before_death(div,hdeat):
+            msg = "Divorce with key {0} of {1} and {2} is not before deathof husband {3} ".format(key2, hname, wname, hname)
+            addError("US06", msg)
+        if not div_before_death(div,wdeat):
+            msg = "Divorce with key {0} of {1} and {2} is not before death of wife {3} ".format(key2, hname, wname, wname)
+            addError("US06", msg)
+        if not correct_genders(d[husb], d[wife]):
+            msg = "Husband {0} is not male or wife {1} is not female".format(hname, wname)
+            addError("US21", msg)
+        if not marriage_after_14(hbirt,marr):
+            msg = "Husbands Birth with key {0} has name {1} is not older than 14".format(husb, hname)
+            addError("US10", msg)
+        if not marriage_after_14(wbirt,marr):
+            msg = "Wifes Birth with key {0} has name {1} is not older than 14".format(wife, wname)
+            addError("US10", msg)
+        if not date_before_today(marr):
+            msg = "Date of {0} and {1} marriage {2} is after today".format(hname,wname,marr)
+            addError("US01", msg)
+        if not date_before_today(div):
+            msg = "Date of {0} and {1} divorce {2} is after today".format(hname,wname,div)
+            addError("US01", msg)
+        if not male_last_names(d,d2[key2]):
+            msg = "Family with key {0} doesn't have all male last names".format(key2)
+            addError("US16", msg)
 
         for c in chil:
             name=d[c]["NAME"]
             birth=d[c]["BIRT"]
-            if PRINT_USER_STORY_TESTS:
-                if birth_before_marriage_of_parents(birth,marr):
-                    print "US08:\tBirth of %s is before marriage of %s,%s "%(name,hname,wname)
-                if birth_before_death_of_parents(birth,hdeat):
-                    print "US09:\tBirth of %s is before death of Dad: %s"%(name,hname)
-                if birth_before_death_of_parents(birth,wdeat):
-                    print "US09:\tBirth of %s is before death of Mom: %s"%(name,wname)
+            if birth_before_marriage_of_parents(birth,marr):
+                msg = "Birth of {0} is before marriage of {1},{2} ".format(name,hname,wname)
+                addError('US08', msg)
+            if birth_before_death_of_parents(birth,hdeat):
+                msg = "Birth of {0} is before death of Dad: {1}".format(name,hname)
+                addError('US09', msg)
+            if birth_before_death_of_parents(birth,wdeat):
+                msg = "Birth of {0} is before death of Mom: {1}".format(name,wname)
+                addError('US09', msg)
 
         for c in chil:
             boolb=0
@@ -489,7 +515,12 @@ def main(filename, printUserStories, printDescriptions):
                     birth1=d[c]["BIRT"]
                     birth2=d[c2]["BIRT"]
                     if not sibling_spacing(birth1,birth2):
-                        print "US13:\tSibling spacing between %s and %s is too small or too large"%(c,c2)
+                        msg = "Sibling spacing between {0} and {1} is too small or too large".format(c,c2)
+                        addError('US13', msg)
+
+    if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
+        print fam_table_hr
+
 
     d3=sorted(d2, key=lambda x: int(x[1:]))
     for key2 in d3:
