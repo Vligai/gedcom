@@ -1,5 +1,5 @@
 #Mark Mirthcouk Project 2
-import sys, time
+import sys, time, copy
 from collections import defaultdict
 from datetime import date, timedelta
 tags=["INDI","NAME","SEX","BIRT","DEAT","FAMC","FAMS","FAM","MARR","HUSB","WIFE","CHIL","DIV","DATE","HEAD","TRLR","NOTE"]
@@ -351,10 +351,35 @@ def parseFile(filename, PRINT_USER_STORY_TESTS):
                 div=1
     return d, d2
 
+ERR_OBJ = {}
+def addError(user_story, message):
+    if not user_story in ERR_OBJ:
+        ERR_OBJ[user_story] = []
+    ERR_OBJ[user_story].append(message)
+
+def printErrors(print_us_nums=True):
+    if len(ERR_OBJ) == 0:
+        print "No errors found"
+        return
+
+    print "\n"
+    print "+----------------------+"
+    print "| Errors found in file |"
+    print "+----------------------+"
+    for user_story in ERR_OBJ:
+        msgLst = ERR_OBJ[user_story]
+        if print_us_nums:
+            print "Errors for {0}".format(user_story)
+        for msg in msgLst:
+            indent = ''
+            if print_us_nums:
+                indent = "- "
+            print "{0}{1}".format(indent, msg)
 
 def main(filename, printUserStories, printDescriptions):
     PRINT_USER_STORY_TESTS = printUserStories
     PRINT_PERSON_OR_FAMILY_DESCRIPTION = printDescriptions
+    ERR_LIST = {}
 
     if True: #to match indentation for easy formatting
         print "+-------------------------------------------------+"
@@ -379,15 +404,22 @@ def main(filename, printUserStories, printDescriptions):
         deat=d[key]["DEAT"]
         if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
             print "The lovely person with the key %s has the wonderful name %s"%(key,name)
-        if PRINT_USER_STORY_TESTS:
-            if not birth_before_death(birt,deat):
-                print "US03:\tBirth is not before death: ",name
-            if not less_than_150(birt,deat):
-                print "US07:\tGreater than 150 years old: ",name
-            if not date_before_today(birt):
-                print "US01:\tDate of %s's birth %s is after today"%(name,birt)
-            if not date_before_today(deat):
-                print "US01:\tDate of %s's death %s is after today "%(name,deat)
+        if not birth_before_death(birt,deat):
+            #delline print "US03:\tBirth is not before death: ",name
+            msg = "Birth is not before death:{0}".format(name)
+            addError("US03", msg)
+        if not less_than_150(birt,deat):
+            #delline print "US07:\tGreater than 150 years old: ",name
+            msg = "Greater than 150 years old: ".format(name)
+            addError('US07', msg)
+        if not date_before_today(birt):
+            #delline print "US01:\tDate of %s's birth %s is after today"%(name,birt)
+            msg = "Date of {0}'s birth {1} is after today".format(name, birt)
+            addError("US01", msg)
+        if not date_before_today(deat):
+            msg = "Date of {0}'s death {1} is after today".format(name,deat)
+            addError("US01", msg)
+            #delline print "US01:\tDate of %s's death %s is after today "%(name,deat)
 
     """
     interate over families
@@ -481,8 +513,8 @@ def main(filename, printUserStories, printDescriptions):
             if husb1==husb2 or wife1==wife2:
                 if not no_bigamy(marr1,marr2,div1,div2):
                     print "US11:\tMarriage with key %s of %s and %s overlaps with Marriage with key %s of %s and %s"%(key2,husb1,wife1,key3,wife2,husb2)
-
-
+    if PRINT_USER_STORY_TESTS:
+        printErrors()
 
 
 if __name__ == '__main__':
