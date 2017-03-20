@@ -188,16 +188,16 @@ def no_bigamy(marr1,marr2,div1,div2):
     """
 
     if firstDateIsEarlier(marr1,marr2):
-        if div1 == {}:
-            return False
-    if firstDateIsEarlier(marr2,div1):
-        return False
+    	if div1 == {}:
+        	return False
+    	if firstDateIsEarlier(marr2,div1):
+        	return False
 
     if firstDateIsEarlier(marr2,marr1):
         if div2 == {}:
-            return False
-    if firstDateIsEarlier(marr1,div2):
-        return False
+        	return False
+    	if firstDateIsEarlier(marr1,div2):
+        	return False
 
     return True
 
@@ -516,28 +516,28 @@ def main(filename, printUserStories, printDescriptions):
     d3=sorted(d2, key=lambda x: int(x[1:]))
     for key2 in d3:
         boolb=0
-    for key3 in d3:
-        if key2==key3:
-            boolb=1
-        elif boolb==1:
-            husb1=d2[key2]["HUSB"]
-            wife1=d2[key2]["WIFE"]
-            hname1=d[husb1]["NAME"]
-            wname1=d[wife1]["NAME"]
-            marr1=d2[key2]["MARR"]
-            div1=d2[key2]["DIV"]
+    	for key3 in d3:
+        	if key2==key3:
+            		boolb=1
+        	elif boolb==1:
+            		husb1=d2[key2]["HUSB"]
+            		wife1=d2[key2]["WIFE"]
+		        hname1=d[husb1]["NAME"]
+            		wname1=d[wife1]["NAME"]
+            		marr1=d2[key2]["MARR"]
+           		div1=d2[key2]["DIV"]
 
-            husb2=d2[key3]["HUSB"]
-            wife2=d2[key3]["WIFE"]
-            hname2=d[husb2]["NAME"]
-            wname2=d[wife2]["NAME"]
-            marr2=d2[key3]["MARR"]
-            div2=d2[key3]["DIV"]
+            		husb2=d2[key3]["HUSB"]
+            		wife2=d2[key3]["WIFE"]
+            		hname2=d[husb2]["NAME"]
+            		wname2=d[wife2]["NAME"]
+            		marr2=d2[key3]["MARR"]
+            		div2=d2[key3]["DIV"]
 
-            if husb1==husb2 or wife1==wife2:
-                if not no_bigamy(marr1,marr2,div1,div2):
-                    msg = "Marriage with key {} of {} and {} overlaps with Marriage with key {} of {} and {}".format(key2,husb1,wife1,key3,wife2,husb2)
-                    addError('US11', msg)
+            		if husb1==husb2 or wife1==wife2:
+                		if not no_bigamy(marr1,marr2,div1,div2):
+                    			msg = "Marriage with key {} of {} and {} overlaps with Marriage with key {} of {} and {}".format(key2,husb1,wife1,key3,wife2,husb2)
+                    			addError('US11', msg)
     if PRINT_USER_STORY_TESTS:
         printErrors()
 
