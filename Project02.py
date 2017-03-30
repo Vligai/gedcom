@@ -7,7 +7,7 @@ d = {} # for individuals
 d2 = {} # for families
 
 months ={"JAN":1,"FEB":2,"MAR":3,"APR":4,"MAY":5,"JUN":6,"JUL":7,"AUG":8,"SEP":9,"OCT":10,"NOV":11,"DEC":12}
-
+monthnames = {1: "January",2:"February",3:"March",4:"April",5:"May",6:"June",7:"July",8:"August",9:"September",10:"October",11:"November",12:"December",}
 ERR_OBJ = {}
 def addError(user_story, message):
     if not user_story in ERR_OBJ:
@@ -30,6 +30,16 @@ def printErrors(print_us_nums=True):
             if print_us_nums:
                 indent = "-"
             print "{0:2}{1}".format(indent, msg)
+
+
+def print_date(ddate):
+
+	if ddate == {}:
+		return {}
+	newdate= "%s %s, %s"%(monthnames[ddate["month"]],ddate["day"],ddate["year"])
+	return newdate
+
+	
 
 def birth_before_death(birth,death):
     """
@@ -255,7 +265,17 @@ def no_incest(ind, fam, start):
                 return False
     return True
 
+def deceased(d):
+	"""US29"""
+	deadpeople={}
+	for key in d:
+	        deat=d[key]["DEAT"]
+		if deat !={}: #dead
+			deadpeople[key]=key
+	return deadpeople
+
 def living_married(d,d2):
+	"""US30"""
 	livingmarriedpeople={}
 	for key2 in d2:
 		husb=d2[key2]["HUSB"]
@@ -425,10 +445,10 @@ def main(filename, printUserStories, printDescriptions):
             msg = "Greater than 150 years old: {0}".format(name)
             addError('US07', msg)
         if not date_before_today(birt):
-            msg = "Date of {0}'s birth {1} is after today".format(name, birt)
+            msg = "Date of {0}'s birth {1} is after today".format(name,print_date(birt))
             addError("US01", msg)
         if not date_before_today(deat):
-            msg = "Date of {0}'s death {1} is after today".format(name,deat)
+            msg = "Date of {0}'s death {1} is after today".format(name,print_date(deat))
             addError("US01", msg)
     if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
         print ind_table_hr
@@ -489,10 +509,10 @@ def main(filename, printUserStories, printDescriptions):
             msg = "Wifes Birth with key {0} has name {1} is not older than 14".format(wife, wname)
             addError("US10", msg)
         if not date_before_today(marr):
-            msg = "Date of {0} and {1} marriage {2} is after today".format(hname,wname,marr)
+            msg = "Date of {0} and {1} marriage {2} is after today".format(hname,wname,print_date(marr))
             addError("US01", msg)
         if not date_before_today(div):
-            msg = "Date of {0} and {1} divorce {2} is after today".format(hname,wname,div)
+            msg = "Date of {0} and {1} divorce {2} is after today".format(hname,wname,print_date(div))
             addError("US01", msg)
         if not male_last_names(d,d2[key2]):
             msg = "Family with key {0} doesn't have all male last names".format(key2)
@@ -553,12 +573,22 @@ def main(filename, printUserStories, printDescriptions):
                     			msg = "Marriage with key {} of {} and {} overlaps with Marriage with key {} of {} and {}".format(key2,husb1,wife1,key3,wife2,husb2)
                     			addError('US11', msg)
 
+
+    deadp=deceased(d)
+    dp=sorted(deadp, key=lambda x: int(x[1:]))
+    for key in dp:
+	name=d[key]["NAME"]
+	deat=d[key]["DEAT"]
+	msg = "Person with key {} has the name {} and died on {}".format(key,name,print_date(deat))
+	addError('US29', msg)
+
     lm=living_married(d,d2)
     lm2=sorted(lm, key=lambda x: int(x[1:]))
     for key in lm2:
 	name=d[key]["NAME"]
 	msg = "Person with key {} has the name {} and is still alive and married".format(key,name)
 	addError('US30', msg)
+
 
     if PRINT_USER_STORY_TESTS:
         printErrors()
