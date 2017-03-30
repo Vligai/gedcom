@@ -255,6 +255,20 @@ def no_incest(ind, fam, start):
                 return False
     return True
 
+def living_married(d,d2):
+	livingmarriedpeople={}
+	for key2 in d2:
+		husb=d2[key2]["HUSB"]
+	        wife=d2[key2]["WIFE"]
+	        hdeat=d[husb]["DEAT"]
+	        wdeat=d[wife]["DEAT"]
+        	div=d2[key2]["DIV"]
+		if div == {}: #not divorced
+			if hdeat=={} and wdeat=={}: #both husbnad and wife are alive
+				livingmarriedpeople[husb]=husb
+				livingmarriedpeople[wife]=wife
+	return livingmarriedpeople
+
 def parseFile(filename, PRINT_USER_STORY_TESTS):
     with open(filename, 'r') as f:
         icurr=''
@@ -538,9 +552,17 @@ def main(filename, printUserStories, printDescriptions):
                 		if not no_bigamy(marr1,marr2,div1,div2):
                     			msg = "Marriage with key {} of {} and {} overlaps with Marriage with key {} of {} and {}".format(key2,husb1,wife1,key3,wife2,husb2)
                     			addError('US11', msg)
+
+    lm=living_married(d,d2)
+    lm2=sorted(lm, key=lambda x: int(x[1:]))
+    for key in lm2:
+	name=d[key]["NAME"]
+	msg = "Person with key {} has the name {} and is still alive and married".format(key,name)
+	addError('US30', msg)
+
     if PRINT_USER_STORY_TESTS:
         printErrors()
-
+    living_married(d,d2)#TAKE OUT
 
 if __name__ == '__main__':
     print_user_stories = True
