@@ -196,7 +196,7 @@ def main(filename, printUserStories, printDescriptions):
         firstNameWidth = 10
         lastNameWidth = 15
         dateWidth = 10
-        ind_table_hr = "+-{0:-<{kw}}-+-{1:-<{fnw}}-+-{2:-<{lnw}}-+-{3:-<{dw}}-+-{4:-<{dw}}-+".format('', '', '', '', '', kw=keyWidth, fnw=firstNameWidth, lnw=lastNameWidth, dw=dateWidth) #horizontal table line
+        ind_table_hr = "+-{0:-<{kw}}-+-{0:-<{fnw}}-+-{0:-<{lnw}}-+-{0:-<{dw}}-+-{0:-<{dw}}-+".format('', kw=keyWidth, fnw=firstNameWidth, lnw=lastNameWidth, dw=dateWidth) #horizontal table line
         print ind_table_hr
         print "| {0:{kw}} | {1:{fnw}} | {2:{lnw}} | {3:{dw}} | {4:{dw}} |".format("Key", "First", "Last", "Birth", "Death", kw=keyWidth, fnw=firstNameWidth, lnw=lastNameWidth, dw=dateWidth)
         print ind_table_hr
@@ -235,10 +235,11 @@ def main(filename, printUserStories, printDescriptions):
     if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
         print "\nFamilies:"
         keyWidth = 6
-        nameWidth = 25
-        fam_table_hr = "+-{0:-<{kw}}-+-{1:-<{nw}}-+-{1:-<{nw}}-+".format('', '', kw=keyWidth, nw=nameWidth) #horizontal table line
+        dateWidth = 10
+        childrenWidth = keyWidth * 4
+        fam_table_hr = "+-{0:-<{kw}}-+-{0:-<{kw}}-+-{0:-<{kw}}-+-{0:-<{dw}}-+-{0:-<{dw}}-+-{0:-<{cw}}-+".format('', kw=keyWidth, dw=dateWidth, cw=childrenWidth) #horizontal table line
         print fam_table_hr
-        print "| {0:{kw}} | {1:{nw}} | {2:{nw}} |".format("Key", "Husband", "Wife", kw=keyWidth, nw=nameWidth)
+        print "|-{0:-<{kw}}-|-{1:-<{kw}}-|-{2:-<{kw}}-|-{3:-<{dw}}-|-{4:-<{dw}}-|-{5:-<{cw}}-|".format("Key", "Husb", "Wife", "Marriage", "Divorce", "Children", kw=keyWidth, dw=dateWidth, cw=childrenWidth)
         print fam_table_hr
     for key2 in sorted(d2, key=lambda x: int(x[1:])):
         husb=d2[key2]["HUSB"]
@@ -253,7 +254,13 @@ def main(filename, printUserStories, printDescriptions):
         div=d2[key2]["DIV"]
         chil=d2[key2]["CHIL"]
         if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
-            print "| {0:{kw}} | {1:{nw}} | {2:{nw}} |".format(key2, hname, wname, kw=keyWidth, nw=nameWidth)
+            mdate = ""
+            ddate = ""
+            if marr != {}:
+                mdate = "{0}-{1}-{2}".format(marr['year'], marr['month'], marr['day'])
+            if div != {}:
+                ddate = "{0}-{1}-{2}".format(div['year'], div['month'], div['day'])
+            print "| {0:{kw}} | {1:{kw}} | {2:{kw}} | {3:{dw}} | {4:{dw}} | {5:{cw}} |".format(key2, husb, wife, mdate, ddate, ', '.join(chil), kw=keyWidth, dw=dateWidth, cw=childrenWidth)
         if not birth_before_marriage(hbirt,marr):
             msg = "Husbands Birth with key {0} has name {1} is not before marriage ".format(husb, hname)
             addError("US02", msg)
@@ -369,12 +376,6 @@ def main(filename, printUserStories, printDescriptions):
     if PRINT_USER_STORY_TESTS:
         printErrors()
     living_married(d,d2)#TAKE OUT
-
-
-    import pprint
-    pp = pprint.PrettyPrinter(indent=2)
-    pp.pprint(d)
-    pp.pprint(d2)
 
 if __name__ == '__main__':
     print_user_stories = False
