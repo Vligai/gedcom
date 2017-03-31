@@ -2,19 +2,35 @@
 import sys, time, copy
 from collections import defaultdict
 from datetime import date, timedelta
-tags=["INDI","NAME","SEX","BIRT","DEAT","FAMC","FAMS","FAM","MARR","HUSB","WIFE","CHIL","DIV","DATE","HEAD","TRLR","NOTE"]
+
+tags=[ "INDI", "NAME", "SEX", "BIRT", "DEAT", "FAMC", "FAMS", "FAM",\
+    "MARR", "HUSB", "WIFE", "CHIL", "DIV", "DATE", "HEAD", "TRLR", "NOTE"]
 d = {} # for individuals
 d2 = {} # for families
 
-months ={"JAN":1,"FEB":2,"MAR":3,"APR":4,"MAY":5,"JUN":6,"JUL":7,"AUG":8,"SEP":9,"OCT":10,"NOV":11,"DEC":12}
-monthnames = {1: "January",2:"February",3:"March",4:"April",5:"May",6:"June",7:"July",8:"August",9:"September",10:"October",11:"November",12:"December",}
+months ={\
+    "JAN":1, "FEB":2, "MAR":3, "APR":4, "MAY":5, "JUN":6,\
+    "JUL":7, "AUG":8, "SEP":9, "OCT":10, "NOV":11, "DEC":12}
+monthnames = {\
+    1: "January", 2:"February", 3:"March", 4:"April", 5:"May", 6:"June",\
+    7:"July", 8:"August", 9:"September", 10:"October", 11:"November",\
+    12:"December",}
 ERR_OBJ = {}
+
 def addError(user_story, message):
+    """
+    Adds an error message to the global dictionary of errors, ERR_OBJ
+    ERR_OBJ is sorted by user story, a string in the form "US<number>"
+    """
     if not user_story in ERR_OBJ:
         ERR_OBJ[user_story] = []
     ERR_OBJ[user_story].append(message)
 
 def printErrors(print_us_nums=True):
+    """
+    Prints errors from the global error dictionary, ERR_OBJ
+    Sorted by user story numbers, with the option to print the numbers
+    """
     if len(ERR_OBJ) == 0:
         print "No errors found"
         return
@@ -31,23 +47,30 @@ def printErrors(print_us_nums=True):
                 indent = "-"
             print "{0:2}{1}".format(indent, msg)
 
-
 def print_date(ddate):
-
+    """
+    prints a date in the form "January 2, 2000"
+    """
     if ddate == {}:
         return {}
-    newdate= "%s %s, %s"%(monthnames[ddate["month"]],ddate["day"],ddate["year"])
-    return newdate
-
-from validity_checks import *
+    monthName = monthnames[ddate["month"]]
+    dd = ddate["day"]
+    yyyy = ddate["year"]
+    return "{0} {1}, {2}".format(monthName, dd, yyyy)
 
 def parseFile(filename):
+    """
+    Parse over a GEDCOM file
+    Return a two dictionaries, one for individuals and one for families
+    """
     with open(filename, 'r') as f:
         icurr=''
         birt=0
         deat=0
         marr=0
         div=0
+        ind_dict = {}
+        fam_dict = {}
         for line in f:
             if "HUSB" not in line and "WIFE" not in line and "CHIL" not in line:
                 fam=0
@@ -65,11 +88,11 @@ def parseFile(filename):
 
             if len(y)>2 and y[2].strip()=="INDI":
                 icurr=y[1].strip()
-                if icurr in d:
+                if icurr in ind_dict:
                     msg = "Individual ID duplicate:{0}".format(icurr)
                     addError('US22', msg)
                     icurr = icurr + "500"
-                d[icurr]={
+                ind_dict[icurr]={
                     "MARR":{},
                     "NAME":{},
                     "SEX":{},
@@ -84,16 +107,16 @@ def parseFile(filename):
                     }
             elif len(y)>3 and y[1].strip()=="NAME":
                 a=y[2].strip()+" "+ y[3].strip()
-                d[icurr]["NAME"]=a
+                ind_dict[icurr]["NAME"]=a
             elif len(y)>2 and y[1].strip()=="SEX":
                 a=y[2].strip()
-                d[icurr]["SEX"]=a
+                ind_dict[icurr]["SEX"]=a
             elif len(y)>2 and y[1].strip()=="GIVN":
                 a=y[2].strip()
-                d[icurr]["GIVN"]=a
+                ind_dict[icurr]["GIVN"]=a
             elif len(y)>2 and y[1].strip()=="SURN":
                 a=y[2].strip()
-                d[icurr]["SURN"]=a
+                ind_dict[icurr]["SURN"]=a
             elif len(y)>=2 and y[1].strip()=="BIRT":
                 birt=1
             elif len(y)>2 and y[1].strip()=="DEAT":
@@ -106,33 +129,33 @@ def parseFile(filename):
                 year=y[4].strip()
                 if birt==1:
                     a={"day":day, "month":month,"year":year}
-                    d[icurr]["BIRT"]=a
+                    ind_dict[icurr]["BIRT"]=a
                     birt=0
                 if deat==1:
                     a={"day":day, "month":month,"year":year}
-                    d[icurr]["DEAT"]=a
+                    ind_dict[icurr]["DEAT"]=a
                     deat=0
                 if marr==1:
                     a={"day":day, "month":month,"year":year}
-                    d2[fcurr]["MARR"]=a
+                    fam_dict[fcurr]["MARR"]=a
                     marr=0
                 if div==1:
                     a={"day":day, "month":month,"year":year}
-                    d2[fcurr]["DIV"]=a
+                    fam_dict[fcurr]["DIV"]=a
                     div=0
             elif len(y)>2 and y[1].strip()=="FAMC":
                 a=y[2].strip()
-                d[icurr]["FAMC"]=a
+                ind_dict[icurr]["FAMC"]=a
             elif len(y)>2 and y[1].strip()=="FAMS":
                 a=y[2].strip()
-                d[icurr]["FAMS"]=a
+                ind_dict[icurr]["FAMS"]=a
             elif len(y)>2 and y[2].strip()=="FAM":
                 fcurr=y[1].strip()
-                if fcurr in d2:
+                if fcurr in fam_dict:
                     msg = "Family ID duplicate:{0}".format(fcurr)
                     addError('US22', msg)
                     fcurr = fcurr + "500"
-                d2[fcurr]={
+                fam_dict[fcurr]={
                     "MARR":{},
                     # "NAME":{},
                     # "SEX":{},
@@ -150,17 +173,18 @@ def parseFile(filename):
                 tag=y[1].strip()
                 a=y[2].strip()
                 if tag =="CHIL":
-                    d2[fcurr][tag].append(a)
+                    fam_dict[fcurr][tag].append(a)
                 else:
-                    d2[fcurr][tag]=a
-                    d[a]["FAMIDS"].append(fcurr)
+                    fam_dict[fcurr][tag]=a
+                    ind_dict[a]["FAMIDS"].append(fcurr)
             elif len(y)>1 and y[1].strip()=="MARR":
                 marr=1
             elif len(y)>1 and y[1].strip()=="DIV":
                 div=1
-    return d, d2
+    return ind_dict, fam_dict
 
 
+from validity_checks import *
 
 def main(filename, printUserStories, printDescriptions):
     PRINT_USER_STORY_TESTS = printUserStories
