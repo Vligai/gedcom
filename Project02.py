@@ -3,11 +3,9 @@ import sys, time, copy
 from collections import defaultdict
 from datetime import date, timedelta
 
-tags=[ "INDI", "NAME", "SEX", "BIRT", "DEAT", "FAMC", "FAMS", "FAM",\
+tags=[\
+    "INDI", "NAME", "SEX", "BIRT", "DEAT", "FAMC", "FAMS", "FAM",\
     "MARR", "HUSB", "WIFE", "CHIL", "DIV", "DATE", "HEAD", "TRLR", "NOTE"]
-d = {} # for individuals
-d2 = {} # for families
-
 months ={\
     "JAN":1, "FEB":2, "MAR":3, "APR":4, "MAY":5, "JUN":6,\
     "JUL":7, "AUG":8, "SEP":9, "OCT":10, "NOV":11, "DEC":12}
@@ -46,6 +44,7 @@ def printErrors(print_us_nums=True):
             if print_us_nums:
                 indent = "-"
             print "{0:2}{1}".format(indent, msg)
+    return None
 
 def print_date(ddate):
     """
@@ -71,22 +70,17 @@ def parseFile(filename):
         div=0
         ind_dict = {}
         fam_dict = {}
+
+        longestFirstNameLength = 0
+        longestLastNameLength = 0
         for line in f:
             if "HUSB" not in line and "WIFE" not in line and "CHIL" not in line:
-                fam=0
-            #print (line.strip())
-            y = line.strip().split(" ")
+                isFamilyLine = False
+            y = line.strip().split(' ')
 
-            #print (y[0].strip())
+            line_part_count = len(y)
 
-            #if y[1].strip() in tags:
-            #    print (y[1].strip())
-            #elif len(y)>2 and y[2].strip() in tags:
-            #	print (y[2].strip())
-            #else:
-            #	print ("Invalid tag")
-
-            if len(y)>2 and y[2].strip()=="INDI":
+            if line_part_count>2 and y[2].strip()=="INDI":
                 icurr=y[1].strip()
                 if icurr in ind_dict:
                     msg = "Individual ID duplicate:{0}".format(icurr)
@@ -105,23 +99,28 @@ def parseFile(filename):
                     "DIV":{},
                     "FAMIDS":[] #for if they have marry multiple times
                     }
-            elif len(y)>3 and y[1].strip()=="NAME":
+            elif line_part_count>3 and y[1].strip()=="NAME":
                 a=y[2].strip()+" "+ y[3].strip()
+
                 ind_dict[icurr]["NAME"]=a
-            elif len(y)>2 and y[1].strip()=="SEX":
+            elif line_part_count>2 and y[1].strip()=="SEX":
                 a=y[2].strip()
                 ind_dict[icurr]["SEX"]=a
-            elif len(y)>2 and y[1].strip()=="GIVN":
+            elif line_part_count>2 and y[1].strip()=="GIVN":
                 a=y[2].strip()
+                if len(a) > longestFirstNameLength:
+                    longestFirstNameLength = len(a)
                 ind_dict[icurr]["GIVN"]=a
-            elif len(y)>2 and y[1].strip()=="SURN":
+            elif line_part_count>2 and y[1].strip()=="SURN":
                 a=y[2].strip()
+                if len(a) > longestLastNameLength:
+                    longestLastNameLength = len(a)
                 ind_dict[icurr]["SURN"]=a
-            elif len(y)>=2 and y[1].strip()=="BIRT":
+            elif line_part_count>=2 and y[1].strip()=="BIRT":
                 birt=1
-            elif len(y)>2 and y[1].strip()=="DEAT":
+            elif line_part_count>2 and y[1].strip()=="DEAT":
                 deat=1
-            elif len(y)>4 and y[1].strip()=="DATE":
+            elif line_part_count>4 and y[1].strip()=="DATE":
                 day=y[2].strip()
                 month=y[3].strip()
                 if not isinstance(month, int):
@@ -143,13 +142,13 @@ def parseFile(filename):
                     a={"day":day, "month":month,"year":year}
                     fam_dict[fcurr]["DIV"]=a
                     div=0
-            elif len(y)>2 and y[1].strip()=="FAMC":
+            elif line_part_count>2 and y[1].strip()=="FAMC":
                 a=y[2].strip()
                 ind_dict[icurr]["FAMC"]=a
-            elif len(y)>2 and y[1].strip()=="FAMS":
+            elif line_part_count>2 and y[1].strip()=="FAMS":
                 a=y[2].strip()
                 ind_dict[icurr]["FAMS"]=a
-            elif len(y)>2 and y[2].strip()=="FAM":
+            elif line_part_count>2 and y[2].strip()=="FAM":
                 fcurr=y[1].strip()
                 if fcurr in fam_dict:
                     msg = "Family ID duplicate:{0}".format(fcurr)
@@ -157,19 +156,11 @@ def parseFile(filename):
                     fcurr = fcurr + "500"
                 fam_dict[fcurr]={
                     "MARR":{},
-                    # "NAME":{},
-                    # "SEX":{},
-                    # "GIVN":{},
-                    # "SURN":{},
-                    # "BIRT":{},
-                    # "DEAT":{},
-                    # "FAMC":{},
-                    # "FAMS":{},
                     "DIV":{},
                     "CHIL":[]
                     }
-                fam=1
-            elif len(y)>2 and fam==1:
+                isFamilyLine = True
+            elif line_part_count>2 and isFamilyLine:
                 tag=y[1].strip()
                 a=y[2].strip()
                 if tag =="CHIL":
@@ -177,12 +168,11 @@ def parseFile(filename):
                 else:
                     fam_dict[fcurr][tag]=a
                     ind_dict[a]["FAMIDS"].append(fcurr)
-            elif len(y)>1 and y[1].strip()=="MARR":
+            elif line_part_count>1 and y[1].strip()=="MARR":
                 marr=1
-            elif len(y)>1 and y[1].strip()=="DIV":
+            elif line_part_count>1 and y[1].strip()=="DIV":
                 div=1
     return ind_dict, fam_dict
-
 
 from validity_checks import *
 
@@ -203,17 +193,27 @@ def main(filename, printUserStories, printDescriptions):
     if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
         print "\nIndividuals:"
         keyWidth = 6
-        nameWidth = 25
-        ind_table_hr = "+-{0:-<{kw}}-+-{1:-<{nw}}-+".format('', '', kw=keyWidth, nw=nameWidth) #horizontal table line
+        firstNameWidth = 10
+        lastNameWidth = 15
+        dateWidth = 10
+        ind_table_hr = "+-{0:-<{kw}}-+-{1:-<{fnw}}-+-{2:-<{lnw}}-+-{3:-<{dw}}-+-{4:-<{dw}}-+".format('', '', '', '', '', kw=keyWidth, fnw=firstNameWidth, lnw=lastNameWidth, dw=dateWidth) #horizontal table line
         print ind_table_hr
-        print "| {0:{kw}} | {1:{nw}} |".format("Key", "Name", kw=keyWidth, nw=nameWidth)
+        print "| {0:{kw}} | {1:{fnw}} | {2:{lnw}} | {3:{dw}} | {4:{dw}} |".format("Key", "First", "Last", "Birth", "Death", kw=keyWidth, fnw=firstNameWidth, lnw=lastNameWidth, dw=dateWidth)
         print ind_table_hr
     for key in sorted(d, key=lambda x: int(x[1:])):
         name=d[key]["NAME"]
+        fname=d[key]['GIVN']
+        lname=d[key]['SURN']
         birt=d[key]["BIRT"]
         deat=d[key]["DEAT"]
         if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
-            print "| {0:{kw}} | {1:{nw}} |".format(key, name, kw=keyWidth, nw=nameWidth)
+            bdate = ""
+            ddate = ""
+            if birt != {}:
+                bdate = "{0}-{1}-{2}".format(birt['year'], birt['month'], birt['day'])
+            if deat != {}:
+                ddate = "{0}-{1}-{2}".format(deat['year'], deat['month'], deat['day'])
+            print "| {0:{kw}} | {1:{fnw}} | {2:{lnw}} | {3:{dw}} | {4:{dw}} |".format(key, fname, lname, bdate, ddate, kw=keyWidth, fnw=firstNameWidth, lnw=lastNameWidth, dw=dateWidth)
         if not birth_before_death(birt,deat):
             msg = "Birth is not before death:{0}".format(name)
             addError("US03", msg)
@@ -370,8 +370,14 @@ def main(filename, printUserStories, printDescriptions):
         printErrors()
     living_married(d,d2)#TAKE OUT
 
+
+    import pprint
+    pp = pprint.PrettyPrinter(indent=2)
+    pp.pprint(d)
+    pp.pprint(d2)
+
 if __name__ == '__main__':
-    print_user_stories = True
+    print_user_stories = False
     print_descriptions = True
     if len(sys.argv) == 2:
         filename = sys.argv[1]
