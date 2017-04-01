@@ -239,7 +239,7 @@ def main(filename, printUserStories, printDescriptions):
         childrenWidth = keyWidth * 4
         fam_table_hr = "+-{0:-<{kw}}-+-{0:-<{kw}}-+-{0:-<{kw}}-+-{0:-<{dw}}-+-{0:-<{dw}}-+-{0:-<{cw}}-+".format('', kw=keyWidth, dw=dateWidth, cw=childrenWidth) #horizontal table line
         print fam_table_hr
-        print "|-{0:-<{kw}}-|-{1:-<{kw}}-|-{2:-<{kw}}-|-{3:-<{dw}}-|-{4:-<{dw}}-|-{5:-<{cw}}-|".format("Key", "Husb", "Wife", "Marriage", "Divorce", "Children", kw=keyWidth, dw=dateWidth, cw=childrenWidth)
+        print "| {0:<{kw}} | {1:<{kw}} | {2:<{kw}} | {3:<{dw}} | {4:<{dw}} | {5:<{cw}} |".format("Key", "Husb", "Wife", "Marriage", "Divorce", "Children", kw=keyWidth, dw=dateWidth, cw=childrenWidth)
         print fam_table_hr
     for key2 in sorted(d2, key=lambda x: int(x[1:])):
         husb=d2[key2]["HUSB"]
