@@ -277,7 +277,7 @@ def main(filename, oldestRecentData, printUserStories, printDescriptions):
             msg = "Date of {0}'s death {1} is after today".format(name,print_date(deat))
             addUSMsg("US01", msg)
     if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
-        printTable(ind_print_tbl, "Individuals")
+        printTable(ind_print_tbl, ind_table_headers, "Individuals")
 
     """
     interate over families
@@ -380,7 +380,7 @@ def main(filename, oldestRecentData, printUserStories, printDescriptions):
                         addUSMsg('US13', msg)
 
     if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
-        printTable(fam_print_tbl, "Families")
+        printTable(fam_print_tbl, fam_table_headers, "Families")
 	"""Checking for bigomy"""
     d3=sorted(d2, key=lambda x: int(x[1:]))
     for key2 in d3:
