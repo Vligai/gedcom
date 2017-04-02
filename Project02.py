@@ -371,11 +371,21 @@ def main(filename, printUserStories, printDescriptions):
         msg = "Person with key {} has the name {} and is still alive and married".format(key,name)
         addError('US30', msg)
 
-
+    for key in sorted(d, key=lambda x: int(x[1:])):
+        for key2 in sorted(d, key=lambda x: int(x[1:])):
+            if key == key2:
+                continue
+            else:
+                name1=d[key]["NAME"]
+                name2=d[key2]["NAME"]
+                birt1=d[key]["BIRT"]
+                birt2=d[key2]["BIRT"]
+                if not unique_name_bdate(name1, name2, birt1, birt2):
+                    msg = "Person with key {} has the name {} is the same as person with key {} and name {} have the same birthday {}".format(key,name1,key2,name2,print_date(birt1))
+                    addError('US23', msg)
     if PRINT_USER_STORY_TESTS:
         printErrors()
-    living_married(d,d2)#TAKE OUT
-
+    
 if __name__ == '__main__':
     print_user_stories = True
     print_descriptions = True

@@ -255,10 +255,15 @@ def aunts_uncles(per1, per2):
 	
 	return 1;
 	
-def unique_name_bdate(name, bdate):
+def unique_name_bdate(name1, name2, bdate1, bdate2):
 	"""
 	US23: No more than one individual with the same name and birth
 	date should appear in a GEDCOM file
 	"""
-	
-	return 1;
+	if name1 == {} or name2 == {}:
+		return True
+	if bdate1 == {} or bdate2 =={}:
+		return True
+	if name1 == name2 and bdate1 == bdate2:
+		return False
+	return True
