@@ -224,7 +224,7 @@ def no_incest(ind, fam, start):
 
 def deceased(d):
     """
-	US29: Returns all people that are dead (DEAT date not empty)
+    US29: Returns all people that are dead (DEAT date not empty)
     """
     deadpeople={}
     for key in d:
@@ -235,7 +235,7 @@ def deceased(d):
 
 def living_married(d,d2):
     """
-	US30: Returns all people that are not divorced and both their husband/wife and themselves are alive
+    US30: Returns all people that are not divorced and both their husband/wife and themselves are alive
     """
     livingmarriedpeople={}
     for key2 in d2:
@@ -253,7 +253,7 @@ def living_married(d,d2):
 def aunts_uncles(key, d, d2):
     """
     US 20: Aunts and uncles should not marry their nieces or nephews
-	"""
+    """
     dad = 0
     mom = 0
     daddad = 0
@@ -329,8 +329,8 @@ def sibling_marry(key, d, d2):
     print d2
     l = []
     for id in fam:
-	    if id in d2:
-	        l += [(d2[id]["HUSB"], d2[id]["WIFE"])]
+        if id in d2:
+            l += [(d2[id]["HUSB"], d2[id]["WIFE"])]
     for sib in siblings:
         if d[key]["SEX"] == "M":
             test = (key, sib)
@@ -343,19 +343,19 @@ def sibling_marry(key, d, d2):
 def first_cousins(key, d, d2):
     """US19"""
     if d[key]["FAMC"] in d2:
-	    dad = d2[d[key]["FAMC"]]["HUSB"]
-	    mom = d2[d[key]["FAMC"]]["WIFE"]
-	    print dad
-	    print mom
-	    print d[mom]["FAMC"]
-	    print d[dad]["FAMC"]
-	    # print d2[d[mom]["FAMC"]]
-	    # print d2[d[dad]["FAMC"]]
-	    momfam = d2[d[mom]["FAMC"]]["CHIL"] if d[mom]["FAMC"] in d2 else []
-	    if momfam != []:
+        dad = d2[d[key]["FAMC"]]["HUSB"]
+        mom = d2[d[key]["FAMC"]]["WIFE"]
+        print dad
+        print mom
+        print d[mom]["FAMC"]
+        print d[dad]["FAMC"]
+        # print d2[d[mom]["FAMC"]]
+        # print d2[d[dad]["FAMC"]]
+        momfam = d2[d[mom]["FAMC"]]["CHIL"] if d[mom]["FAMC"] in d2 else []
+        if momfam != []:
             momfam.remove(mom)
-	    dadfam = d2[d[dad]["FAMC"]]["CHIL"] if d[dad]["FAMC"] in d2 else []
-	    if dadfam != []:
+        dadfam = d2[d[dad]["FAMC"]]["CHIL"] if d[dad]["FAMC"] in d2 else []
+        if dadfam != []:
             dadfam.remove(dad)
     cousin = []
     l = []

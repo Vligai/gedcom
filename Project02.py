@@ -372,7 +372,7 @@ def main(filename, oldestRecentData, printUserStories, printDescriptions):
             if birth_before_death_of_parents(birth,wdeat):
                 msg = "Birth of {0} is before death of Mom: {1}".format(name,wname)
                 addUSMsg('US09', msg)
-		"""Checking if siblings were born too close or too far apart"""
+        """Checking if siblings were born too close or too far apart"""
         for c in chil:
             boolb=0
             for c2 in chil:
@@ -386,7 +386,7 @@ def main(filename, oldestRecentData, printUserStories, printDescriptions):
                         addUSMsg('US13', msg)
 
 
-	"""Checking for bigomy"""
+    """Checking for bigomy"""
     d3=sorted(d2, key=lambda x: int(x[1:]))
     for key2 in d3:
         boolb=0
@@ -428,7 +428,7 @@ def main(filename, oldestRecentData, printUserStories, printDescriptions):
         name=d[key]["NAME"]
         msg = "Person with key {} has the name {} and is still alive and married".format(key,name)
         addUSMsg('US30', msg)
-	"""Checking for people with same names and birthdates"""
+    """Checking for people with same names and birthdates"""
     for key in sorted(d, key=lambda x: int(x[1:])):
         for key2 in sorted(d, key=lambda x: int(x[1:])):
             if key == key2:
@@ -441,7 +441,7 @@ def main(filename, oldestRecentData, printUserStories, printDescriptions):
                 if not unique_name_bdate(name1, name2, birt1, birt2):
                     msg = "Person with key {} has the name {} is the same as person with key {} and name {} have the same birthday {}".format(key,name1,key2,name2,print_date(birt1))
                     addUSMsg('US23', msg)
-	"""Checking for people, who are married to their aunts/uncles"""
+    """Checking for people, who are married to their aunts/uncles"""
     for key in sorted(d, key=lambda x: int(x[1:])):
         a = aunts_uncles(key, d, d2)
         if a != []:
