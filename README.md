@@ -1,7 +1,8 @@
-# gedcom
-SSW/CS 555 Project 
-Members:
-Mark Mirtchouk
-Josh Gribbon
-Zachary Caldarola
-Vladislav Ligai
+# Gedcom
+## SSW/CS 555 Project 
+---
+### Members:
+1. Mark Mirtchouk
+2. Josh Gribbon
+3. Zachary Caldarola
+4. Vladislav Ligai
