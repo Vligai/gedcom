@@ -390,7 +390,7 @@ def main(filename, printUserStories, printDescriptions):
             for aa in a:
                 name1=d[key]["NAME"]
                 name2=d[aa]["NAME"]
-                msg = "Person with key {} has the name {} has aunt or uncle with key {} and name {}".format(key,name1,aa,name2)
+                msg = "Person with key {} has the name {} and is married to their aunt or uncle with key {} and name {}".format(key,name1,aa,name2)
                 addError('US20', msg)
     if PRINT_USER_STORY_TESTS:
         printErrors()
