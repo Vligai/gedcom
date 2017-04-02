@@ -155,7 +155,6 @@ def no_bigamy(marr1,marr2,div1,div2):
     User Story 11
     Marriage should not occur during marriage to another spouse
     """
-
     if firstDateIsEarlier(marr1,marr2):
         if div1 == {}:
             return False
@@ -177,7 +176,6 @@ def sibling_spacing(birth_sib1, birth_sib2):
     days apart (twins may be born one day apart, e.g. 11:59 PM and 12:02 AM the
     following calendar day)
     """
-
     if firstDateIsEarlier(birth_sib2,birth_sib1):
     # Makes the birth_sib1 first
         temp = birth_sib1
@@ -225,7 +223,9 @@ def no_incest(ind, fam, start):
     return True
 
 def deceased(d):
-    """US29"""
+    """
+	US29: Returns all people that are dead (DEAT date not empty)
+    """
     deadpeople={}
     for key in d:
         deat=d[key]["DEAT"]
@@ -234,7 +234,9 @@ def deceased(d):
     return deadpeople
 
 def living_married(d,d2):
-    """US30"""
+    """
+	US30: Returns all people that are not divorced and both their husband/wife and themselves are alive
+    """
     livingmarriedpeople={}
     for key2 in d2:
         husb=d2[key2]["HUSB"]
@@ -258,7 +260,6 @@ def aunts_uncles(key, d, d2):
     mommom = 0
     dadmom = 0
     momdad = 0
-
     fam = []
     ans = []
     for key1 in d2:
