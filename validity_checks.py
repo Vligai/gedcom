@@ -319,3 +319,44 @@ def unique_name_bdate(name1, name2, bdate1, bdate2):
     if name1 == name2 and bdate1 == bdate2:
         return False
     return True
+
+def sibling_marry(key, d, d2):
+    """US18"""
+    siblings = d2[d[key]["FAMC"]]["CHIL"]
+    siblings.remove(key)
+    fam = d[key]["FAMIDS"]
+    l = []
+    for id in fam:
+        l += [(d2[id]["HUSB"], d2[id]["WIFE"])]
+    for sib in siblings:
+        if d[key]["SEX"] == "M":
+            test = (key, sib)
+        else:
+            test = (sib, key)
+        if test in l:
+            return False
+    return True
+
+def first_cousins(key, d, d2):
+    """US19"""
+    dad = d2[d[key]["FAMC"]]["HUSB"]
+    mom = d2[d[key]["FAMC"]]["WIFE"]
+    momfam = d2[d[mom]["FAMC"]]["CHIL"]
+    momfam.remove(mom)
+    dadfam = d2[d[dad]["FAMC"]]["CHIL"]
+    dadfam.remove(dad)
+    cousin = []
+    l = []
+    for k in momfam + dadfam:
+        for f in d[k]["FAMIDS"]:
+            cousin += [d2[f]["CHIL"]]
+    for id in d[key]["FAMIDS"]:
+        l += [(d2[id]["HUSB"], d2[id]["WIFE"])]
+    for c in cousin:
+        if d[key]["SEX"] == "M":
+            test = (key, sib)
+        else:
+            test = (sib, key)
+        if test in l:
+            return False
+    return True
