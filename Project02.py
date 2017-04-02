@@ -215,7 +215,6 @@ def parseFile(filename):
     handleDups()
     return ind_dict, fam_dict
 
-
 def main(filename, oldestRecentData, printUserStories, printDescriptions):
     RECENT_CUTOFF = oldestRecentData
     PRINT_USER_STORY_TESTS = printUserStories
