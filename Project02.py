@@ -283,6 +283,12 @@ def main(filename, oldestRecentData, printUserStories, printDescriptions):
         if not date_before_today(deat):
             msg = "Date of {0}'s death {1} is after today".format(name,print_date(deat))
             addUSMsg("US01", msg)
+        if not sibling_marry(key, d, d2):
+            msg = "{0} has married one of their siblings".format(name)
+            addUSMsg("US18", msg)
+        if not first_cousins(key, d, d2):
+            msg = "{0} has married one of their first cousins".format(name)
+            addUSMsg("US19", msg)
 
     """
     interate over families

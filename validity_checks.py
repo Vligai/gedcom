@@ -325,6 +325,8 @@ def sibling_marry(key, d, d2):
     siblings = d2[d[key]["FAMC"]]["CHIL"]
     siblings.remove(key)
     fam = d[key]["FAMIDS"]
+    print fam
+    print d2
     l = []
     for id in fam:
         l += [(d2[id]["HUSB"], d2[id]["WIFE"])]
