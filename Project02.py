@@ -1,6 +1,7 @@
 import sys, time, copy
 from collections import defaultdict
 from datetime import date, timedelta
+from copy import deepcopy
 
 #Code for user story checks
 from validity_checks import *
@@ -72,6 +73,7 @@ def parseFile(filename):
         div=0
         ind_dict = {}
         fam_dict = {}
+        dup_prefix = 'dup_'
 
         longestFirstNameLength = 0
         longestLastNameLength = 0
@@ -87,7 +89,7 @@ def parseFile(filename):
                 if icurr in ind_dict:
                     msg = "Individual ID duplicate:{0}".format(icurr)
                     addUSMsg('US22', msg)
-                    icurr = icurr + "500"
+                    icurr = dup_prefix + icurr
                 ind_dict[icurr]={
                     "MARR":{},
                     "NAME":{},
@@ -155,7 +157,7 @@ def parseFile(filename):
                 if fcurr in fam_dict:
                     msg = "Family ID duplicate:{0}".format(fcurr)
                     addUSMsg('US22', msg)
-                    fcurr = fcurr + "500"
+                    fcurr = dup_prefix + fcurr
                 fam_dict[fcurr]={
                     "MARR":{},
                     "DIV":{},
@@ -174,10 +176,41 @@ def parseFile(filename):
                 marr=1
             elif line_part_count>1 and y[1].strip()=="DIV":
                 div=1
+        #time to fix duplicate IDs
+        #get list of IDs that aren't tagged as duplicates
+        non_dup_ind_lst = [k for k in ind_dict.keys() \
+            if k[:len(dup_prefix)]!=dup_prefix]
+        #get list of IDs tagged as duplicates
+        dup_ind_lst = [k for k in ind_dict.keys() \
+            if k[:len(dup_prefix)]==dup_prefix]
+        #get max non-duplicate ID
+        ind_id_max = max([int(x[1:]) for x in non_dup_ind_lst])
+        #swap key for new key
+        for k in dup_ind_lst:
+            temp_obj = deepcopy(ind_dict[k])
+            del ind_dict[k]
+            new_k = "I{0}".format(ind_id_max+1)
+            ind_dict[new_k] = temp_obj
+            ind_id_max = ind_id_max+1
+
+        #same as above for families
+        non_dup_fam_lst = [k for k in fam_dict.keys() \
+            if k[:len(dup_prefix)]!=dup_prefix]
+        dup_fam_lst = [k for k in fam_dict.keys() \
+            if k[:len(dup_prefix)]==dup_prefix]
+        fam_id_max = max([int(x[1:]) for x in non_dup_fam_lst])
+        for k in dup_fam_lst:
+            temp_obj = deepcopy(fam_dict[k])
+            del fam_dict[k]
+            new_k = "F{0}".format(fam_id_max+1)
+            fam_dict[new_k] = temp_obj
+            fam_id_max = fam_id_max+1
+
     return ind_dict, fam_dict
 
 
-def main(filename, printUserStories, printDescriptions):
+def main(filename, oldestRecentData, printUserStories, printDescriptions):
+    RECENT_CUTOFF = oldestRecentData
     PRINT_USER_STORY_TESTS = printUserStories
     PRINT_PERSON_OR_FAMILY_DESCRIPTION = printDescriptions
     ERR_LIST = {}
@@ -191,20 +224,16 @@ def main(filename, printUserStories, printDescriptions):
     """
     interate over individuals
     """
+    recent = {'births':[], 'deaths':[]}
     if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
         print "\nIndividuals:"
         keyWidth = 6
         firstNameWidth = 10
         lastNameWidth = 15
         dateWidth = 10
-        ind_table_hr = "+-{0:-<{kw}}-+-{0:-<{fnw}}-+-{0:-<{lnw}}\
-                       -+-{0:-<{dw}}\-+-{0:-<{dw}}-+"\
-                       .format('', kw=keyWidth, fnw=firstNameWidth, \
-                       lnw=lastNameWidth, dw=dateWidth) #horizontal table line
+        ind_table_hr = "+-{0:-<{kw}}-+-{0:-<{fnw}}-+-{0:-<{lnw}}-+-{0:-<{dw}}-+-{0:-<{dw}}-+".format('', kw=keyWidth, fnw=firstNameWidth, lnw=lastNameWidth, dw=dateWidth) #horizontal table line
         print ind_table_hr
-        print "| {0:{kw}} | {1:{fnw}} | {2:{lnw}} | {3:{dw}} | {4:{dw}} |"\
-            .format("Key", "First", "Last", "Birth", "Death", kw=keyWidth, \
-            fnw=firstNameWidth, lnw=lastNameWidth, dw=dateWidth)
+        print "| {0:{kw}} | {1:{fnw}} | {2:{lnw}} | {3:{dw}} | {4:{dw}} |".format("Key", "First", "Last", "Birth", "Death", kw=keyWidth, fnw=firstNameWidth, lnw=lastNameWidth, dw=dateWidth)
         print ind_table_hr
     for key in sorted(d, key=lambda x: int(x[1:])):
         name=d[key]["NAME"]
@@ -213,15 +242,23 @@ def main(filename, printUserStories, printDescriptions):
         birt=d[key]["BIRT"]
         deat=d[key]["DEAT"]
         if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
-            bdate = ""
-            ddate = ""
+            strBirth = ""
+            strDeath = ""
             if birt != {}:
-                bdate = "{0}-{1}-{2}".format(birt['year'], birt['month'], birt['day'])
+                dateBirth = date(int(birt['year']), int(birt['month']), int(birt['day']))
+                strBirth = str(dateBirth)
+                if dateBirth > RECENT_CUTOFF:
+                    msg = "Recent birth: {0} on {1}".format(name, strBirth)
+                    addUSMsg('US35', msg)
             if deat != {}:
-                ddate = "{0}-{1}-{2}".format(deat['year'], deat['month'], deat['day'])
+                dateDeath = date(int(deat['year']), int(deat['month']), int(deat['day']))
+                strDeath = str(dateDeath)
+                if dateDeath > RECENT_CUTOFF:
+                    msg = "Recent death: {0} on {1}".format(name, strDeath)
+                    addUSMsg('US36', msg)
             print "| {0:{kw}} | {1:{fnw}} | {2:{lnw}} | {3:{dw}} | {4:{dw}} |"\
-                .format(key, fname, lname, bdate, ddate, kw=keyWidth, \
-                fnw=firstNameWidth, lnw=lastNameWidth, dw=dateWidth)
+				.format(key, fname, lname, strBirth, strDeath, kw=keyWidth, \
+				fnw=firstNameWidth, lnw=lastNameWidth, dw=dateWidth)
         if not birth_before_death(birt,deat):
             msg = "Birth is not before death:{0}".format(name)
             addUSMsg("US03", msg)
@@ -262,13 +299,15 @@ def main(filename, printUserStories, printDescriptions):
         div=d2[key2]["DIV"]
         chil=d2[key2]["CHIL"]
         if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
-            mdate = ""
-            ddate = ""
+            strMarr = ""
+            strDiv = ""
             if marr != {}:
-                mdate = "{0}-{1}-{2}".format(marr['year'], marr['month'], marr['day'])
+                dateMarr = date(int(marr['year']), int(marr['month']), int(marr['day']))
+                strMarr = str(dateMarr)
             if div != {}:
-                ddate = "{0}-{1}-{2}".format(div['year'], div['month'], div['day'])
-            print "| {0:{kw}} | {1:{kw}} | {2:{kw}} | {3:{dw}} | {4:{dw}} | {5:{cw}} |".format(key2, husb, wife, mdate, ddate, ', '.join(chil), kw=keyWidth, dw=dateWidth, cw=childrenWidth)
+                dateDiv = date(int(div['year']), int(div['month']), int(div['day']))
+                strDiv = str(dateDiv)
+            print "| {0:{kw}} | {1:{kw}} | {2:{kw}} | {3:{dw}} | {4:{dw}} | {5:{cw}} |".format(key2, husb, wife, strMarr, strDiv, ', '.join(chil), kw=keyWidth, dw=dateWidth, cw=childrenWidth)
         if not birth_before_marriage(hbirt,marr):
             msg = "Husbands Birth with key {0} has name {1} is not before marriage ".format(husb, hname)
             addUSMsg("US02", msg)
@@ -404,11 +443,12 @@ def main(filename, printUserStories, printDescriptions):
         printUSMsgs()
 
 if __name__ == '__main__':
-    print_user_stories = True
+    print_user_stories = False
     print_descriptions = True
-    print str(date.today())
+    recent_days = 90
+    oldest_recent_date = (date.today() + timedelta(days=-90))
     if len(sys.argv) == 2:
         filename = sys.argv[1]
-        main(filename, print_user_stories, print_descriptions)
+        main(filename, oldest_recent_date, print_user_stories, print_descriptions)
     else:
         print ("Usage: python project02.py <filename>")

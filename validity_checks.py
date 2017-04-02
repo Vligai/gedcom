@@ -305,7 +305,7 @@ def aunts_uncles(key, d, d2):
             if key in mar and key2 in mar:
                 ans.append(key2)
     return ans
-    
+
 def unique_name_bdate(name1, name2, bdate1, bdate2):
     """
     US23: No more than one individual with the same name and birth
