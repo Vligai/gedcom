@@ -248,22 +248,74 @@ def living_married(d,d2):
                 livingmarriedpeople[wife]=wife
     return livingmarriedpeople
 
-def aunts_uncles(per1, per2):
-	"""
-	US 20: Aunts and uncles should not marry their nieces or nephews
-	"""
-	
-	return 1;
-	
+def aunts_uncles(key, d, d2):
+    """
+    US 20: Aunts and uncles should not marry their nieces or nephews
+    """
+    fam = []
+    ans = []
+    dad = 0
+    mom = 0
+    daddad = 0
+    mommom = 0
+    dadmom = 0
+    momdad = 0
+    for key1 in d2:
+        for key2 in d2[key1]["CHIL"]:
+            if key == key2:
+                husb=d2[key1]["HUSB"]
+                wife=d2[key1]["WIFE"]
+                dad = husb
+                mom = wife
+    for key1 in d2:
+        for key2 in d2[key1]["CHIL"]:
+            if dad == key2:
+                husb=d2[key1]["HUSB"]
+                wife=d2[key1]["WIFE"]
+                daddad = husb
+                momdad = wife
+    for key1 in d2:
+        for key2 in d2[key1]["CHIL"]:
+            if mom == key2:
+                husb=d2[key1]["HUSB"]
+                wife=d2[key1]["WIFE"]
+                dadmom = husb
+                mommom = wife
+    for key1 in d2:
+        husb=d2[key1]["HUSB"]
+        wife=d2[key1]["WIFE"]
+        if husb == dadmom and wife == mommom:
+            for chil in d2[key1]["CHIL"]:
+                if chil == mom:
+                    continue
+                else:
+                    fam.append(chil)
+        if husb == daddad and wife == momdad:
+            for chil in d2[key1]["CHIL"]:
+                if chil == dad:
+                    continue
+                else:
+                    fam.append(chil)
+	#print fam
+    for key1 in d2:
+        husb=d2[key1]["HUSB"]
+        wife=d2[key1]["WIFE"]
+        mar = [husb,wife]
+        for key2 in fam:
+            if key in mar and key2 in mar:
+                ans.append(key2)
+                print key, key2
+    return ans
+    
 def unique_name_bdate(name1, name2, bdate1, bdate2):
-	"""
-	US23: No more than one individual with the same name and birth
-	date should appear in a GEDCOM file
-	"""
-	if name1 == {} or name2 == {}:
-		return True
-	if bdate1 == {} or bdate2 =={}:
-		return True
-	if name1 == name2 and bdate1 == bdate2:
-		return False
-	return True
+    """
+    US23: No more than one individual with the same name and birth
+    date should appear in a GEDCOM file
+    """
+    if name1 == {} or name2 == {}:
+        return True
+    if bdate1 == {} or bdate2 =={}:
+        return True
+    if name1 == name2 and bdate1 == bdate2:
+        return False
+    return True

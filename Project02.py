@@ -383,9 +383,18 @@ def main(filename, printUserStories, printDescriptions):
                 if not unique_name_bdate(name1, name2, birt1, birt2):
                     msg = "Person with key {} has the name {} is the same as person with key {} and name {} have the same birthday {}".format(key,name1,key2,name2,print_date(birt1))
                     addError('US23', msg)
+    
+    for key in sorted(d, key=lambda x: int(x[1:])):
+        a = aunts_uncles(key, d, d2)
+        if a != []:
+            for aa in a:
+                name1=d[key]["NAME"]
+                name2=d[aa]["NAME"]
+                msg = "Person with key {} has the name {} has aunt or uncle with key {} and name {}".format(key,name1,aa,name2)
+                addError('US20', msg)
     if PRINT_USER_STORY_TESTS:
         printErrors()
-    print ind_dict
+    
 if __name__ == '__main__':
     print_user_stories = True
     print_descriptions = True
