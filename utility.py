@@ -3,6 +3,8 @@ def printTable(tobj, title=""):
     Prints a table
     tobj is a dictionary of column headers as keys, holding lists of cell values for each column
     """
+    #define the order columns should print in
+    customOrdering = ['Key', 'First', 'Last', 'Birth', 'Death', 'Husb', 'Wife', 'Marriage', 'Divorce', 'Children']
     #check for at least 1 column
     if len(tobj.keys()) < 1:
         raise ValueError("Table must contain at least 1 column")
@@ -15,10 +17,11 @@ def printTable(tobj, title=""):
         tobj = {k:["None"] for k in tobj}
     #create dictionary of column headers and longest widths
     maxSizeLst = {k:len(max(tobj[k], key=len)) for k in tobj}
+    maxSizeLst = {k:max(maxSizeLst[k], len(k)) for k in maxSizeLst}
     #create horizontal rule string
-    hr = "+-" + "-+-".join(["-"*(maxSizeLst[k]) for k in maxSizeLst]) + "-+"
+    hr = "+-" + "-+-".join(["-"*(maxSizeLst[k]) for k in sorted(maxSizeLst, key=lambda word: customOrdering.index(word))]) + "-+"
     #create header string
-    header = "| " + " | ".join(["{0:{w}}".format(k, w=maxSizeLst[k]) for k in tobj]) + " |"
+    header = "| " + " | ".join(["{0:{w}}".format(k, w=maxSizeLst[k]) for k in sorted(tobj, key=lambda word: customOrdering.index(word))]) + " |"
     #print header
     print title+":" if len(title)>0 else title
     print hr
@@ -26,7 +29,7 @@ def printTable(tobj, title=""):
     print hr
     #print row data
     for i in range(rowCount):
-        line = "| " + " | ".join(["{0:{w}}".format(tobj[k][i], w=maxSizeLst[k]) for k in tobj]) + " |"
+        line = "| " + " | ".join(["{0:{w}}".format(tobj[k][i], w=maxSizeLst[k]) for k in sorted(tobj, key=lambda word: customOrdering.index(word))]) + " |"
         print line
     #print bottom hr
     print hr

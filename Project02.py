@@ -5,6 +5,7 @@ from copy import deepcopy
 
 #Code for user story checks
 from validity_checks import *
+from utility import *
 
 tags=[\
     "INDI", "NAME", "SEX", "BIRT", "DEAT", "FAMC", "FAMS", "FAM",\
@@ -231,16 +232,12 @@ def main(filename, oldestRecentData, printUserStories, printDescriptions):
     interate over individuals
     """
     recent = {'births':[], 'deaths':[]}
+    ind_print_tbl = {}
     if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
-        print "\nIndividuals:"
-        keyWidth = 6
-        firstNameWidth = 10
-        lastNameWidth = 15
-        dateWidth = 10
-        ind_table_hr = "+-{0:-<{kw}}-+-{0:-<{fnw}}-+-{0:-<{lnw}}-+-{0:-<{dw}}-+-{0:-<{dw}}-+".format('', kw=keyWidth, fnw=firstNameWidth, lnw=lastNameWidth, dw=dateWidth) #horizontal table line
-        print ind_table_hr
-        print "| {0:{kw}} | {1:{fnw}} | {2:{lnw}} | {3:{dw}} | {4:{dw}} |".format("Key", "First", "Last", "Birth", "Death", kw=keyWidth, fnw=firstNameWidth, lnw=lastNameWidth, dw=dateWidth)
-        print ind_table_hr
+        #define headers and initialize dictionary columns
+        ind_table_headers = ["Key", "First", "Last", "Birth", "Death"]
+        for h in ind_table_headers:
+            ind_print_tbl[h] = []
     for key in sorted(d, key=lambda x: int(x[1:])):
         name=d[key]["NAME"]
         fname=d[key]['GIVN']
@@ -262,9 +259,11 @@ def main(filename, oldestRecentData, printUserStories, printDescriptions):
                 if dateDeath > RECENT_CUTOFF:
                     msg = "Recent death: {0} on {1}".format(name, strDeath)
                     addUSMsg('US36', msg)
-            print "| {0:{kw}} | {1:{fnw}} | {2:{lnw}} | {3:{dw}} | {4:{dw}} |"\
-				.format(key, fname, lname, strBirth, strDeath, kw=keyWidth, \
-				fnw=firstNameWidth, lnw=lastNameWidth, dw=dateWidth)
+            ind_print_tbl["Key"].append(key)
+            ind_print_tbl["First"].append(fname)
+            ind_print_tbl["Last"].append(lname)
+            ind_print_tbl["Birth"].append(strBirth if strBirth else "")
+            ind_print_tbl["Death"].append(strDeath if strBirth else "")
         if not birth_before_death(birt,deat):
             msg = "Birth is not before death:{0}".format(name)
             addUSMsg("US03", msg)
@@ -278,7 +277,7 @@ def main(filename, oldestRecentData, printUserStories, printDescriptions):
             msg = "Date of {0}'s death {1} is after today".format(name,print_date(deat))
             addUSMsg("US01", msg)
     if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
-        print ind_table_hr
+        printTable(ind_print_tbl, "Individuals")
 
     """
     interate over families
