@@ -329,7 +329,8 @@ def sibling_marry(key, d, d2):
     print d2
     l = []
     for id in fam:
-        l += [(d2[id]["HUSB"], d2[id]["WIFE"])]
+	if id in d2:
+	        l += [(d2[id]["HUSB"], d2[id]["WIFE"])]
     for sib in siblings:
         if d[key]["SEX"] == "M":
             test = (key, sib)
@@ -341,12 +342,19 @@ def sibling_marry(key, d, d2):
 
 def first_cousins(key, d, d2):
     """US19"""
-    dad = d2[d[key]["FAMC"]]["HUSB"]
-    mom = d2[d[key]["FAMC"]]["WIFE"]
-    momfam = d2[d[mom]["FAMC"]]["CHIL"]
-    momfam.remove(mom)
-    dadfam = d2[d[dad]["FAMC"]]["CHIL"]
-    dadfam.remove(dad)
+    if d[key]["FAMC"] in d2:
+	    dad = d2[d[key]["FAMC"]]["HUSB"]
+	    mom = d2[d[key]["FAMC"]]["WIFE"]
+	    print dad
+	    print mom
+	    print d[mom]["FAMC"]
+	    print d[dad]["FAMC"]
+	    print d2[d[mom]["FAMC"]]
+	    print d2[d[dad]["FAMC"]]
+	    momfam = d2[d[mom]["FAMC"]]["CHIL"]
+	    momfam.remove(mom)
+	    dadfam = d2[d[dad]["FAMC"]]["CHIL"]
+	    dadfam.remove(dad)
     cousin = []
     l = []
     for k in momfam + dadfam:
