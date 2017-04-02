@@ -2,6 +2,9 @@ import sys, time, copy
 from collections import defaultdict
 from datetime import date, timedelta
 
+#Code for user story checks
+from validity_checks import *
+
 tags=[\
     "INDI", "NAME", "SEX", "BIRT", "DEAT", "FAMC", "FAMS", "FAM",\
     "MARR", "HUSB", "WIFE", "CHIL", "DIV", "DATE", "HEAD", "TRLR", "NOTE"]
@@ -173,7 +176,6 @@ def parseFile(filename):
                 div=1
     return ind_dict, fam_dict
 
-from validity_checks import *
 
 def main(filename, printUserStories, printDescriptions):
     PRINT_USER_STORY_TESTS = printUserStories
@@ -195,9 +197,14 @@ def main(filename, printUserStories, printDescriptions):
         firstNameWidth = 10
         lastNameWidth = 15
         dateWidth = 10
-        ind_table_hr = "+-{0:-<{kw}}-+-{0:-<{fnw}}-+-{0:-<{lnw}}-+-{0:-<{dw}}-+-{0:-<{dw}}-+".format('', kw=keyWidth, fnw=firstNameWidth, lnw=lastNameWidth, dw=dateWidth) #horizontal table line
+        ind_table_hr = "+-{0:-<{kw}}-+-{0:-<{fnw}}-+-{0:-<{lnw}}\
+                       -+-{0:-<{dw}}\-+-{0:-<{dw}}-+"\
+                       .format('', kw=keyWidth, fnw=firstNameWidth, \
+                       lnw=lastNameWidth, dw=dateWidth) #horizontal table line
         print ind_table_hr
-        print "| {0:{kw}} | {1:{fnw}} | {2:{lnw}} | {3:{dw}} | {4:{dw}} |".format("Key", "First", "Last", "Birth", "Death", kw=keyWidth, fnw=firstNameWidth, lnw=lastNameWidth, dw=dateWidth)
+        print "| {0:{kw}} | {1:{fnw}} | {2:{lnw}} | {3:{dw}} | {4:{dw}} |"\
+            .format("Key", "First", "Last", "Birth", "Death", kw=keyWidth, \
+            fnw=firstNameWidth, lnw=lastNameWidth, dw=dateWidth)
         print ind_table_hr
     for key in sorted(d, key=lambda x: int(x[1:])):
         name=d[key]["NAME"]
@@ -212,7 +219,9 @@ def main(filename, printUserStories, printDescriptions):
                 bdate = "{0}-{1}-{2}".format(birt['year'], birt['month'], birt['day'])
             if deat != {}:
                 ddate = "{0}-{1}-{2}".format(deat['year'], deat['month'], deat['day'])
-            print "| {0:{kw}} | {1:{fnw}} | {2:{lnw}} | {3:{dw}} | {4:{dw}} |".format(key, fname, lname, bdate, ddate, kw=keyWidth, fnw=firstNameWidth, lnw=lastNameWidth, dw=dateWidth)
+            print "| {0:{kw}} | {1:{fnw}} | {2:{lnw}} | {3:{dw}} | {4:{dw}} |"\
+                .format(key, fname, lname, bdate, ddate, kw=keyWidth, \
+                fnw=firstNameWidth, lnw=lastNameWidth, dw=dateWidth)
         if not birth_before_death(birt,deat):
             msg = "Birth is not before death:{0}".format(name)
             addUSMsg("US03", msg)
@@ -362,6 +371,7 @@ def main(filename, printUserStories, printDescriptions):
         msg = "Person with key {} has the name {} and died on {}".format(key,name,print_date(deat))
         addUSMsg('US29', msg)
 
+
     lm=living_married(d,d2)
     lm2=sorted(lm, key=lambda x: int(x[1:]))
     for key in lm2:
@@ -396,6 +406,7 @@ def main(filename, printUserStories, printDescriptions):
 if __name__ == '__main__':
     print_user_stories = True
     print_descriptions = True
+    print str(date.today())
     if len(sys.argv) == 2:
         filename = sys.argv[1]
         main(filename, print_user_stories, print_descriptions)
