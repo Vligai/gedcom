@@ -247,3 +247,18 @@ def living_married(d,d2):
                 livingmarriedpeople[husb]=husb
                 livingmarriedpeople[wife]=wife
     return livingmarriedpeople
+
+def aunts_uncles(per1, per2):
+	"""
+	US 20: Aunts and uncles should not marry their nieces or nephews
+	"""
+	
+	return 1;
+	
+def unique_name_bdate(name, bdate):
+	"""
+	US23: No more than one individual with the same name and birth
+	date should appear in a GEDCOM file
+	"""
+	
+	return 1;

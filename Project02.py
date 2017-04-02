@@ -1,4 +1,3 @@
-#Mark Mirthcouk Project 2
 import sys, time, copy
 from collections import defaultdict
 from datetime import date, timedelta
