@@ -385,7 +385,7 @@ def main(filename, printUserStories, printDescriptions):
                     addError('US23', msg)
     if PRINT_USER_STORY_TESTS:
         printErrors()
-    
+    print ind_dict
 if __name__ == '__main__':
     print_user_stories = True
     print_descriptions = True
