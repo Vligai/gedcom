@@ -87,8 +87,6 @@ def parseFile(filename):
             if line_part_count>2 and y[2].strip()=="INDI":
                 icurr=y[1].strip()
                 if icurr in ind_dict:
-                    msg = "Individual ID duplicate:{0}".format(icurr)
-                    addUSMsg('US22', msg)
                     icurr = dup_prefix + icurr
                 ind_dict[icurr]={
                     "MARR":{},
@@ -155,8 +153,6 @@ def parseFile(filename):
             elif line_part_count>2 and y[2].strip()=="FAM":
                 fcurr=y[1].strip()
                 if fcurr in fam_dict:
-                    msg = "Family ID duplicate:{0}".format(fcurr)
-                    addUSMsg('US22', msg)
                     fcurr = dup_prefix + fcurr
                 fam_dict[fcurr]={
                     "MARR":{},
@@ -176,6 +172,7 @@ def parseFile(filename):
                 marr=1
             elif line_part_count>1 and y[1].strip()=="DIV":
                 div=1
+    def handleDups():
         #time to fix duplicate IDs
         #get list of IDs that aren't tagged as duplicates
         non_dup_ind_lst = [k for k in ind_dict.keys() \
@@ -187,10 +184,15 @@ def parseFile(filename):
         ind_id_max = max([int(x[1:]) for x in non_dup_ind_lst])
         #swap key for new key
         for k in dup_ind_lst:
+            #swap
             temp_obj = deepcopy(ind_dict[k])
             del ind_dict[k]
             new_k = "I{0}".format(ind_id_max+1)
             ind_dict[new_k] = temp_obj
+            #log
+            msg = "Individual ID duplicate '{0}' reassigned to '{1}'".format(k[len(dup_prefix):], new_k)
+            addUSMsg('US22', msg)
+            #increase counter
             ind_id_max = ind_id_max+1
 
         #same as above for families
@@ -200,12 +202,17 @@ def parseFile(filename):
             if k[:len(dup_prefix)]==dup_prefix]
         fam_id_max = max([int(x[1:]) for x in non_dup_fam_lst])
         for k in dup_fam_lst:
+            #swap
             temp_obj = deepcopy(fam_dict[k])
             del fam_dict[k]
             new_k = "F{0}".format(fam_id_max+1)
             fam_dict[new_k] = temp_obj
+            #log
+            msg = "Family ID duplicate '{0}' reassigned to '{1}'".format(k[len(dup_prefix):], new_k)
+            addUSMsg('US22', msg)
+            #increase counter
             fam_id_max = fam_id_max+1
-
+    handleDups()
     return ind_dict, fam_dict
 
 
@@ -443,7 +450,7 @@ def main(filename, oldestRecentData, printUserStories, printDescriptions):
         printUSMsgs()
 
 if __name__ == '__main__':
-    print_user_stories = False
+    print_user_stories = True
     print_descriptions = True
     recent_days = 90
     oldest_recent_date = (date.today() + timedelta(days=-90))
