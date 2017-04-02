@@ -377,7 +377,7 @@ def main(filename, printUserStories, printDescriptions):
     living_married(d,d2)#TAKE OUT
 
 if __name__ == '__main__':
-    print_user_stories = False
+    print_user_stories = True
     print_descriptions = True
     if len(sys.argv) == 2:
         filename = sys.argv[1]
