@@ -282,15 +282,11 @@ def main(filename, oldestRecentData, printUserStories, printDescriptions):
     """
     interate over families
     """
+    fam_print_tbl = {}
     if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
-        print "\nFamilies:"
-        keyWidth = 6
-        dateWidth = 10
-        childrenWidth = keyWidth * 4
-        fam_table_hr = "+-{0:-<{kw}}-+-{0:-<{kw}}-+-{0:-<{kw}}-+-{0:-<{dw}}-+-{0:-<{dw}}-+-{0:-<{cw}}-+".format('', kw=keyWidth, dw=dateWidth, cw=childrenWidth) #horizontal table line
-        print fam_table_hr
-        print "| {0:<{kw}} | {1:<{kw}} | {2:<{kw}} | {3:<{dw}} | {4:<{dw}} | {5:<{cw}} |".format("Key", "Husb", "Wife", "Marriage", "Divorce", "Children", kw=keyWidth, dw=dateWidth, cw=childrenWidth)
-        print fam_table_hr
+        fam_table_headers = ["Key", "Husb", "Wife", "Marriage", "Divorce", "Children"]
+        for h in fam_table_headers:
+            fam_print_tbl[h] = []
     for key2 in sorted(d2, key=lambda x: int(x[1:])):
         husb=d2[key2]["HUSB"]
         wife=d2[key2]["WIFE"]
@@ -312,7 +308,12 @@ def main(filename, oldestRecentData, printUserStories, printDescriptions):
             if div != {}:
                 dateDiv = date(int(div['year']), int(div['month']), int(div['day']))
                 strDiv = str(dateDiv)
-            print "| {0:{kw}} | {1:{kw}} | {2:{kw}} | {3:{dw}} | {4:{dw}} | {5:{cw}} |".format(key2, husb, wife, strMarr, strDiv, ', '.join(chil), kw=keyWidth, dw=dateWidth, cw=childrenWidth)
+            fam_print_tbl["Key"].append(key2)
+            fam_print_tbl["Husb"].append(husb)
+            fam_print_tbl["Wife"].append(wife)
+            fam_print_tbl["Marriage"].append(strMarr if strMarr else "")
+            fam_print_tbl["Divorce"].append(strDiv if strDiv else "")
+            fam_print_tbl["Children"].append(", ".join(chil) if len(chil)>0 else "")
         if not birth_before_marriage(hbirt,marr):
             msg = "Husbands Birth with key {0} has name {1} is not before marriage ".format(husb, hname)
             addUSMsg("US02", msg)
@@ -379,7 +380,7 @@ def main(filename, oldestRecentData, printUserStories, printDescriptions):
                         addUSMsg('US13', msg)
 
     if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
-        print fam_table_hr
+        printTable(fam_print_tbl, "Families")
 	"""Checking for bigomy"""
     d3=sorted(d2, key=lambda x: int(x[1:]))
     for key2 in d3:
