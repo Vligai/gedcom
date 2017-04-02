@@ -223,7 +223,9 @@ def no_incest(ind, fam, start):
     return True
 
 def deceased(d):
-    """US29"""
+    """
+	US29: Returns all people that are dead (DEAT date not empty)
+    """
     deadpeople={}
     for key in d:
         deat=d[key]["DEAT"]
@@ -232,7 +234,9 @@ def deceased(d):
     return deadpeople
 
 def living_married(d,d2):
-    """US30"""
+    """
+	US30: Returns all people that are not divorced and both their husband/wife and themselves are alive
+    """
     livingmarriedpeople={}
     for key2 in d2:
         husb=d2[key2]["HUSB"]
