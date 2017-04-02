@@ -16,7 +16,7 @@ US_MSG_OBJ = {} #user story message object
 
 def addUSMsg(user_story, message):
     """
-    Adds an error message to the global dictionary of errors, US_MSG_OBJ
+    Adds a user story message to the global dictionary of user story messages, US_MSG_OBJ
     US_MSG_OBJ is sorted by user story, a string in the form "US<number>"
     """
     if not user_story in US_MSG_OBJ:
@@ -25,19 +25,19 @@ def addUSMsg(user_story, message):
 
 def printUSMsgs(print_us_nums=True):
     """
-    Prints errors from the global error dictionary, US_MSG_OBJ
+    Prints messages from the global user story message dictionary, US_MSG_OBJ
     Sorted by user story numbers, with the option to print the numbers
     """
     if len(US_MSG_OBJ) == 0:
-        print "No errors found"
+        print "No messages found"
         return
     print "\n+----------------------+"
-    print "| Errors found in file |"
+    print "| User Story Messages  |"
     print "+----------------------+"
     for user_story, msgLst in sorted(US_MSG_OBJ.iteritems()):
         #msgLst = US_MSG_OBJ[user_story]
         if print_us_nums:
-            print "{0} errors:".format(user_story)
+            print "{0} messages:".format(user_story)
         for msg in msgLst:
             indent = ''
             if print_us_nums:
