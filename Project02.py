@@ -232,12 +232,19 @@ def main(filename, oldestRecentData, printUserStories, printDescriptions):
     interate over individuals
     """
     recent = {'births':[], 'deaths':[]}
-    ind_print_tbl = {}
+
     if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
+        ind_print_tbl = {}
+        fam_print_tbl = {}
         #define headers and initialize dictionary columns
         ind_table_headers = ["Key", "First", "Last", "Birth", "Death"]
         for h in ind_table_headers:
             ind_print_tbl[h] = []
+
+        fam_table_headers = ["Key", "Husb", "Wife", "Marriage", "Divorce", "Children"]
+        for h in fam_table_headers:
+            fam_print_tbl[h] = []
+
     for key in sorted(d, key=lambda x: int(x[1:])):
         name=d[key]["NAME"]
         fname=d[key]['GIVN']
@@ -276,17 +283,10 @@ def main(filename, oldestRecentData, printUserStories, printDescriptions):
         if not date_before_today(deat):
             msg = "Date of {0}'s death {1} is after today".format(name,print_date(deat))
             addUSMsg("US01", msg)
-    if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
-        printTable(ind_print_tbl, ind_table_headers, "Individuals")
 
     """
     interate over families
     """
-    fam_print_tbl = {}
-    if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
-        fam_table_headers = ["Key", "Husb", "Wife", "Marriage", "Divorce", "Children"]
-        for h in fam_table_headers:
-            fam_print_tbl[h] = []
     for key2 in sorted(d2, key=lambda x: int(x[1:])):
         husb=d2[key2]["HUSB"]
         wife=d2[key2]["WIFE"]
@@ -379,8 +379,7 @@ def main(filename, oldestRecentData, printUserStories, printDescriptions):
                         msg = "Sibling spacing between {0} and {1} is too small or too large".format(c,c2)
                         addUSMsg('US13', msg)
 
-    if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
-        printTable(fam_print_tbl, fam_table_headers, "Families")
+
 	"""Checking for bigomy"""
     d3=sorted(d2, key=lambda x: int(x[1:]))
     for key2 in d3:
@@ -445,6 +444,10 @@ def main(filename, oldestRecentData, printUserStories, printDescriptions):
                 name2=d[aa]["NAME"]
                 msg = "Person with key {} has the name {} and is married to their aunt or uncle with key {} and name {}".format(key,name1,aa,name2)
                 addUSMsg('US20', msg)
+
+    if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
+        printTable(ind_print_tbl, ind_table_headers, "Individuals")
+        printTable(fam_print_tbl, fam_table_headers, "Families")
     if PRINT_USER_STORY_TESTS:
         printUSMsgs()
 
