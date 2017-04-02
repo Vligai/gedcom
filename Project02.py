@@ -452,7 +452,7 @@ def main(filename, oldestRecentData, printUserStories, printDescriptions):
 if __name__ == '__main__':
     print_user_stories = True
     print_descriptions = True
-    recent_days = 90
+    recent_days = 30
     oldest_recent_date = (date.today() + timedelta(days=-90))
     if len(sys.argv) == 2:
         filename = sys.argv[1]
