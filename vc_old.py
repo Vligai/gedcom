@@ -1,5 +1,4 @@
 from datetime import date, timedelta
-import copy
 
 def birth_before_death(birth,death):
     """
@@ -205,7 +204,6 @@ def male_last_names(ind, fam):
     return True
 
 def no_incest(ind, fam, start):
-    """US17"""
     sex = "HUSB" if ind[start]["SEX"] == "M" else "WIFE"
     other = "WIFE" if sex == "HUSB" else "HUSB"
     childsFams = []
@@ -321,17 +319,11 @@ def unique_name_bdate(name1, name2, bdate1, bdate2):
     if name1 == name2 and bdate1 == bdate2:
         return False
     return True
-    
+
 def sibling_marry(key, d, d2):
     """US18"""
     if d[key]["FAMC"] != {} and d[key]["FAMC"] in d2:
-        siblings = []
-	#for a in d2[d[key]["FAMC"]]["CHIL"]:
-	#	siblings[a] = 
-	for a in d2[d[key]["FAMC"]]["CHIL"]:
-		siblings.append(a)
-	#siblings = d2[d[key]["FAMC"]]["CHIL"]
-	print siblings
+        siblings = d2[d[key]["FAMC"]]["CHIL"]
         #print key, siblings, d2[d[key]["FAMC"]]
         if key in siblings:
             siblings.remove(key)
@@ -358,19 +350,13 @@ def first_cousins(key, d, d2):
             dad = d2[d[key]["FAMC"]]["HUSB"]
             mom = d2[d[key]["FAMC"]]["WIFE"]
             if d[mom]["FAMC"] != {} and d[mom]["FAMC"] in d2:
-                momfam = []
-                for a in d2[d[mom]["FAMC"]]["CHIL"]:
-			momfam.append(a)
-		#momfam = d2[d[mom]["FAMC"]]["CHIL"]
+                momfam = d2[d[mom]["FAMC"]]["CHIL"] 
             else:
                 momfam = []
             if momfam != [] and mom in momfam:
                 momfam.remove(mom)
             if d[dad]["FAMC"] != {} and d[dad]["FAMC"] in d2:
-                dadfam = []
-                for a in d2[d[dad]["FAMC"]]["CHIL"]:
-			dadfam.append(a)
-                #dadfam = d2[d[dad]["FAMC"]]["CHIL"]
+                dadfam = d2[d[dad]["FAMC"]]["CHIL"] 
             else:
                 dadfam = []
             if dadfam != [] and dad in dadfam:
