@@ -258,13 +258,13 @@ def main(filename, oldestRecentData, printUserStories, printDescriptions):
                 dateBirth = date(int(birt['year']), int(birt['month']), int(birt['day']))
                 strBirth = str(dateBirth)
                 if dateBirth > RECENT_CUTOFF:
-                    msg = "Recent birth: {0} on {1}".format(name, print_date(birt))
+                    msg = "Recent birth: {0} on {1}".format(name, strBirth)
                     addUSMsg('US35', msg)
             if deat != {}:
                 dateDeath = date(int(deat['year']), int(deat['month']), int(deat['day']))
                 strDeath = str(dateDeath)
                 if dateDeath > RECENT_CUTOFF:
-                    msg = "Recent death: {0} on {1}".format(name, print_date(deat))
+                    msg = "Recent death: {0} on {1}".format(name, strDeath)
                     addUSMsg('US36', msg)
             ind_print_tbl["Key"].append(key)
             ind_print_tbl["First"].append(fname)
