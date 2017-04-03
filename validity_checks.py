@@ -322,6 +322,7 @@ def unique_name_bdate(name1, name2, bdate1, bdate2):
 
 def sibling_marry(key, d, d2):
     """US18"""
+<<<<<<< HEAD
     if d[key]["FAMC"] != {} and d[key]["FAMC"] in d2:
         siblings = d2[d[key]["FAMC"]]["CHIL"]
         #print key, siblings, d2[d[key]["FAMC"]]
@@ -341,10 +342,28 @@ def sibling_marry(key, d, d2):
                 test = (sib, key)
             if test in l:
                 return False
+=======
+    siblings = d2[d[key]["FAMC"]]["CHIL"]
+    siblings.remove(key)
+    fam = d[key]["FAMIDS"]
+    print fam
+    print d2
+    l = []
+    for id in fam:
+        l += [(d2[id]["HUSB"], d2[id]["WIFE"])]
+    for sib in siblings:
+        if d[key]["SEX"] == "M":
+            test = (key, sib)
+        else:
+            test = (sib, key)
+        if test in l:
+            return False
+>>>>>>> parent of c8c5f39... helping zach
     return True
 
 def first_cousins(key, d, d2):
     """US19"""
+<<<<<<< HEAD
     if d[key]["FAMC"] != {}:
         if d[key]["FAMC"] in d2:
             dad = d2[d[key]["FAMC"]]["HUSB"]
@@ -378,3 +397,26 @@ def first_cousins(key, d, d2):
             if test in l:
                 return False
     return True
+=======
+    dad = d2[d[key]["FAMC"]]["HUSB"]
+    mom = d2[d[key]["FAMC"]]["WIFE"]
+    momfam = d2[d[mom]["FAMC"]]["CHIL"]
+    momfam.remove(mom)
+    dadfam = d2[d[dad]["FAMC"]]["CHIL"]
+    dadfam.remove(dad)
+    cousin = []
+    l = []
+    for k in momfam + dadfam:
+        for f in d[k]["FAMIDS"]:
+            cousin += [d2[f]["CHIL"]]
+    for id in d[key]["FAMIDS"]:
+        l += [(d2[id]["HUSB"], d2[id]["WIFE"])]
+    for c in cousin:
+        if d[key]["SEX"] == "M":
+            test = (key, sib)
+        else:
+            test = (sib, key)
+        if test in l:
+            return False
+    return True
+>>>>>>> parent of c8c5f39... helping zach
