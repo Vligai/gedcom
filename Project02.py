@@ -48,6 +48,12 @@ def printUSMsgs(print_us_nums=True):
             if print_us_nums:
                 indent = "-"
             print "{0:2}{1}".format(indent, msg)
+    USLst = ['US01', 'US06','US07','US08','US09','US10','US11','US13','US16','US17','US18','US19','US20','US21','US22','US23','US29','US30','US35','US36']
+    noMsgUSLst = filter(lambda x: x not in US_MSG_OBJ.keys(), USLst)
+    if len(noMsgUSLst)>0:
+        print "\nUSER STORY PRINT ERRORS"
+        for us in noMsgUSLst:
+            print "US not printing:{0}".format(us)
     return None
 
 def print_date(ddate):
