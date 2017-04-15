@@ -1,5 +1,5 @@
 from datetime import date, timedelta
-from dateutil.relativedelta import relativedelta
+
 import copy
 
 def birth_before_death(birth,death):
@@ -327,12 +327,12 @@ def sibling_marry(key, d, d2):
     """US18"""
     if d[key]["FAMC"] != {} and d[key]["FAMC"] in d2:
         siblings = []
-    #for a in d2[d[key]["FAMC"]]["CHIL"]:
-    #   siblings[a] = 
-    for a in d2[d[key]["FAMC"]]["CHIL"]:
-        siblings.append(a)
-    #siblings = d2[d[key]["FAMC"]]["CHIL"]
-    print siblings
+        #for a in d2[d[key]["FAMC"]]["CHIL"]:
+        #   siblings[a] = 
+        for a in d2[d[key]["FAMC"]]["CHIL"]:
+            siblings.append(a)
+        #siblings = d2[d[key]["FAMC"]]["CHIL"]
+        print siblings
         #print key, siblings, d2[d[key]["FAMC"]]
         if key in siblings:
             siblings.remove(key)
@@ -361,8 +361,8 @@ def first_cousins(key, d, d2):
             if d[mom]["FAMC"] != {} and d[mom]["FAMC"] in d2:
                 momfam = []
                 for a in d2[d[mom]["FAMC"]]["CHIL"]:
-            momfam.append(a)
-        #momfam = d2[d[mom]["FAMC"]]["CHIL"]
+					momfam.append(a)
+			#momfam = d2[d[mom]["FAMC"]]["CHIL"]
             else:
                 momfam = []
             if momfam != [] and mom in momfam:
@@ -370,7 +370,7 @@ def first_cousins(key, d, d2):
             if d[dad]["FAMC"] != {} and d[dad]["FAMC"] in d2:
                 dadfam = []
                 for a in d2[d[dad]["FAMC"]]["CHIL"]:
-            dadfam.append(a)
+					dadfam.append(a)
                 #dadfam = d2[d[dad]["FAMC"]]["CHIL"]
             else:
                 dadfam = []
