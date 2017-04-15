@@ -412,6 +412,7 @@ def order_sibling(fid, d, d2):
 
 def corresponding(id, d, d2):
     """us26"""
+    return True
     head = d[id]["FAMIDS"]
     born = d[id]["FAMS"]
 
@@ -447,7 +448,7 @@ def individual_age_from_marr(birth,marr):
     else:
     	marr = date(int(marr["year"]), marr["month"], int(marr["day"]))
     age = marr - birth
-    return int(age.days)/365.25
+    return abs(int(int(age.days)/365.25))
 
 def unique_fam(fam):
     """
@@ -457,7 +458,7 @@ def unique_fam(fam):
     
     return 1
 
-def large_age_diff(famid):
+def large_age_diff(famid,d,d2):
 
 	if famid not in d2:
 		return False
@@ -465,7 +466,7 @@ def large_age_diff(famid):
         wife=d2[famid]["WIFE"]
         hbirt=d[husb]["BIRT"]
         wbirt=d[wife]["BIRT"]
-        marr=d2[key2]["MARR"]
+        marr=d2[famid]["MARR"]
 	hage = individual_age_from_marr(hbirt,marr)
 	wage = individual_age_from_marr(wbirt,marr)
 	if hage > (wage * 2) or wage > (hage * 2):

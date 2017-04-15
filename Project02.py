@@ -381,7 +381,8 @@ def main(filename, oldestRecentData, printUserStories, printDescriptions):
             if birth_before_death_of_parents(birth,wdeat):
                 msg = "Birth of {0} is before death of Mom: {1}".format(name,wname)
                 addUSMsg('US09', msg)
-        msg = "The list of children by decreasing age: "+ str(order_sibling(chil))[1:-1]
+        #msg = "The list of children by decreasing age: "+ str(order_sibling(chil))[1:-1]
+	msg = "FIX ME!"
         addUSMsg('US28', msg)
         """Checking if siblings were born too close or too far apart"""
         for c in chil:
@@ -461,6 +462,20 @@ def main(filename, oldestRecentData, printUserStories, printDescriptions):
                 name2=d[aa]["NAME"]
                 msg = "Person with key {} has the name {} and is married to their aunt or uncle with key {} and name {}".format(key,name1,aa,name2)
                 addUSMsg('US20', msg)
+
+    for key in d2:
+	if large_age_diff(key,d,d2):
+	        husb=d2[key]["HUSB"]
+        	wife=d2[key]["WIFE"]
+	        hbirt=d[husb]["BIRT"]
+	        wbirt=d[wife]["BIRT"]
+	        marr=d2[key]["MARR"]
+	        hage = individual_age_from_marr(hbirt,marr)
+        	wage = individual_age_from_marr(wbirt,marr)
+
+	    	msg = "Marriage with key {} of person with key {} and person with key {} were married on {}, but the age of one was more than double the age of the other ({} vs {})!".format(key,husb,wife,print_date(marr),hage,wage)
+        	addUSMsg('US34', msg)
+	
 
     if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
         printTable(ind_print_tbl, ind_table_headers, "Individuals")
