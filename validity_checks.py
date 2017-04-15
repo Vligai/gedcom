@@ -408,7 +408,8 @@ def order_sibling(fid, d, d2):
         return []
     children = d2[fid]["CHIL"]
     if children != []:
-        return sorted(children, key=lambda id:makedate(d[id]["BIRT"]))
+        sorted(children, key=lambda id: makedate(d[id]["BIRT"]))
+        return children
     return []
 
 def corresponding(id, d, d2):
