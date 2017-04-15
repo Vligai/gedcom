@@ -332,7 +332,7 @@ def sibling_marry(key, d, d2):
         for a in d2[d[key]["FAMC"]]["CHIL"]:
             siblings.append(a)
         #siblings = d2[d[key]["FAMC"]]["CHIL"]
-        print siblings
+        #print siblings
         #print key, siblings, d2[d[key]["FAMC"]]
         if key in siblings:
             siblings.remove(key)
