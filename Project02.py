@@ -295,6 +295,9 @@ def main(filename, oldestRecentData, printUserStories, printDescriptions):
         if not first_cousins(key, d, d2):
             msg = "{0} has married one of their first cousins".format(name)
             addUSMsg("US19", msg)
+        if not corresponding(key, d, d2):
+            msg = "{0} has not corresponding values in the individual dictionary and the family one".format(name)
+            addUSMsg("US26", msg)
 
     """
     interate over families
@@ -378,6 +381,8 @@ def main(filename, oldestRecentData, printUserStories, printDescriptions):
             if birth_before_death_of_parents(birth,wdeat):
                 msg = "Birth of {0} is before death of Mom: {1}".format(name,wname)
                 addUSMsg('US09', msg)
+        msg = "The list of children by decreasing age: "+ str(order_sibling(chil))[1:-1]
+        addUSMsg('US28', msg)
         """Checking if siblings were born too close or too far apart"""
         for c in chil:
             boolb=0
