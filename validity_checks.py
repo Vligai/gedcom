@@ -361,8 +361,8 @@ def first_cousins(key, d, d2):
             if d[mom]["FAMC"] != {} and d[mom]["FAMC"] in d2:
                 momfam = []
                 for a in d2[d[mom]["FAMC"]]["CHIL"]:
-					momfam.append(a)
-			#momfam = d2[d[mom]["FAMC"]]["CHIL"]
+                    momfam.append(a)
+            #momfam = d2[d[mom]["FAMC"]]["CHIL"]
             else:
                 momfam = []
             if momfam != [] and mom in momfam:
@@ -370,7 +370,7 @@ def first_cousins(key, d, d2):
             if d[dad]["FAMC"] != {} and d[dad]["FAMC"] in d2:
                 dadfam = []
                 for a in d2[d[dad]["FAMC"]]["CHIL"]:
-					dadfam.append(a)
+                    dadfam.append(a)
                 #dadfam = d2[d[dad]["FAMC"]]["CHIL"]
             else:
                 dadfam = []
@@ -424,9 +424,12 @@ def corresponding(id, d, d2):
         return False
     return True
 
-def individual_age(curr_date, birth_date):
+def individual_age(curr_date, birth):
     """US27: Include person's current age when listing individuals"""
     age = 0
+    today = date.today()
+    birth = date(int(birth["year"]), birth["month"], int(birth["day"]))
+    age = today - birth
     return age
 
 def unique_fam(fam):
@@ -434,4 +437,5 @@ def unique_fam(fam):
     US24: No more than one family with the same spouses
     by name and the same marriage date should appear in a GEDCOM file
     """
+	
     return 1
