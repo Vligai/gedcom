@@ -435,6 +435,20 @@ def individual_age(birth):
     age = today - birth
     return age
 
+def individual_age_from_marr(birth,marr):
+    """US27: Include person's current age when listing individuals"""
+    age = 0
+    if birth == {}:
+        return age
+    else:
+        birth = date(int(birth["year"]), birth["month"], int(birth["day"]))
+    if marr == {}:
+        return age
+    else:
+    	marr = date(int(marr["year"]), marr["month"], int(marr["day"]))
+    age = marr - birth
+    return int(age.days)/365.25
+
 def unique_fam(fam):
     """
     US24: No more than one family with the same spouses
@@ -442,3 +456,18 @@ def unique_fam(fam):
     """
     
     return 1
+
+def large_age_diff(famid):
+
+	if famid not in d2:
+		return False
+        husb=d2[famid]["HUSB"]
+        wife=d2[famid]["WIFE"]
+        hbirt=d[husb]["BIRT"]
+        wbirt=d[wife]["BIRT"]
+        marr=d2[key2]["MARR"]
+	hage = individual_age_from_marr(hbirt,marr)
+	wage = individual_age_from_marr(wbirt,marr)
+	if hage > (wage * 2) or wage > (hage * 2):
+		return True
+	return False
