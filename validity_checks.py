@@ -480,3 +480,15 @@ def large_age_diff(famid,d,d2):
 		return True
 	return False
 
+def unique_name_bdate_fam(name1, name2, bdate1, bdate2):
+    """
+    US25: No more than one child with the same name and birth
+    date should appear in a family
+    """
+    if name1 == {} or name2 == {}:
+        return True
+    if bdate1 == {} or bdate2 =={}:
+        return True
+    if name1 == name2 and bdate1 == bdate2:
+        return False
+    return True
