@@ -381,7 +381,7 @@ def main(filename, oldestRecentData, printUserStories, printDescriptions):
             if birth_before_death_of_parents(birth,wdeat):
                 msg = "Birth of {0} is before death of Mom: {1}".format(name,wname)
                 addUSMsg('US09', msg)
-        msg = "The list of children by decreasing age: "+ str(order_sibling(chil))[1:-1]
+        msg = "The list of children by decreasing age: "+ str(order_sibling(key, d, d2))[1:-1]
         addUSMsg('US28', msg)
         """Checking if siblings were born too close or too far apart"""
         for c in chil:

@@ -404,7 +404,9 @@ def makedate(d1):
 
 def order_sibling(fid, d, d2):
     """us28"""
-    children = d[fid]["CHIL"]
+    if fid not in d2:
+        return []
+    children = d2[fid]["CHIL"]
     if children != []:
         return sorted(children, key=lambda id:makedate(d[id]["BIRT"]))
     return []
@@ -415,10 +417,12 @@ def corresponding(id, d, d2):
     born = d[id]["FAMS"]
 
     for fid in head:
+        if fid not in d2:
+            return False
         f = d2[fid]
         if f["HUSB"] != id and f["WIFE"] != id:
             return False
     
-    if id not in d2[born]["CHIL"]:
+    if born == {} or id not in d2[born]["CHIL"]:
         return False
     return True
