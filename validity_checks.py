@@ -424,11 +424,14 @@ def corresponding(id, d, d2):
         return False
     return True
 
-def individual_age(curr_date, birth):
+def individual_age(birth):
     """US27: Include person's current age when listing individuals"""
     age = 0
+    if birth == {}:
+        return age
+    else:
+        birth = date(int(birth["year"]), birth["month"], int(birth["day"]))
     today = date.today()
-    birth = date(int(birth["year"]), birth["month"], int(birth["day"]))
     age = today - birth
     return age
 
@@ -437,5 +440,5 @@ def unique_fam(fam):
     US24: No more than one family with the same spouses
     by name and the same marriage date should appear in a GEDCOM file
     """
-	
+    
     return 1
