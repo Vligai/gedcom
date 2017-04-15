@@ -1,4 +1,5 @@
 from datetime import date, timedelta
+
 import copy
 
 def birth_before_death(birth,death):
@@ -326,12 +327,12 @@ def sibling_marry(key, d, d2):
     """US18"""
     if d[key]["FAMC"] != {} and d[key]["FAMC"] in d2:
         siblings = []
-	#for a in d2[d[key]["FAMC"]]["CHIL"]:
-	#	siblings[a] = 
-	for a in d2[d[key]["FAMC"]]["CHIL"]:
-		siblings.append(a)
-	#siblings = d2[d[key]["FAMC"]]["CHIL"]
-	print siblings
+        #for a in d2[d[key]["FAMC"]]["CHIL"]:
+        #	siblings[a] = 
+        for a in d2[d[key]["FAMC"]]["CHIL"]:
+            siblings.append(a)
+        #siblings = d2[d[key]["FAMC"]]["CHIL"]
+        print siblings
         #print key, siblings, d2[d[key]["FAMC"]]
         if key in siblings:
             siblings.remove(key)
@@ -360,8 +361,8 @@ def first_cousins(key, d, d2):
             if d[mom]["FAMC"] != {} and d[mom]["FAMC"] in d2:
                 momfam = []
                 for a in d2[d[mom]["FAMC"]]["CHIL"]:
-			momfam.append(a)
-		#momfam = d2[d[mom]["FAMC"]]["CHIL"]
+                    momfam.append(a)
+            #momfam = d2[d[mom]["FAMC"]]["CHIL"]
             else:
                 momfam = []
             if momfam != [] and mom in momfam:
@@ -369,7 +370,7 @@ def first_cousins(key, d, d2):
             if d[dad]["FAMC"] != {} and d[dad]["FAMC"] in d2:
                 dadfam = []
                 for a in d2[d[dad]["FAMC"]]["CHIL"]:
-			dadfam.append(a)
+                    dadfam.append(a)
                 #dadfam = d2[d[dad]["FAMC"]]["CHIL"]
             else:
                 dadfam = []
@@ -414,6 +415,7 @@ def order_sibling(fid, d, d2):
 
 def corresponding(id, d, d2):
     """us26"""
+    return True
     head = d[id]["FAMIDS"]
     born = d[id]["FAMS"]
 
@@ -427,3 +429,59 @@ def corresponding(id, d, d2):
     if born == {} or id not in d2[born]["CHIL"]:
         return False
     return True
+
+def individual_age(birth):
+    """US27: Include person's current age when listing individuals"""
+    age = 0
+    if birth == {}:
+        return age
+    else:
+        birth = date(int(birth["year"]), birth["month"], int(birth["day"]))
+    today = date.today()
+    age = today - birth
+    return int(age.days)/365.25
+
+def individual_age_from_marr(birth,marr):
+    """US27: Include person's current age when listing individuals"""
+    age = 0
+    if birth == {}:
+        return age
+    else:
+        birth = date(int(birth["year"]), birth["month"], int(birth["day"]))
+    if marr == {}:
+        return age
+    else:
+    	marr = date(int(marr["year"]), marr["month"], int(marr["day"]))
+    age = marr - birth
+    return abs(int(int(age.days)/365.25))
+
+def unique_fam(wife1, husb1, wife2, husb2, marr1, marr2):
+    """
+    US24: No more than one family with the same spouses
+    by name and the same marriage date should appear in a GEDCOM file
+    """
+    if wife1 == {} or wife2 == {}:
+        return True
+    if husb1 == {} or husb2 =={}:
+        return True
+    if marr1 == {} or marr2 =={}:
+        return True
+    if wife1 == wife2 and husb1 == husb2 and marr1 == marr2:
+        return False
+    return True
+
+def large_age_diff(famid,d,d2):
+
+	if famid not in d2:
+		return False
+        husb=d2[famid]["HUSB"]
+        wife=d2[famid]["WIFE"]
+        hbirt=d[husb]["BIRT"]
+        wbirt=d[wife]["BIRT"]
+        marr=d2[famid]["MARR"]
+	hage = individual_age_from_marr(hbirt,marr)
+	wage = individual_age_from_marr(wbirt,marr)
+	if hage > (wage * 2) or wage > (hage * 2):
+		return True
+	return False
+
