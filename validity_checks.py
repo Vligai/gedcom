@@ -434,7 +434,7 @@ def individual_age(birth):
         birth = date(int(birth["year"]), birth["month"], int(birth["day"]))
     today = date.today()
     age = today - birth
-    return int(age.days)/365.25
+    return abs(int(int(age.days)/365.25))
 
 def individual_age_from_marr(birth,marr):
     """US27: Include person's current age when listing individuals"""

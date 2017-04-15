@@ -81,7 +81,7 @@ def parseFile(filename):
         ind_dict = {}
         fam_dict = {}
         dup_prefix = 'dup_'
-
+    
         longestFirstNameLength = 0
         longestLastNameLength = 0
         for line in f:
@@ -243,7 +243,7 @@ def main(filename, oldestRecentData, printUserStories, printDescriptions):
         ind_print_tbl = {}
         fam_print_tbl = {}
         #define headers and initialize dictionary columns
-        ind_table_headers = ["Key", "First", "Last", "Birth", "Death"]
+        ind_table_headers = ["Key", "First", "Last", "Birth", "Death", "Age"]
         for h in ind_table_headers:
             ind_print_tbl[h] = []
 
@@ -260,6 +260,7 @@ def main(filename, oldestRecentData, printUserStories, printDescriptions):
         if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
             strBirth = ""
             strDeath = ""
+            age = 0
             if birt != {}:
                 dateBirth = date(int(birt['year']), int(birt['month']), int(birt['day']))
                 strBirth = str(dateBirth)
@@ -272,11 +273,13 @@ def main(filename, oldestRecentData, printUserStories, printDescriptions):
                 if dateDeath > RECENT_CUTOFF:
                     msg = "Recent death: {0} on {1}".format(name, strDeath)
                     addUSMsg('US36', msg)
+            age = individual_age(birt)
             ind_print_tbl["Key"].append(key)
             ind_print_tbl["First"].append(fname)
             ind_print_tbl["Last"].append(lname)
             ind_print_tbl["Birth"].append(strBirth if strBirth else "")
             ind_print_tbl["Death"].append(strDeath if strBirth else "")
+            ind_print_tbl["Age"].append(str(age))
         if not birth_before_death(birt,deat):
             msg = "Birth is not before death:{0}".format(name)
             addUSMsg("US03", msg)
@@ -475,8 +478,22 @@ def main(filename, oldestRecentData, printUserStories, printDescriptions):
 
 	    	msg = "Marriage with key {} of person with key {} and person with key {} were married on {}, but the age of one was more than double the age of the other ({} vs {})!".format(key,husb,wife,print_date(marr),hage,wage)
         	addUSMsg('US34', msg)
-	
+        	
+    for key in d2:
+	for key2 in d2:
+                if key == key2:
+                    continue
+	        husb1=d2[key]["HUSB"]
+        	wife1=d2[key]["WIFE"]
+        	husb2=d2[key2]["HUSB"]
+        	wife2=d2[key2]["WIFE"]
+	        marr1=d2[key]["MARR"]
+	        marr2=d2[key2]["MARR"]
 
+	        if not unique_fam(wife1, husb1, wife2, husb2, marr1, marr2):
+                    msg = "Marriage with key {} of person with husband {} and person with wife {} were married on {}, which is the same as marriage with key {} of person with husband {} and person with wife {} were married on {}!".format(key,husb1,wife1,print_date(marr1),key2,husb2,wife2,print_date(marr2))
+                    addUSMsg('US24', msg)	
+    
     if PRINT_PERSON_OR_FAMILY_DESCRIPTION:
         printTable(ind_print_tbl, ind_table_headers, "Individuals")
         printTable(fam_print_tbl, fam_table_headers, "Families")
