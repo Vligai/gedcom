@@ -392,3 +392,20 @@ def first_cousins(key, d, d2):
             if test in l:
                 return False
     return True
+
+def makedate(d1):
+    """
+    Given dates in the form {"year":1970, "month": 01, "day": 01},
+    return True if the first date is the earlier of the two
+    """
+    if len(str(d1["month"])) > 2 and str(d1["month"]) in months.keys():
+        #replace GED month code with number
+        d1["month"] = months[d1["month"]]
+    return date(int(d1["year"]), d1["month"], int(d1["day"]))
+
+def order_sibling(fid, d, d2):
+    """us28"""
+    children = d[fid]["CHIL"]
+    if children != []:
+        return sorted(children, key=lambda id:makedate(d[id]["BIRT"]))
+    return []
