@@ -433,12 +433,19 @@ def individual_age(birth):
         birth = date(int(birth["year"]), birth["month"], int(birth["day"]))
     today = date.today()
     age = today - birth
-    return age
+    return int(age.days)/365.25
 
-def unique_fam(fam):
+def unique_fam(wife1, husb1, wife2, husb2, marr1, marr2):
     """
     US24: No more than one family with the same spouses
     by name and the same marriage date should appear in a GEDCOM file
     """
-    
-    return 1
+    if wife1 == {} or wife2 == {}:
+        return True
+    if husb1 == {} or husb2 =={}:
+        return True
+    if marr1 == {} or marr2 =={}:
+        return True
+    if wife1 == wife2 and husb1 == husb2 and marr1 == marr2:
+        return False
+    return True
