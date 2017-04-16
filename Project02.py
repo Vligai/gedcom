@@ -406,7 +406,7 @@ def main(filename, oldestRecentData, printUserStories, printDescriptions):
                         msg = "Sibling spacing between {0} and {1} is too small or too large".format(c,c2)
                         addUSMsg('US13', msg)
                     if not unique_name_bdate_fam(name1,name2,birth1,birth2):
-                        print c,name1,print_date(birth1),c2,name2,print_date(birth2)
+                        #print c,name1,print_date(birth1),c2,name2,print_date(birth2)
                         msg = "Sibling with key {}, name {}, and birthdate {} is the same as sibling with key {}, name {}, and birthdate {}".format(c,name1,print_date(birth1),c2,name2,print_date(birth2))
                         addUSMsg('US25', msg)
 
