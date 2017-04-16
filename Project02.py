@@ -388,11 +388,7 @@ def main(filename, oldestRecentData, printUserStories, printDescriptions):
             p = [d[x]["NAME"] for x in order_sibling(key2, d, d2)]
             msg = "The list of children by decreasing age in {0}: ".format(key2) + str(p)
             addUSMsg('US28', msg)
-<<<<<<< Updated upstream
- 
-=======
 
->>>>>>> Stashed changes
         """Checking if siblings were born too close or too far apart"""
         for c in chil:
             boolb=0
