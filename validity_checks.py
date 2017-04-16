@@ -332,7 +332,7 @@ def sibling_marry(key, d, d2):
         for a in d2[d[key]["FAMC"]]["CHIL"]:
             siblings.append(a)
         #siblings = d2[d[key]["FAMC"]]["CHIL"]
-        print siblings
+        #print siblings
         #print key, siblings, d2[d[key]["FAMC"]]
         if key in siblings:
             siblings.remove(key)
@@ -415,10 +415,10 @@ def order_sibling(fid, d, d2):
 
 def corresponding(id, d, d2):
     """us26"""
-    return True
     head = d[id]["FAMIDS"]
     born = d[id]["FAMS"]
-
+    print "us26"
+    print id, born
     for fid in head:
         if fid not in d2:
             return False
@@ -426,7 +426,7 @@ def corresponding(id, d, d2):
         if f["HUSB"] != id and f["WIFE"] != id:
             return False
     
-    if born == {} or id not in d2[born]["CHIL"]:
+    if born != {} and id not in d2[born]["CHIL"]:
         return False
     return True
 
@@ -485,3 +485,15 @@ def large_age_diff(famid,d,d2):
 		return True
 	return False
 
+def unique_name_bdate_fam(name1, name2, bdate1, bdate2):
+    """
+    US25: No more than one child with the same name and birth
+    date should appear in a family
+    """
+    if name1 == {} or name2 == {}:
+        return True
+    if bdate1 == {} or bdate2 =={}:
+        return True
+    if name1 == name2 and bdate1 == bdate2:
+        return False
+    return True

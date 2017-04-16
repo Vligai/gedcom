@@ -388,9 +388,11 @@ def main(filename, oldestRecentData, printUserStories, printDescriptions):
             p = [d[x]["NAME"] for x in order_sibling(key2, d, d2)]
             msg = "The list of children by decreasing age in {0}: ".format(key2) + str(p)
             addUSMsg('US28', msg)
-        #msg = "The list of children by decreasing age: "+ str(order_sibling(chil))[1:-1]
-	msg = "FIX ME!"
-        addUSMsg('US28', msg)
+<<<<<<< Updated upstream
+ 
+=======
+
+>>>>>>> Stashed changes
         """Checking if siblings were born too close or too far apart"""
         for c in chil:
             boolb=0
@@ -400,9 +402,15 @@ def main(filename, oldestRecentData, printUserStories, printDescriptions):
                 elif boolb==1:
                     birth1=d[c]["BIRT"]
                     birth2=d[c2]["BIRT"]
+                    name1=d[c]["NAME"]
+                    name2=d[c2]["NAME"]
                     if not sibling_spacing(birth1,birth2):
                         msg = "Sibling spacing between {0} and {1} is too small or too large".format(c,c2)
                         addUSMsg('US13', msg)
+                    if not unique_name_bdate_fam(name1,name2,birth1,birth2):
+                        print c,name1,print_date(birth1),c2,name2,print_date(birth2)
+                        msg = "Sibling with key {}, name {}, and birthdate {} is the same as sibling with key {}, name {}, and birthdate {}".format(c,name1,print_date(birth1),c2,name2,print_date(birth2))
+                        addUSMsg('US25', msg)
 
 
     """Checking for bigomy"""
