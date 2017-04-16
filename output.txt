@@ -1,80 +1,89 @@
 +------------+
 | Running... |
 +------------+
-
+I11 Ilya /Eygin/ May 31, 1994 I21 Ilya /Eygin/ May 31, 1994
 Individuals:
-+--------+---------------------------+
-| Key    | Name                      |
-+--------+---------------------------+
-| I1     | Mark /Mirtchouk/          |
-| I2     | Alex /Mirtchouk/          |
-| I3     | Kate /Slou/               |
-| I4     | Grigory /Mirchouk/        |
-| I5     | Raisa /Heyk/              |
-| I6     | Beata /Mirchouk/          |
-| I7     | Ben /Mirtchouk/           |
-| I8     | Marina /Mirchouk/         |
-| I9     | Andy /Krylov/             |
-| I10    | Darya /Krylov/            |
-| I11    | Ilya /Eygin/              |
-| I12    | Leonid /Eygin/            |
-| I13    | Olga /Ivanova/            |
-| I14    | Vasya /Eygin/             |
-| I15    | Lena /Petrova/            |
-| I16    | Vaily /Krylov/            |
-| I17    | Ily /Krylov/              |
-| I18    | Michael /Duben/           |
-| I1500  | Marki /Mirtchouk/         |
-+--------+---------------------------+
-
++-----+---------+-----------+------------+------------+------+
+| Key | First   | Last      | Birth      | Death      | Age  |
++-----+---------+-----------+------------+------------+------+
+| I1  | Mark    | Mirtchouk | 0994-09-22 |            | 1022 |
+| I2  | Alex    | Mirtchouk | 1963-12-17 |            | 53   |
+| I3  | Kate    | Slou      | 2969-05-01 |            | 952  |
+| I4  | Grigory | Mirchouk  | 1937-04-19 | 1007-11-08 | 79   |
+| I5  | Raisa   | Heyk      | 1937-08-26 |            | 79   |
+| I6  | Beata   | Mirchouk  | 1999-10-22 |            | 17   |
+| I7  | Ben     | Mirtchouk | 1999-10-10 |            | 17   |
+| I8  | Marina  | Mirchouk  | 1969-09-24 | 1715-06-01 | 47   |
+| I9  | Andy    | Krylov    | 1964-03-08 | 2015-06-01 | 53   |
+| I10 | Darya   | Krylov    | 2010-03-15 |            | 7    |
+| I11 | Ilya    | Eygin     | 1994-05-31 |            | 22   |
+| I12 | Leonid  | Eygin     | 1968-09-24 |            | 48   |
+| I13 | Olga    | Ivanova   | 1971-01-01 |            | 46   |
+| I14 | Vasya   | Eygin     | 2004-02-06 |            | 13   |
+| I15 | Lena    | Petrova   | 1967-05-05 |            | 49   |
+| I16 | Vaily   | Krylov    | 1994-04-11 |            | 23   |
+| I17 | Ily     | Krylov    | 1995-07-15 |            | 21   |
+| I18 | Michael | Duben     | 1969-07-08 |            | 47   |
+| I19 | Charlie | Smith     | 2017-03-05 | 2017-03-30 | 0    |
+| I21 | Ilya    | Eygin     | 1994-05-31 |            | 22   |
+| I22 | Mark    | Mirtchouk | 0994-09-22 | 2017-03-22 | 1022 |
++-----+---------+-----------+------------+------------+------+
 Families:
-+--------+---------------------------+---------------------------+
-| Key    | Husband                   | Wife                      |
-+--------+---------------------------+---------------------------+
-| F1     | Alex /Mirtchouk/          | Kate /Slou/               |
-| F2     | Grigory /Mirchouk/        | Raisa /Heyk/              |
-| F3     | Michael /Duben/           | Marina /Mirchouk/         |
-| F4     | Andy /Krylov/             | Marina /Mirchouk/         |
-| F5     | Andy /Krylov/             | Lena /Petrova/            |
-| F6     | Leonid /Eygin/            | Marina /Mirchouk/         |
-| F7     | Leonid /Eygin/            | Olga /Ivanova/            |
-| F8     | Mark /Mirtchouk/          | Kate /Slou/               |
-| F1500  | Vaily /Krylov/            | Ily /Krylov/              |
-+--------+---------------------------+---------------------------+
++-----+------+------+------------+------------+------------+
+| Key | Husb | Wife | Marriage   | Divorce    | Children   |
++-----+------+------+------------+------------+------------+
+| F1  | I2   | I3   | 1989-10-21 |            | I1, I6, I7 |
+| F2  | I4   | I5   |            |            | I2, I8     |
+| F3  | I18  | I8   | 2016-02-07 |            |            |
+| F4  | I9   | I8   | 2018-06-15 | 2019-06-15 | I10        |
+| F5  | I9   | I15  | 1993-08-16 |            | I16, I17   |
+| F6  | I12  | I8   | 1991-08-16 | 1900-06-01 | I11, I21   |
+| F7  | I12  | I13  | 1992-08-16 |            | I14        |
+| F8  | I1   | I3   | 2017-03-19 |            |            |
+| F9  | I12  | I13  | 1992-08-16 |            | I14        |
+| F18 | I2   | I8   | 1992-08-16 |            |            |
+| F23 | I10  | I6   | 1992-08-16 |            |            |
+| F24 | I16  | I17  | 2015-10-21 |            |            |
+| F25 | I1   | I8   | 2015-03-18 |            |            |
++-----+------+------+------------+------------+------------+
 
 +----------------------+
-| Errors found in file |
+| User Story Messages  |
 +----------------------+
-US01 errors:
-- Date of Kate /Slou/'s birth {'year': '2969', 'day': '1', 'month': 5} is after today
-- Date of Andy /Krylov/ and Marina /Mirchouk/ marriage {'year': '2018', 'day': '15', 'month': 6} is after today
-- Date of Andy /Krylov/ and Marina /Mirchouk/ divorce {'year': '2019', 'day': '15', 'month': 6} is after today
-US02 errors:
-- Wifes Birth with key I3 has name Kate /Slou/ is not before marriage 
-- Wifes Birth with key I3 has name Kate /Slou/ is not before marriage 
-US03 errors:
+US01 messages:
+- Date of Kate /Slou/'s birth May 1, 2969 is after today
+- Date of Andy /Krylov/ and Marina /Mirchouk/ marriage June 15, 2018 is after today
+- Date of Andy /Krylov/ and Marina /Mirchouk/ divorce June 15, 2019 is after today
+US02 messages:
+- Wifes Birth with key I3 has name Kate /Slou/ is not before marriage
+- Wifes Birth with key I3 has name Kate /Slou/ is not before marriage
+- Husbands Birth with key I10 has name Darya /Krylov/ is not before marriage
+- Wifes Birth with key I6 has name Beata /Mirchouk/ is not before marriage
+US03 messages:
 - Birth is not before death:Grigory /Mirchouk/
 - Birth is not before death:Marina /Mirchouk/
-US04 errors:
-- Marriage with key F6 of Leonid /Eygin/ and Marina /Mirchouk/ is not before divorce 
-US05 errors:
-- Marriage with key F3 of Michael /Duben/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/ 
-- Marriage with key F4 of Andy /Krylov/ and Marina /Mirchouk/ is not before death of husband Andy /Krylov/: 
-- Marriage with key F4 of Andy /Krylov/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/ 
-- Marriage with key F6 of Leonid /Eygin/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/ 
-US06 errors:
-- Divorce with key F4 of Andy /Krylov/ and Marina /Mirchouk/ is not before deathof husband Andy /Krylov/ 
-- Divorce with key F4 of Andy /Krylov/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/ 
-- Divorce with key F6 of Leonid /Eygin/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/ 
-US07 errors:
+US04 messages:
+- Marriage with key F6 of Leonid /Eygin/ and Marina /Mirchouk/ is not before divorce
+US05 messages:
+- Marriage with key F3 of Michael /Duben/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/
+- Marriage with key F4 of Andy /Krylov/ and Marina /Mirchouk/ is not before death of husband Andy /Krylov/:
+- Marriage with key F4 of Andy /Krylov/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/
+- Marriage with key F6 of Leonid /Eygin/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/
+- Marriage with key F18 of Alex /Mirtchouk/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/
+- Marriage with key F25 of Mark /Mirtchouk/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/
+US06 messages:
+- Divorce with key F4 of Andy /Krylov/ and Marina /Mirchouk/ is not before deathof husband Andy /Krylov/
+- Divorce with key F4 of Andy /Krylov/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/
+- Divorce with key F6 of Leonid /Eygin/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/
+US07 messages:
 - Greater than 150 years old: Mark /Mirtchouk/
-- Greater than 150 years old: Marki /Mirtchouk/
-US08 errors:
-- Birth of Mark /Mirtchouk/ is before marriage of Alex /Mirtchouk/,Kate /Slou/ 
-- Birth of Alex /Mirtchouk/ is before marriage of Grigory /Mirchouk/,Raisa /Heyk/ 
-- Birth of Marina /Mirchouk/ is before marriage of Grigory /Mirchouk/,Raisa /Heyk/ 
-- Birth of Darya /Krylov/ is before marriage of Andy /Krylov/,Marina /Mirchouk/ 
-US09 errors:
+- Greater than 150 years old: Mark /Mirtchouk/
+US08 messages:
+- Birth of Mark /Mirtchouk/ is before marriage of Alex /Mirtchouk/,Kate /Slou/
+- Birth of Alex /Mirtchouk/ is before marriage of Grigory /Mirchouk/,Raisa /Heyk/
+- Birth of Marina /Mirchouk/ is before marriage of Grigory /Mirchouk/,Raisa /Heyk/
+- Birth of Darya /Krylov/ is before marriage of Andy /Krylov/,Marina /Mirchouk/
+US09 messages:
 - Birth of Mark /Mirtchouk/ is before death of Dad: Alex /Mirtchouk/
 - Birth of Mark /Mirtchouk/ is before death of Mom: Kate /Slou/
 - Birth of Beata /Mirchouk/ is before death of Dad: Alex /Mirtchouk/
@@ -89,24 +98,98 @@ US09 errors:
 - Birth of Ily /Krylov/ is before death of Dad: Andy /Krylov/
 - Birth of Ily /Krylov/ is before death of Mom: Lena /Petrova/
 - Birth of Ilya /Eygin/ is before death of Dad: Leonid /Eygin/
+- Birth of Ilya /Eygin/ is before death of Dad: Leonid /Eygin/
 - Birth of Vasya /Eygin/ is before death of Dad: Leonid /Eygin/
 - Birth of Vasya /Eygin/ is before death of Mom: Olga /Ivanova/
-US10 errors:
+- Birth of Vasya /Eygin/ is before death of Dad: Leonid /Eygin/
+- Birth of Vasya /Eygin/ is before death of Mom: Olga /Ivanova/
+US10 messages:
 - Wifes Birth with key I3 has name Kate /Slou/ is not older than 14
 - Husbands Birth with key I4 has name Grigory /Mirchouk/ is not older than 14
 - Wifes Birth with key I5 has name Raisa /Heyk/ is not older than 14
 - Wifes Birth with key I3 has name Kate /Slou/ is not older than 14
-US11 errors:
+- Husbands Birth with key I10 has name Darya /Krylov/ is not older than 14
+- Wifes Birth with key I6 has name Beata /Mirchouk/ is not older than 14
+US11 messages:
 - Marriage with key F1 of I2 and I3 overlaps with Marriage with key F8 of I3 and I1
+- Marriage with key F1 of I2 and I3 overlaps with Marriage with key F18 of I8 and I2
 - Marriage with key F3 of I18 and I8 overlaps with Marriage with key F4 of I8 and I9
+- Marriage with key F3 of I18 and I8 overlaps with Marriage with key F18 of I8 and I2
+- Marriage with key F3 of I18 and I8 overlaps with Marriage with key F25 of I8 and I1
 - Marriage with key F4 of I9 and I8 overlaps with Marriage with key F5 of I15 and I9
-US13 errors:
+- Marriage with key F4 of I9 and I8 overlaps with Marriage with key F18 of I8 and I2
+- Marriage with key F4 of I9 and I8 overlaps with Marriage with key F25 of I8 and I1
+- Marriage with key F8 of I1 and I3 overlaps with Marriage with key F25 of I8 and I1
+- Marriage with key F18 of I2 and I8 overlaps with Marriage with key F25 of I8 and I1
+US13 messages:
 - Sibling spacing between I6 and I7 is too small or too large
-US16 errors:
+US16 messages:
 - Family with key F2 doesn't have all male last names
-US21 errors:
+US17 messages:
+- Kate /Slou/ has commited incest
+US18 messages:
+- Alex /Mirtchouk/ has married one of their siblings
+- Marina /Mirchouk/ has married one of their siblings
+US19 messages:
+- Beata /Mirchouk/ has married one of their first cousins
+- Darya /Krylov/ has married one of their first cousins
+US20 messages:
+- Person with key I1 has the name Mark /Mirtchouk/ and is married to their aunt or uncle with key I8 and name Marina /Mirchouk/
+US21 messages:
 - Husband Leonid /Eygin/ is not male or wife Olga /Ivanova/ is not female
+- Husband Leonid /Eygin/ is not male or wife Olga /Ivanova/ is not female
+- Husband Darya /Krylov/ is not male or wife Beata /Mirchouk/ is not female
 - Husband Vaily /Krylov/ is not male or wife Ily /Krylov/ is not female
-US22 errors:
-- Individual ID duplicate:I1
-- Family ID duplicate:F1
+US22 messages:
+- Individual ID duplicate 'I1' reassigned to 'I22'
+- Family ID duplicate 'F1' reassigned to 'F24'
+- Family ID duplicate 'F8' reassigned to 'F25'
+US23 messages:
+- Person with key I1 has the name Mark /Mirtchouk/ is the same as person with key I22 and name Mark /Mirtchouk/ have the same birthday September 22, 994
+- Person with key I11 has the name Ilya /Eygin/ is the same as person with key I21 and name Ilya /Eygin/ have the same birthday May 31, 1994
+- Person with key I21 has the name Ilya /Eygin/ is the same as person with key I11 and name Ilya /Eygin/ have the same birthday May 31, 1994
+- Person with key I22 has the name Mark /Mirtchouk/ is the same as person with key I1 and name Mark /Mirtchouk/ have the same birthday September 22, 994
+US24 messages:
+- Marriage with key F7 of person with husband I12 and person with wife I13 were married on August 16, 1992, which is the same as marriage with key F9 of person with husband I12 and person with wife I13 were married on August 16, 1992!
+- Marriage with key F9 of person with husband I12 and person with wife I13 were married on August 16, 1992, which is the same as marriage with key F7 of person with husband I12 and person with wife I13 were married on August 16, 1992!
+US25 messages:
+- Sibling with key I11, name Ilya /Eygin/, and birthdate May 31, 1994 is the same as sibling with key I21, name Ilya /Eygin/, and birthdate May 31, 1994
+US26 messages:
+- I1 has not corresponding values in the individual dictionary and the family one
+- I8 has not corresponding values in the individual dictionary and the family one
+- I16 has not corresponding values in the individual dictionary and the family one
+- I17 has not corresponding values in the individual dictionary and the family one
+- I22 has not corresponding values in the individual dictionary and the family one
+US28 messages:
+- The list of children by decreasing age in F1: ['Mark /Mirtchouk/', 'Beata /Mirchouk/', 'Ben /Mirtchouk/']
+- The list of children by decreasing age in F2: ['Alex /Mirtchouk/', 'Marina /Mirchouk/']
+- The list of children by decreasing age in F4: ['Darya /Krylov/']
+- The list of children by decreasing age in F5: ['Vaily /Krylov/', 'Ily /Krylov/']
+- The list of children by decreasing age in F6: ['Ilya /Eygin/', 'Ilya /Eygin/']
+- The list of children by decreasing age in F7: ['Vasya /Eygin/']
+- The list of children by decreasing age in F9: ['Vasya /Eygin/']
+US29 messages:
+- Person with key I4 has the name Grigory /Mirchouk/ and died on November 8, 1007
+- Person with key I8 has the name Marina /Mirchouk/ and died on June 1, 1715
+- Person with key I9 has the name Andy /Krylov/ and died on June 1, 2015
+- Person with key I19 has the name Charlie /Smith/ and died on March 30, 2017
+- Person with key I22 has the name Mark /Mirtchouk/ and died on March 22, 2017
+US30 messages:
+- Person with key I1 has the name Mark /Mirtchouk/ and is still alive and married
+- Person with key I2 has the name Alex /Mirtchouk/ and is still alive and married
+- Person with key I3 has the name Kate /Slou/ and is still alive and married
+- Person with key I6 has the name Beata /Mirchouk/ and is still alive and married
+- Person with key I10 has the name Darya /Krylov/ and is still alive and married
+- Person with key I12 has the name Leonid /Eygin/ and is still alive and married
+- Person with key I13 has the name Olga /Ivanova/ and is still alive and married
+- Person with key I16 has the name Vaily /Krylov/ and is still alive and married
+- Person with key I17 has the name Ily /Krylov/ and is still alive and married
+US34 messages:
+- Marriage with key F1 of person with key I2 and person with key I3 were married on October 21, 1989, but the age of one was more than double the age of the other (25 vs 979)!
+- Marriage with key F23 of person with key I10 and person with key I6 were married on August 16, 1992, but the age of one was more than double the age of the other (17 vs 7)!
+- Marriage with key F25 of person with key I1 and person with key I8 were married on March 18, 2015, but the age of one was more than double the age of the other (1020 vs 45)!
+US35 messages:
+- Recent birth: Kate /Slou/ on 2969-05-01
+US36 messages:
+- Recent death: Charlie /Smith/ on 2017-03-30
+- Recent death: Mark /Mirtchouk/ on 2017-03-22
