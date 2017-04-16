@@ -383,16 +383,12 @@ def first_cousins(key, d, d2):
         for k in momfam + dadfam:
             for f in d[k]["FAMIDS"]:
                 if "dup" not in f:
-                    cousin += [d2[f]["CHIL"]]
+                    cousin += d2[f]["CHIL"]
         for id in d[key]["FAMIDS"]:
             if "dup" not in id:
                 l += [(d2[id]["HUSB"], d2[id]["WIFE"])]
         for c in cousin:
-            if d[key]["SEX"] == "M":
-                test = (key, c)
-            else:
-                test = (c, key)
-            if test in l:
+            if (key, c) in l or (c, key) in l:
                 return False
     return True
 
