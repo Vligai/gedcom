@@ -299,9 +299,11 @@ def main(filename, oldestRecentData, printUserStories, printDescriptions):
             msg = "{0} has married one of their first cousins".format(name)
             addUSMsg("US19", msg)
         if not corresponding(key, d, d2):
-            msg = "{0} has not corresponding values in the individual dictionary and the family one".format(name)
+            msg = "{0} has not corresponding values in the individual dictionary and the family one".format(key)
             addUSMsg("US26", msg)
-
+        if not no_incest(key, d, d2):
+            msg = "{0} has commited incest".format(name)
+            addUSMsg("US17", msg)
     """
     interate over families
     """

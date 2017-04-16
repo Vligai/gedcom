@@ -205,7 +205,7 @@ def male_last_names(ind, fam):
             return False
     return True
 
-def no_incest(ind, fam, start):
+def no_incest(start, ind, fam):
     """US17"""
     sex = "HUSB" if ind[start]["SEX"] == "M" else "WIFE"
     other = "WIFE" if sex == "HUSB" else "HUSB"
@@ -213,16 +213,18 @@ def no_incest(ind, fam, start):
     marr = {}
     descendants = []
     for famid in ind[start]["FAMIDS"]:
-        if sex == "HUSB":
-            marr[(fam[famid][sex], fam[famid][other])] = ''
-        else:
-            marr[(fam[famid][other], fam[famid][sex])] = ''
-        descendants += fam[famid]["CHIL"]
+        if famid in fam:
+            if sex == "HUSB":
+                marr[(fam[famid][sex], fam[famid][other])] = ''
+            else:
+                marr[(fam[famid][other], fam[famid][sex])] = ''
+            descendants += fam[famid]["CHIL"]
     for id in descendants:
         for famid in ind[id]["FAMIDS"]:
-            descendants += fam[famid]["CHIL"]
-            if (fam[famid][sex], fam[famid][other]) in marr or (fam[famid][other], fam[famid][sex]) in marr:
-                return False
+            if famid in fam:
+                descendants += fam[famid]["CHIL"]
+                if (fam[famid][sex], fam[famid][other]) in marr or (fam[famid][other], fam[famid][sex]) in marr:
+                    return False
     return True
 
 def deceased(d):
@@ -416,9 +418,7 @@ def order_sibling(fid, d, d2):
 def corresponding(id, d, d2):
     """us26"""
     head = d[id]["FAMIDS"]
-    born = d[id]["FAMS"]
-    print "us26"
-    print id, born
+    born = d[id]["FAMC"]
     for fid in head:
         if fid not in d2:
             return False
