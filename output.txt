@@ -1,12 +1,11 @@
 +------------+
 | Running... |
 +------------+
-I11 Ilya /Eygin/ May 31, 1994 I21 Ilya /Eygin/ May 31, 1994
 Individuals:
 +-----+---------+-----------+------------+------------+------+
 | Key | First   | Last      | Birth      | Death      | Age  |
 +-----+---------+-----------+------------+------------+------+
-| I1  | Mark    | Mirtchouk | 0994-09-22 |            | 1022 |
+| I1  | Mark    | Mirtchouk | 2017-04-16 |            | 0    |
 | I2  | Alex    | Mirtchouk | 1963-12-17 |            | 53   |
 | I3  | Kate    | Slou      | 2969-05-01 |            | 952  |
 | I4  | Grigory | Mirchouk  | 1937-04-19 | 1007-11-08 | 79   |
@@ -51,145 +50,154 @@ Families:
 | User Story Messages  |
 +----------------------+
 US01 messages:
-- Date of Kate /Slou/'s birth May 1, 2969 is after today
-- Date of Andy /Krylov/ and Marina /Mirchouk/ marriage June 15, 2018 is after today
-- Date of Andy /Krylov/ and Marina /Mirchouk/ divorce June 15, 2019 is after today
+ -Date of Mark /Mirtchouk/'s(line 3) birth April 16, 2017 is after today
+ -Date of Kate /Slou/'s(line 33) birth May 1, 2969 is after today
+ -Date of Andy /Krylov/ and Marina /Mirchouk/ marriage June 15, 2018 is after today
+ -Date of Andy /Krylov/ and Marina /Mirchouk/ divorce June 15, 2019 is after today
 US02 messages:
-- Wifes Birth with key I3 has name Kate /Slou/ is not before marriage
-- Wifes Birth with key I3 has name Kate /Slou/ is not before marriage
-- Husbands Birth with key I10 has name Darya /Krylov/ is not before marriage
-- Wifes Birth with key I6 has name Beata /Mirchouk/ is not before marriage
+ -Wifes Birth with key I3(line 207) has name Kate /Slou/ is not before marriage 
+ -Husbands Birth with key I1(line 275) has name Mark /Mirtchouk/ is not before marriage 
+ -Wifes Birth with key I3(line 275) has name Kate /Slou/ is not before marriage 
+ -Husbands Birth with key I10(line 300) has name Darya /Krylov/ is not before marriage 
+ -Wifes Birth with key I6(line 300) has name Beata /Mirchouk/ is not before marriage 
+ -Husbands Birth with key I1(line not available) has name Mark /Mirtchouk/ is not before marriage 
 US03 messages:
-- Birth is not before death:Grigory /Mirchouk/
-- Birth is not before death:Marina /Mirchouk/
+ -Birth is not before death:Grigory /Mirchouk/(line 42)
+ -Birth is not before death:Marina /Mirchouk/(line 80)
 US04 messages:
-- Marriage with key F6 of Leonid /Eygin/ and Marina /Mirchouk/ is not before divorce
+ -Marriage with key F6(line 249) of Leonid /Eygin/ and Marina /Mirchouk/ is not before divorce 
 US05 messages:
-- Marriage with key F3 of Michael /Duben/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/
-- Marriage with key F4 of Andy /Krylov/ and Marina /Mirchouk/ is not before death of husband Andy /Krylov/:
-- Marriage with key F4 of Andy /Krylov/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/
-- Marriage with key F6 of Leonid /Eygin/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/
-- Marriage with key F18 of Alex /Mirtchouk/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/
-- Marriage with key F25 of Mark /Mirtchouk/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/
+ -Marriage with key F3(line 230) of Michael /Duben/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/ 
+ -Marriage with key F4(line 237) of Andy /Krylov/ and Marina /Mirchouk/ is not before death of husband Andy /Krylov/: 
+ -Marriage with key F4(line 237) of Andy /Krylov/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/ 
+ -Marriage with key F6(line 249) of Leonid /Eygin/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/ 
+ -Marriage with key F18(line 294) of Alex /Mirtchouk/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/ 
+ -Marriage with key F25(line not available) of Mark /Mirtchouk/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/ 
 US06 messages:
-- Divorce with key F4 of Andy /Krylov/ and Marina /Mirchouk/ is not before deathof husband Andy /Krylov/
-- Divorce with key F4 of Andy /Krylov/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/
-- Divorce with key F6 of Leonid /Eygin/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/
+ -Divorce with key F4(line 237) of Andy /Krylov/ and Marina /Mirchouk/ is not before deathof husband Andy /Krylov/ 
+ -Divorce with key F4(line 237) of Andy /Krylov/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/ 
+ -Divorce with key F6(line 249) of Leonid /Eygin/ and Marina /Mirchouk/ is not before death of wife Marina /Mirchouk/ 
 US07 messages:
-- Greater than 150 years old: Mark /Mirtchouk/
-- Greater than 150 years old: Mark /Mirtchouk/
+ -Greater than 150 years old: Mark /Mirtchouk/(line 306)
 US08 messages:
-- Birth of Mark /Mirtchouk/ is before marriage of Alex /Mirtchouk/,Kate /Slou/
-- Birth of Alex /Mirtchouk/ is before marriage of Grigory /Mirchouk/,Raisa /Heyk/
-- Birth of Marina /Mirchouk/ is before marriage of Grigory /Mirchouk/,Raisa /Heyk/
-- Birth of Darya /Krylov/ is before marriage of Andy /Krylov/,Marina /Mirchouk/
+ -Birth of Alex /Mirtchouk/(line 23) is before marriage of Grigory /Mirchouk/,Raisa /Heyk/ 
+ -Birth of Marina /Mirchouk/(line 80) is before marriage of Grigory /Mirchouk/,Raisa /Heyk/ 
+ -Birth of Darya /Krylov/(line 106) is before marriage of Andy /Krylov/,Marina /Mirchouk/ 
 US09 messages:
-- Birth of Mark /Mirtchouk/ is before death of Dad: Alex /Mirtchouk/
-- Birth of Mark /Mirtchouk/ is before death of Mom: Kate /Slou/
-- Birth of Beata /Mirchouk/ is before death of Dad: Alex /Mirtchouk/
-- Birth of Beata /Mirchouk/ is before death of Mom: Kate /Slou/
-- Birth of Ben /Mirtchouk/ is before death of Dad: Alex /Mirtchouk/
-- Birth of Ben /Mirtchouk/ is before death of Mom: Kate /Slou/
-- Birth of Alex /Mirtchouk/ is before death of Mom: Raisa /Heyk/
-- Birth of Marina /Mirchouk/ is before death of Mom: Raisa /Heyk/
-- Birth of Darya /Krylov/ is before death of Dad: Andy /Krylov/
-- Birth of Vaily /Krylov/ is before death of Dad: Andy /Krylov/
-- Birth of Vaily /Krylov/ is before death of Mom: Lena /Petrova/
-- Birth of Ily /Krylov/ is before death of Dad: Andy /Krylov/
-- Birth of Ily /Krylov/ is before death of Mom: Lena /Petrova/
-- Birth of Ilya /Eygin/ is before death of Dad: Leonid /Eygin/
-- Birth of Ilya /Eygin/ is before death of Dad: Leonid /Eygin/
-- Birth of Vasya /Eygin/ is before death of Dad: Leonid /Eygin/
-- Birth of Vasya /Eygin/ is before death of Mom: Olga /Ivanova/
-- Birth of Vasya /Eygin/ is before death of Dad: Leonid /Eygin/
-- Birth of Vasya /Eygin/ is before death of Mom: Olga /Ivanova/
+ -Birth of Mark /Mirtchouk/(line 3) is before death of Dad: Alex /Mirtchouk/
+ -Birth of Mark /Mirtchouk/(line 3) is before death of Mom: Kate /Slou/
+ -Birth of Beata /Mirchouk/(line 62) is before death of Dad: Alex /Mirtchouk/
+ -Birth of Beata /Mirchouk/(line 62) is before death of Mom: Kate /Slou/
+ -Birth of Ben /Mirtchouk/(line 71) is before death of Dad: Alex /Mirtchouk/
+ -Birth of Ben /Mirtchouk/(line 71) is before death of Mom: Kate /Slou/
+ -Birth of Alex /Mirtchouk/(line 23) is before death of Mom: Raisa /Heyk/
+ -Birth of Marina /Mirchouk/(line 80) is before death of Mom: Raisa /Heyk/
+ -Birth of Darya /Krylov/(line 106) is before death of Dad: Andy /Krylov/
+ -Birth of Vaily /Krylov/(line 169) is before death of Dad: Andy /Krylov/
+ -Birth of Vaily /Krylov/(line 169) is before death of Mom: Lena /Petrova/
+ -Birth of Ily /Krylov/(line 178) is before death of Dad: Andy /Krylov/
+ -Birth of Ily /Krylov/(line 178) is before death of Mom: Lena /Petrova/
+ -Birth of Ilya /Eygin/(line 114) is before death of Dad: Leonid /Eygin/
+ -Birth of Ilya /Eygin/(line 123) is before death of Dad: Leonid /Eygin/
+ -Birth of Vasya /Eygin/(line 151) is before death of Dad: Leonid /Eygin/
+ -Birth of Vasya /Eygin/(line 151) is before death of Mom: Olga /Ivanova/
+ -Birth of Vasya /Eygin/(line 151) is before death of Dad: Leonid /Eygin/
+ -Birth of Vasya /Eygin/(line 151) is before death of Mom: Olga /Ivanova/
 US10 messages:
-- Wifes Birth with key I3 has name Kate /Slou/ is not older than 14
-- Husbands Birth with key I4 has name Grigory /Mirchouk/ is not older than 14
-- Wifes Birth with key I5 has name Raisa /Heyk/ is not older than 14
-- Wifes Birth with key I3 has name Kate /Slou/ is not older than 14
-- Husbands Birth with key I10 has name Darya /Krylov/ is not older than 14
-- Wifes Birth with key I6 has name Beata /Mirchouk/ is not older than 14
+ -Wifes Birth with key I3(line 207) has name Kate /Slou/ is not older than 14
+ -Husbands Birth with key I4(line 224) has name Grigory /Mirchouk/ is not older than 14
+ -Wifes Birth with key I5(line 224) has name Raisa /Heyk/ is not older than 14
+ -Husbands Birth with key I1(line 275) has name Mark /Mirtchouk/ is not older than 14
+ -Wifes Birth with key I3(line 275) has name Kate /Slou/ is not older than 14
+ -Husbands Birth with key I10(line 300) has name Darya /Krylov/ is not older than 14
+ -Wifes Birth with key I6(line 300) has name Beata /Mirchouk/ is not older than 14
+ -Husbands Birth with key I1(line not available) has name Mark /Mirtchouk/ is not older than 14
 US11 messages:
-- Marriage with key F1 of I2 and I3 overlaps with Marriage with key F8 of I3 and I1
-- Marriage with key F1 of I2 and I3 overlaps with Marriage with key F18 of I8 and I2
-- Marriage with key F3 of I18 and I8 overlaps with Marriage with key F4 of I8 and I9
-- Marriage with key F3 of I18 and I8 overlaps with Marriage with key F18 of I8 and I2
-- Marriage with key F3 of I18 and I8 overlaps with Marriage with key F25 of I8 and I1
-- Marriage with key F4 of I9 and I8 overlaps with Marriage with key F5 of I15 and I9
-- Marriage with key F4 of I9 and I8 overlaps with Marriage with key F18 of I8 and I2
-- Marriage with key F4 of I9 and I8 overlaps with Marriage with key F25 of I8 and I1
-- Marriage with key F8 of I1 and I3 overlaps with Marriage with key F25 of I8 and I1
-- Marriage with key F18 of I2 and I8 overlaps with Marriage with key F25 of I8 and I1
+ -Marriage with key F1(line 207) of I2 and I3 overlaps with Marriage with key F8(line 275) of I3 and I1
+ -Marriage with key F1(line 207) of I2 and I3 overlaps with Marriage with key F18(line 294) of I8 and I2
+ -Marriage with key F3(line 230) of I18 and I8 overlaps with Marriage with key F4(line 237) of I8 and I9
+ -Marriage with key F3(line 230) of I18 and I8 overlaps with Marriage with key F18(line 294) of I8 and I2
+ -Marriage with key F3(line 230) of I18 and I8 overlaps with Marriage with key F25(line not avaliable) of I8 and I1
+ -Marriage with key F4(line 237) of I9 and I8 overlaps with Marriage with key F5(line 260) of I15 and I9
+ -Marriage with key F4(line 237) of I9 and I8 overlaps with Marriage with key F18(line 294) of I8 and I2
+ -Marriage with key F4(line 237) of I9 and I8 overlaps with Marriage with key F25(line not avaliable) of I8 and I1
+ -Marriage with key F8(line 275) of I1 and I3 overlaps with Marriage with key F25(line not avaliable) of I8 and I1
+ -Marriage with key F18(line 294) of I2 and I8 overlaps with Marriage with key F25(line not avaliable) of I8 and I1
 US13 messages:
-- Sibling spacing between I6 and I7 is too small or too large
+ -Sibling spacing between I6(line 62) and I7(line 71) is too small or too large
 US16 messages:
-- Family with key F2 doesn't have all male last names
+ -Family with key F2(line 224) doesn't have all male last names
 US17 messages:
-- Kate /Slou/ has commited incest
+ -Kate /Slou/(line 33) has commited incest
 US18 messages:
-- Alex /Mirtchouk/ has married one of their siblings
-- Marina /Mirchouk/ has married one of their siblings
+ -Alex /Mirtchouk/(line 23) has married one of their siblings
+ -Marina /Mirchouk/(line 80) has married one of their siblings
 US19 messages:
-- Beata /Mirchouk/ has married one of their first cousins
-- Darya /Krylov/ has married one of their first cousins
+ -Beata /Mirchouk/(line 62) has married one of their first cousins
+ -Darya /Krylov/(line 106) has married one of their first cousins
 US20 messages:
-- Person with key I1 has the name Mark /Mirtchouk/ and is married to their aunt or uncle with key I8 and name Marina /Mirchouk/
+ -Person with key I1(line 3) has the name Mark /Mirtchouk/ and is married to their aunt or uncle with key I8(line 80) and name Marina /Mirchouk/
 US21 messages:
-- Husband Leonid /Eygin/ is not male or wife Olga /Ivanova/ is not female
-- Husband Leonid /Eygin/ is not male or wife Olga /Ivanova/ is not female
-- Husband Darya /Krylov/ is not male or wife Beata /Mirchouk/ is not female
-- Husband Vaily /Krylov/ is not male or wife Ily /Krylov/ is not female
+ -Husband Leonid /Eygin/ is not male or wife Olga /Ivanova/ is not female
+ -Husband Leonid /Eygin/ is not male or wife Olga /Ivanova/ is not female
+ -Husband Darya /Krylov/ is not male or wife Beata /Mirchouk/ is not female
+ -Husband Vaily /Krylov/ is not male or wife Ily /Krylov/ is not female
 US22 messages:
-- Individual ID duplicate 'I1' reassigned to 'I22'
-- Family ID duplicate 'F1' reassigned to 'F24'
-- Family ID duplicate 'F8' reassigned to 'F25'
+ -Individual ID duplicate 'I1'(line 3) reassigned to 'I22'
+ -Family ID duplicate 'F1'(line 207) reassigned to 'F24'
+ -Family ID duplicate 'F8'(line 275) reassigned to 'F25'
 US23 messages:
-- Person with key I1 has the name Mark /Mirtchouk/ is the same as person with key I22 and name Mark /Mirtchouk/ have the same birthday September 22, 994
-- Person with key I11 has the name Ilya /Eygin/ is the same as person with key I21 and name Ilya /Eygin/ have the same birthday May 31, 1994
-- Person with key I21 has the name Ilya /Eygin/ is the same as person with key I11 and name Ilya /Eygin/ have the same birthday May 31, 1994
-- Person with key I22 has the name Mark /Mirtchouk/ is the same as person with key I1 and name Mark /Mirtchouk/ have the same birthday September 22, 994
+ -Person with key I11(line 114) has the name Ilya /Eygin/ is the same as person with key I21(line 123) and name Ilya /Eygin/ have the same birthday May 31, 1994
+ -Person with key I21(line 123) has the name Ilya /Eygin/ is the same as person with key I11(line 114) and name Ilya /Eygin/ have the same birthday May 31, 1994
 US24 messages:
-- Marriage with key F7 of person with husband I12 and person with wife I13 were married on August 16, 1992, which is the same as marriage with key F9 of person with husband I12 and person with wife I13 were married on August 16, 1992!
-- Marriage with key F9 of person with husband I12 and person with wife I13 were married on August 16, 1992, which is the same as marriage with key F7 of person with husband I12 and person with wife I13 were married on August 16, 1992!
+ -Marriage with key F7(line 268) of person with husband I12 and person with wife I13 were married on August 16, 1992, which is the same as marriage with key F9(line 287) of person with husband I12 and person with wife I13 were married on August 16, 1992!
+ -Marriage with key F9(line 287) of person with husband I12 and person with wife I13 were married on August 16, 1992, which is the same as marriage with key F7(line 268) of person with husband I12 and person with wife I13 were married on August 16, 1992!
 US25 messages:
-- Sibling with key I11, name Ilya /Eygin/, and birthdate May 31, 1994 is the same as sibling with key I21, name Ilya /Eygin/, and birthdate May 31, 1994
+ -Sibling with key I11(line 114), name Ilya /Eygin/, and birthdate May 31, 1994 is the same as sibling with key I21(line 123), name Ilya /Eygin/, and birthdate May 31, 1994
 US26 messages:
-- I1 has not corresponding values in the individual dictionary and the family one
-- I8 has not corresponding values in the individual dictionary and the family one
-- I16 has not corresponding values in the individual dictionary and the family one
-- I17 has not corresponding values in the individual dictionary and the family one
-- I22 has not corresponding values in the individual dictionary and the family one
+ -I1(line 3) has not corresponding values in the individual dictionary and the family one
+ -I8(line 80) has not corresponding values in the individual dictionary and the family one
+ -I16(line 169) has not corresponding values in the individual dictionary and the family one
+ -I17(line 178) has not corresponding values in the individual dictionary and the family one
+ -I22(line 306) has not corresponding values in the individual dictionary and the family one
+US27 messages:
+ -Printing ages in years
 US28 messages:
-- The list of children by decreasing age in F1: ['Mark /Mirtchouk/', 'Beata /Mirchouk/', 'Ben /Mirtchouk/']
-- The list of children by decreasing age in F2: ['Alex /Mirtchouk/', 'Marina /Mirchouk/']
-- The list of children by decreasing age in F4: ['Darya /Krylov/']
-- The list of children by decreasing age in F5: ['Vaily /Krylov/', 'Ily /Krylov/']
-- The list of children by decreasing age in F6: ['Ilya /Eygin/', 'Ilya /Eygin/']
-- The list of children by decreasing age in F7: ['Vasya /Eygin/']
-- The list of children by decreasing age in F9: ['Vasya /Eygin/']
+ -The list of children by decreasing age in F1(line 207): ['Mark /Mirtchouk/', 'Beata /Mirchouk/', 'Ben /Mirtchouk/']
+ -The list of children by decreasing age in F2(line 224): ['Alex /Mirtchouk/', 'Marina /Mirchouk/']
+ -The list of children by decreasing age in F4(line 237): ['Darya /Krylov/']
+ -The list of children by decreasing age in F5(line 260): ['Vaily /Krylov/', 'Ily /Krylov/']
+ -The list of children by decreasing age in F6(line 249): ['Ilya /Eygin/', 'Ilya /Eygin/']
+ -The list of children by decreasing age in F7(line 268): ['Vasya /Eygin/']
+ -The list of children by decreasing age in F9(line 287): ['Vasya /Eygin/']
 US29 messages:
-- Person with key I4 has the name Grigory /Mirchouk/ and died on November 8, 1007
-- Person with key I8 has the name Marina /Mirchouk/ and died on June 1, 1715
-- Person with key I9 has the name Andy /Krylov/ and died on June 1, 2015
-- Person with key I19 has the name Charlie /Smith/ and died on March 30, 2017
-- Person with key I22 has the name Mark /Mirtchouk/ and died on March 22, 2017
+ -Person with key I4(line 42) has the name Grigory /Mirchouk/ and died on November 8, 1007
+ -Person with key I8(line 80) has the name Marina /Mirchouk/ and died on June 1, 1715
+ -Person with key I9(line 94) has the name Andy /Krylov/ and died on June 1, 2015
+ -Person with key I19(line 196) has the name Charlie /Smith/ and died on March 30, 2017
+ -Person with key I22(line 306) has the name Mark /Mirtchouk/ and died on March 22, 2017
 US30 messages:
-- Person with key I1 has the name Mark /Mirtchouk/ and is still alive and married
-- Person with key I2 has the name Alex /Mirtchouk/ and is still alive and married
-- Person with key I3 has the name Kate /Slou/ and is still alive and married
-- Person with key I6 has the name Beata /Mirchouk/ and is still alive and married
-- Person with key I10 has the name Darya /Krylov/ and is still alive and married
-- Person with key I12 has the name Leonid /Eygin/ and is still alive and married
-- Person with key I13 has the name Olga /Ivanova/ and is still alive and married
-- Person with key I16 has the name Vaily /Krylov/ and is still alive and married
-- Person with key I17 has the name Ily /Krylov/ and is still alive and married
+ -Person with key I1(line 3) has the name Mark /Mirtchouk/ and is still alive and married
+ -Person with key I2(line 23) has the name Alex /Mirtchouk/ and is still alive and married
+ -Person with key I3(line 33) has the name Kate /Slou/ and is still alive and married
+ -Person with key I6(line 62) has the name Beata /Mirchouk/ and is still alive and married
+ -Person with key I10(line 106) has the name Darya /Krylov/ and is still alive and married
+ -Person with key I12(line 132) has the name Leonid /Eygin/ and is still alive and married
+ -Person with key I13(line 142) has the name Olga /Ivanova/ and is still alive and married
+ -Person with key I16(line 169) has the name Vaily /Krylov/ and is still alive and married
+ -Person with key I17(line 178) has the name Ily /Krylov/ and is still alive and married
 US34 messages:
-- Marriage with key F1 of person with key I2 and person with key I3 were married on October 21, 1989, but the age of one was more than double the age of the other (25 vs 979)!
-- Marriage with key F23 of person with key I10 and person with key I6 were married on August 16, 1992, but the age of one was more than double the age of the other (17 vs 7)!
-- Marriage with key F25 of person with key I1 and person with key I8 were married on March 18, 2015, but the age of one was more than double the age of the other (1020 vs 45)!
+ -Marriage with key F1(line 207) of person with key I2(line 23) and person with key I3(line 33) were married on October 21, 1989, but the age of one was more than double the age of the other (25 vs 979)!
+ -Marriage with key F8(line 275) of person with key I1(line 3) and person with key I3(line 33) were married on March 19, 2017, but the age of one was more than double the age of the other (0 vs 952)!
+ -Marriage with key F23(line 300) of person with key I10(line 106) and person with key I6(line 62) were married on August 16, 1992, but the age of one was more than double the age of the other (17 vs 7)!
+ -Marriage with key F25(line not avaliable) of person with key I1(line 3) and person with key I8(line 80) were married on March 18, 2015, but the age of one was more than double the age of the other (2 vs 45)!
 US35 messages:
-- Recent birth: Kate /Slou/ on 2969-05-01
+ -Recent birth: Mark /Mirtchouk/(line3) on 2017-04-16
+ -Recent birth: Kate /Slou/(line33) on 2969-05-01
 US36 messages:
-- Recent death: Charlie /Smith/ on 2017-03-30
-- Recent death: Mark /Mirtchouk/ on 2017-03-22
+ -Recent death: Charlie /Smith/(line 196) on 2017-03-30
+ -Recent death: Mark /Mirtchouk/(line 306) on 2017-03-22
+US40 messages:
+ -Printing line numbers
+US42 messages:
+ -Bad date: 2017-4-16(line 10)
